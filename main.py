@@ -1,7 +1,7 @@
 from flask import Blueprint
 
-views= Blueprint(__name__, "views")
+main= Blueprint(__name__, "main")
 
-@views.route("/")
+@main.route("/")
 def home():
     return "Welcome to RailwayGo "

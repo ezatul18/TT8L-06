@@ -1,8 +1,8 @@
 from flask import Flask
-from views import views
+from main import main
 
 app=Flask(__name__)
-app.register_blueprint(views,url_prefix='/views')
+app.register_blueprint(main,url_prefix='/main')
 
 
 if __name__=='__main__':
