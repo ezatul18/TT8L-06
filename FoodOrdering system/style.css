@@ -30,10 +30,7 @@ header {
     transition: all .50s ease;
 }
 
-header .sticky {
-    padding: 12px 14%;
-    background: white;
-}
+
 
 .main {
     display: flex;
@@ -148,3 +145,25 @@ section {
 }
 
 /*button hover*/
+
+header.sticky {
+    padding: 12px 10px;
+    background: white;
+    box-shadow: black 0.1rem;
+}
+
+.box img {
+    width: 180px;
+    border-radius: 2rem;
+    
+}
+
+.container {
+    padding-top: 50px;
+    padding: 30px 14% 70px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    gap: 2rem;
+    text-align: center;
+    
+}
