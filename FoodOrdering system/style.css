@@ -153,18 +153,28 @@ header.sticky {
     box-shadow: black 0.1rem;
 }
 
-.box img {
-    width: 180px;
-    border-radius: 2rem;
-    
+/*container*/
+
+.box {
+    width: 900px;
+    display: flex;
+    overflow-x:scroll;
 }
 
-.container {
-    padding-top: 50px;
-    padding: 30px 14% 70px;
+.box div {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
-    gap: 2rem;
-    text-align: center;
-    
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px;
+    padding: 10px;
+    flex: none;
+
+}
+
+.box div img {
+    width: 100%;
+}
+
+.box::-webkit-scrollbar{
+    display: none;
 }
