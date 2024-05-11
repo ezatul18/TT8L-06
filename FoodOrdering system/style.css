@@ -10,19 +10,11 @@
 :root {
     --text-color: #82A284;
     --logo-color: #E4AEC5;
-    --main-color: #FFC4DD;
-    --second-color: 
-    --bg-color: ;
-    --h1-font:
-    --p-font: 
+    --main-color: #FFC4DD; 
   
 }
 
-body {
-    background: var(--bg-color);
-    
-
-}
+/*will put body background here*/
 
 header {
     position: fixed;
@@ -38,13 +30,18 @@ header {
     transition: all .50s ease;
 }
 
+header .sticky {
+    padding: 12px 14%;
+    background: white;
+}
+
 .main {
     display: flex;
     align-items: center;
     margin: 50px;
     color: var(--text-color);
     font-size: 35px;
-    text-shadow: black 1px 1px;
+    
 }
 
 .main span {
@@ -124,7 +121,8 @@ section {
 }
 
 .home1 span {
-    color: var(--logo-color);
+    color: var(--main-color);
+    font-family: "Finger Paint", sans-serif;
 }
 
 .home1 a {
