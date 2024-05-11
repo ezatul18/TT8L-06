@@ -111,6 +111,7 @@ section {
     align-items: center;
     gap: 4rem;
    
+   
 }
 
 .home1 h2 {
@@ -148,7 +149,7 @@ section {
 
 header.sticky {
     padding: 12px 10px;
-    background: white;
+    background: #FFFF;
     box-shadow: black 0.1rem;
 }
 
