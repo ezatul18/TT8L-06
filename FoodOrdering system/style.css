@@ -168,13 +168,103 @@ header.sticky {
     grid-gap: 20px;
     padding: 10px;
     flex: none;
+   
 
 }
 
 .box div img {
     width: 100%;
+    filter: grayscale(100%);
+    transition: transform 0.5s;
+   
+}
+
+
+.box img {
+    border-radius: 2rem;
 }
 
 .box::-webkit-scrollbar{
     display: none;
+}
+
+.box-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10% auto;
+}
+
+#backbton, #forwardbton {
+    width: 50px;
+    cursor: pointer;
+    margin: 40px;
+    font-size: 40px;
+    padding-bottom: 100px;
+}
+
+.box div img:hover {
+    filter: grayscale(0);
+    cursor: pointer;
+    transform: scale(1.1);
+
+}
+
+/*shop section*/
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    gap: 2rem;
+    align-items: center;
+    margin-top: 4rem;
+    cursor: pointer;
+}
+
+.row img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+
+}
+
+.row {
+    transition: all .35s ease;
+}
+
+.menuText{
+    display: flex;
+    align-items: center;
+    justify-content: space-betweeen;
+    padding: 15px 0;
+}
+
+.menuLeft h3{
+    font-size: 20px;
+    padding-right: 80px;
+}
+
+.menuRight h4{
+    font-size: 15px;
+    color: red;
+    text-align: right;
+
+}
+
+.row p {
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.rate i {
+    color: gold;
+    font-size: 15px;
+    margin-right: 4px;
+
+}
+
+.row:hover {
+    transform: scale(0.9);
+
 }
