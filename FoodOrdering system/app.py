@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, send_file , request
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template("Railwayfood.html")
+    return send_file("C:\\Users\\nurti\\TT8L-06\\FoodOrdering system\\Railwayfood.html")
 
 
 
