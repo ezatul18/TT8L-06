@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RailwayFood</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='FoodOrdering system/style.css') }}">
-    
     <link rel="stylesheet"
     href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    
-    
+   
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
 
     <!--font-->
 
@@ -19,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
+
     
 </head>
 
@@ -50,7 +49,7 @@
         </div>
 
         <div class="homeimg">
-            <img src="{{ url_for('static', filename='FoodOrdering system/image/main.png') }}" width="600" height="auto">
+            <img src="{{ url_for('static', filename='Foodimage/main.png') }}" width="600" height="auto">
       </div>
 
       <div class="home1">
@@ -67,13 +66,13 @@
         <i class='bx bx-left-arrow-alt' id="backbton"></i>
         <div class="box">
          <div>
-          <span><a href="#breakfast"><img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\breakfast1.jpeg"></a></span>
-          <span><a href="#lunch"><img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\lunch1.jpeg"></a></span>  
-          <span><a href="#dinner"><img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\dinner1.jpeg"></a></span>
+          <span><a href="#breakfast"><img src="{{ url_for('static', filename='image/breakfast1') }}"></a></span>
+          <span><a href="#lunch"><img src="{{ url_for('static', filename='image/lunch1.jpeg') }}"></a></span>  
+          <span><a href="#dinner"><img src="{{ url_for('static', filename='image/dinner.jpeg') }}"></a></span>
          </div>
          <div>
-          <span><a href="#dessert"><img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\dessert.jpeg"></a></span>
-          <span><a href="#drinks"><img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\drinks.jpeg"></a></span>  
+          <span><a href="#dessert"><img src="{{ url_for('static', filename='image/dessert.jpeg') }}"></a></span>
+          <span><a href="#drinks"><img src="{{ url_for('static', filename='image/drinks.jpeg') }}"></a></span>  
          </div>
         </div>
         <i class='bx bx-right-arrow-alt' id="forwardbton"></i>
@@ -88,7 +87,7 @@
       <div class="content">
         <!--first food-->
         <div class="row">
-          <img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\breakfast1.jpeg">
+          <img src="{{ url_for('static', filename='image/breakfast1.jpeg') }}">
           <div class="menuText">
             <div class="menuLeft">
               <h3>Egg&Meat sandwhich</h3>
@@ -110,7 +109,7 @@
         </div>
         <!--second-->
         <div class="row">
-          <img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\breakfast2.jpeg">
+          <img src="{{ url_for('static', filename='image/breakfast2.jpeg') }}">
           <div class="menuText">
             <div class="menuLeft">
               <h3>Wanpaku sandwhich</h3>
@@ -133,7 +132,7 @@
         <!--third-->
         </div>
         <div class="row">
-          <img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\breakfast3.jpeg">
+          <img src="{{ url_for('static', filename='image/breakfast3.jpeg') }}">
           <div class="menuText">
             <div class="menuLeft">
               <h3>Croissant Egg&Meat</h3>
@@ -153,7 +152,7 @@
         </div>
         <!--forth-->
         <div class="row">
-          <img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\breakfast4.jpeg">
+          <img src="{{ url_for('static', filename='image/breakfast4.jpeg') }}">
           <div class="menuText">
             <div class="menuLeft">
               <h3>Ice cream with berries </h3>
@@ -184,7 +183,7 @@
 
 
 
-     <script src="{{ url_for('static', filename='FoodOrdering system/script.js') }}"></script>
+     <script src="{{ url_for('static', filename='script.js')}}"></script>
 </body>
 
 
