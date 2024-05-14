@@ -261,10 +261,28 @@
       color: gold;
       font-size: 15px;
       margin-right: 4px;
+      padding-top: 10px;
   
   }
   
   .row:hover {
       transform: scale(0.9);
   
+  }
+
+  .addtocart {
+    padding-left: 200px;
+  }
+
+  .addcart i{
+    background-color: maroon;
+    border: none;
+    color:white;
+    font-size: 25px;
+    
+  }
+
+  .iconwrap {
+    display: flex;
+    
   }

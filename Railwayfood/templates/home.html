@@ -67,13 +67,13 @@
         <i class='bx bx-left-arrow-alt' id="backbton"></i>
         <div class="box">
          <div>
-          <span><a href="#breakfast"><img src="image/breakfast1.jpeg"></a></span>
-          <span><a href="#lunch"><img src="image/lunch1.jpeg"></a></span>  
-          <span><a href="#dinner"><img src="image/dinner1.jpeg"></a></span>
+          <span><a href="#breakfast"><image src="{{ url_for ('static', filename='image/breakfast1')}}"></a></span>
+          <span><a href="#lunch"><image src="{{ url_for ('static', filename='image/lunch1.jpeg')}}"></a></span>  
+          <span><a href="#dinner"><image src="{{ url_for ('static', filename='image/dinner1.jpeg')}}"></a></span>
          </div>
          <div>
-          <span><a href="#dessert"><img src="image/dessert.jpeg"></a></span>
-          <span><a href="#drinks"><img src="image/drinks.jpeg"></a></span>  
+          <span><a href="#dessert"><image src="{{ url_for ('static', filename='image/dessert.jpeg')}}"></a></span>
+          <span><a href="#drinks"><image src="{{ url_for ('static', filename='image/drinks.jpeg')}}"></a></span>  
          </div>
         </div>
         <i class='bx bx-right-arrow-alt' id="forwardbton"></i>
@@ -88,7 +88,7 @@
       <div class="content">
         <!--first food-->
         <div class="row">
-          <img src="image/breakfast1.jpeg">
+          <image src="{{ url_for ('static', filename='image/breakfast2.jpeg')}}">
           <div class="menuText">
             <div class="menuLeft">
               <h3>Egg&Meat sandwhich</h3>
@@ -100,17 +100,24 @@
           <p>farm-fresh eggs, savory meats, creamy avocado, 
             rich cheese, and crisp greens, all between freshly baked bread. 
             A symphony of flavors and textures in every bite.</p>
-          <div class="rate">
+          <div class="iconwrap">
+           <div class="rate">
             <a href="#"><i class='bx bxs-star'></i></a>
             <a href="#"><i class='bx bxs-star'></i></a>
             <a href="#"><i class='bx bxs-star'></i></a>
             <a href="#"><i class='bx bxs-star'></i></a>
             <a href="#"><i class='bx bxs-star'></i></a>
+           </div>
+           <div class="addtocart">
+            <button class="addcart">
+                <i class='bx bx-cart-add'></i>
+            </button>
+           </div>
           </div>
         </div>
         <!--second-->
         <div class="row">
-          <img src="image/breakfast2.jpeg">
+          <image src="{{ url_for ('static', filename='image/breakfast2.jpeg')}}">
           <div class="menuText">
             <div class="menuLeft">
               <h3>Wanpaku sandwhich</h3>
@@ -123,17 +130,24 @@
             zesty sauces, and crunchy veggies. Pair it with our 
             wholesome Cereal Bowl, featuring crunchy cornflakes, fresh milk,
             and a touch of honey. </p>
-          <div class="rate">
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bx-star' ></i></a>
-          </div>
-        <!--third-->
+            <div class="iconwrap">
+                <div class="rate">
+                 <a href="#"><i class='bx bxs-star'></i></a>
+                 <a href="#"><i class='bx bxs-star'></i></a>
+                 <a href="#"><i class='bx bxs-star'></i></a>
+                 <a href="#"><i class='bx bxs-star'></i></a>
+                 <a href="#"><i class='bx bx-star'></i></a>
+                </div>
+                <div class="addtocart">
+                 <button class="addcart">
+                     <i class='bx bx-cart-add'></i>
+                 </button>
+                </div>
+            </div>
         </div>
+        <!--third-->
         <div class="row">
-          <img src="image/breakfast3.jpeg">
+          <image src="{{ url_for ('static', filename='image/breakfast3.jpeg')}}">
           <div class="menuText">
             <div class="menuLeft">
               <h3>Croissant Egg&Meat</h3>
@@ -143,17 +157,24 @@
             </div>
           </div>
           <p>Croissant Breakfast Sandwich, a delightful blend of buttery croissant, fluffy eggs, savory meats, creamy avocado, and tangy cheese. A delicious twist on a classic favorite.</p>
-          <div class="rate">
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star-half' ></i></a>
-          </div>
+          <div class="iconwrap">
+            <div class="rate">
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star-half' ></i></a>
+            </div>
+            <div class="addtocart">
+             <button class="addcart">
+                 <i class='bx bx-cart-add'></i>
+             </button>
+            </div>
+           </div>
         </div>
         <!--forth-->
         <div class="row">
-          <img src="image/breakfast4.jpeg">
+          <image src="{{ url_for ('static', filename='image/breakfast4.jpeg')}}">
           <div class="menuText">
             <div class="menuLeft">
               <h3>Ice cream with berries </h3>
@@ -163,13 +184,20 @@
             </div>
           </div>
           <p>Experience our Berry Bliss Bread: soft bread topped with creamy scoops and fresh berries. A heavenly delight in every bite."</p>
-          <div class="rate">
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star'></i></a>
-            <a href="#"><i class='bx bxs-star-half' ></i></a>
-          </div>
+          <div class="iconwrap">
+            <div class="rate">
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star-half' ></i></a>
+             <a href="#"><i class='bx bx-star' ></i></a>
+            </div>
+            <div class="addtocart">
+             <button class="addcart">
+                 <i class='bx bx-cart-add'></i>
+             </button>
+            </div>
+           </div>
         </div>
 
       </div>
