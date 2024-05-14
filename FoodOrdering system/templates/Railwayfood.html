@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RailwayFood</title>
-    <link rel="stylesheet" type="text/css" href="C:\Users\nurti\TT8L-06\FoodOrdering system\static\style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='FoodOrdering system/style.css') }}">
     
     <link rel="stylesheet"
     href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -50,7 +50,7 @@
         </div>
 
         <div class="homeimg">
-            <img src="C:\Users\nurti\TT8L-06\FoodOrdering system\image\main.png" width="600" height="auto">
+            <img src="{{ url_for('static', filename='FoodOrdering system/image/main.png') }}" width="600" height="auto">
       </div>
 
       <div class="home1">
@@ -184,7 +184,7 @@
 
 
 
-     <script src="C:\Users\nurti\TT8L-06\FoodOrdering system\static\script.js"></script>
+     <script src="{{ url_for('static', filename='FoodOrdering system/script.js') }}"></script>
 </body>
 
 
