@@ -21,16 +21,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
     
 </head>
-
 <body>
-  
 
-      <!--header section-->
+    <!--header section-->
     <header>
         <a href="#" class="main">Railway<span>Food</span></a>
 
         <ul class="navlist">
-            <li><a href="#home">Home</a></li>
+            <li><a href="/home">Home</a></li>
             <li><a href="#menu">Menu</a></li>
             <li><a href="#review">Our Customer</a></li>
             
@@ -41,37 +39,43 @@
             <li><a href="#search" ><i class='bx bx-search-alt-2'></i></a></li>
          </ul>
     </header>
-    
 
-      <!--home section-->
-    <section class="home" id="home">
-        <div class="hometext">
-            <h1>From departure<br>to destinations, <br> We got your <br> craving satisfied!</h1>
-        </div>
+    <body>
+        <section class="cartTable">
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Product </th>
+                            <th> Name </th>
+                            <th> Price </th>
+                                
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                3
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <div class="homeimg">
-            <image src="{{ url_for ('static', filename='image/main.png')}}" width="600" height="auto">
-      </div>
-
-      <div class="home1">
-        <h2>Arrive hungry,<br>leave happy<br>Pre-order your<br>meals<span> now!</span></h2>
-        <a href="#" class="button1"><i class='bx bx-food-menu'></i></a>
-        <a href="#" class="button2">Order now</a>
-      </div>
-    </section>
-
-    
 
 
 
-
-
-  
+        </section>
 
 
 
-     <script src="{{url_for('static', filename='script.js')}}"></script>
-</body>
+    </body>
 
 
 

@@ -1,0 +1,13 @@
+CREATE TABLE items (
+    item_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    price REAL NOT NULL,
+    image_url TEXT NOT NULL,
+);
+
+CREATE TABLE cart (
+    cart_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id INTEGER NOT NULL,
+    time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (item_id) REFERENCES items (item_id)
+);
