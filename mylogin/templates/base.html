@@ -23,13 +23,13 @@
     <ul class="nav-links">
       <li>
         
-        <a href="home.html">Home</a>
+        <a href="{{url_for('views.home')}}">Home</a>
         </li>
         <li>
-          <a href="login.html">Login</a>
+          <a href="{{url_for('auth.login')}}">Login</a>
         </li>
         <li>
-          <a href="sign-up.html">Sign-up</a>
+          <a href="{{url_for('auth.sign_up')}}">Sign-up</a>
         </li>
     </ul>
     <div class="navline">

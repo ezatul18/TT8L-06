@@ -1,3 +1,9 @@
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
 *{
     margin:0px;
     padding: 0px;
@@ -105,4 +111,74 @@ nav{
 
 
     }
+ }
+ 
+
+
+
+
+
+ .form-container{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:20px;
+    padding-bottom: 60px;
+    background: white;
+    container: fluid;
+    border-radius: 10px;
+    
+ }
+ 
+ .form-container form {
+    padding: 20px;
+    border-radius:0 5px 10px rgba(222, 211, 211, 0.1);
+    background:#82a284 ;
+    text-align: center;
+    width: 500px;
+
+ }
+ .form-container form h3{
+    font-size: 30px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color:white;
+    
+
+ }
+ .form-container form input,
+ .form-container form select
+ {
+    width: 100%;
+    padding:10px 15px;
+    font-size: 17px;
+    margin:8px 0;
+    background:whitesmoke
+    border-radius: 5px;
+}
+
+ 
+ .form-container form select option{
+    background: white;
+ }
+ .form-container form .form-btn{
+    background: #fbd0d9;
+    color:white;
+    text-transform: capitalize;
+    font-size: 20px;
+    cursor: pointer;
+ 
+ }
+ .form-container form .form-btn:hover{
+    background: #E4AEC5;
+    color: white;
+ }
+ .form-container form p{
+    margin-top: 10px;
+    font-size: 20px;
+    color:#E4AEC5;
+ }
+ .form-container form p a{
+    color: white;
  }
