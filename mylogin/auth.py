@@ -1,6 +1,6 @@
 # mylogin/auth.py
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template , redirect,url_for
 
 auth = Blueprint("auth", __name__)
 
@@ -15,4 +15,4 @@ def sign_up():
 
 @auth.route("/logout")
 def logout():
-    return "Logout Page"
+    return redirect(url_for("views.home"))

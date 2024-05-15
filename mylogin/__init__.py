@@ -6,7 +6,9 @@ from flask_login import LoginManager
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = "helloworld"
+    app.config['SECRET_KEY'] = "testtest"
+
+    app.static_folder = 'static'
 
     from .views import views
     from .auth import auth

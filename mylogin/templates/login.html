@@ -1,24 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login
-        
-    </h1>
-    <div class="Login">
-    <form action="/login" method="post">
-        <input type="text" name=" username" placeholder="username"><br>
-        <input type="password" name="password" placeholder="Password"><br>
-          <div class="Remember">
-             <label></label><input type="checkbox">Remember me</label>
-          </div>
-    
-        <input type="submit" value="Login">
-    </form>
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<form method="POST">
+    <h3 align="center">Login</h3>
+    <div class="form-group">
+        <label for="Email Address">Email Address</label>
+        <input type="text"
+         id="email" 
+         name="email" 
+         class="form-control"
+        placeholder="Enter Email"
+        />
+
+        <label for="Password">Password</label>
+        <input type="password"
+         id="password" 
+         name="password" 
+         class="form-control"
+        placeholder="Enter Password"
+        />
+        <br/>
+        <div align="edge">
+            <button type="button" class="btn btn-custom">Login</button>
+        </div>
     </div>
-</body>
-</html>
+</form>
+
+{% endblock %}
