@@ -1,40 +1,56 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
-
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+app.config['DATABASE'] = 'your_database.db'
 
-items = [
-    {    
-        'id': '1',
-        'name': 'Egg & Meat Sandwhich',
-        'price': 14,
-        'description': 'farm-fresh eggs, savory meats, creamy avocado, rich cheese, and crisp greens, all between freshly baked bread. A symphony of flavors and textures in every bite.',
-           
-    },
-]
+def get_db():
+    return sqlite3.connect(app.config['DATABASE'])
 
-connection = sqlite3.connect ('store.db', check_same_thread=False)
-db = connection.cursor()
+def init_db():
+    with app.app_context():
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS products (
+                       id INTEGER PRIMARY KEY,
+                       name TEXT,
+                       description TEXT        
+            )
+        ''')
+        db.commit()
+
 
 @app.route ("/home")
 def home():
     return render_template("home.html")
 
-@app.route ("/store")
+@app.route ("/store", methods=['GET', 'POST'])
 def store():
-    return render_template("store.html", items=items)
+    if request.method == 'POST':
+        query = request.form['query']
+        return redirect(url_for('search', query=query))
+    return render_template("store.html")
+
+@app.route ("/search")
+def search():
+    query = request.args.get('query', '')
+    if not query:
+        return redirect(url_for('store'))
+    
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM products WHERE name LIKE ?", ('%' + query + '%',))
+    results = cursor.fetchall()
+
+    return render_template('search_results.html', query=query, results=results)
 
 @app.route ("/cart")
 def cart():
     return render_template("cart.html")
 
-@app.route ("/add-to-cart/<int:item_id>", methods=["POST"])
-def add_to_cart(item_id):
-    return redirect("/cart")
-
-
 
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug=True)

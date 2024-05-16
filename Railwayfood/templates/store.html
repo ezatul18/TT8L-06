@@ -36,8 +36,13 @@
 
          <ul class="icons">
             <li><a href="/cart" ><i class='bx bx-cart'></i></a></li>
-            <li><a href="#search" ><i class='bx bx-search-alt-2'></i></a></li>
-         </ul>
+
+          <form action="/search" method="GET">
+            <input type="text" name="query" placeholders="Search...">
+            <li><button type="submit"><i class='bx bx-search-alt-2'></i></button></li>
+          </form>
+          
+          </ul>
     </header>
 
     <!--container-->
@@ -47,7 +52,7 @@
           <i class='bx bx-left-arrow-alt' id="backbton"></i>
           <div class="box">
            <div>
-            <span><a href="#breakfast"><image src="{{ url_for ('static', filename='image/breakfast1')}}"></a></span>
+            <span><a href="#breakfast"><image src="{{ url_for ('static', filename='image/breakfast1.jpeg')}}"></a></span>
             <span><a href="#lunch"><image src="{{ url_for ('static', filename='image/lunch1.jpeg')}}"></a></span>  
             <span><a href="#dinner"><image src="{{ url_for ('static', filename='image/dinner1.jpeg')}}"></a></span>
            </div>
@@ -60,73 +65,26 @@
       </div>
       </section>
 
-      <!--shop section-->
+      
     <section class="breakfast" id="breakfast">
         <div class="mainText">
           <h2>Breakfast menu</h2>
         </div>
-      
-    {% for item in items %}
-    <form method="POST">
-      <div class="item">
-          <!--first food-->
+
+          <!--first-->
+        <div class="items">
+         
           <div class="row">
-            <img src="{{ url_for ('static', filename='image/breakfast1.jpeg') }}">
+            <img src="{{ url_for ('static', filename='image/breakfast1.jpeg')}}">
             <div class="menuText">
               <div class="menuLeft">
-                <h3>{{ item['name'] }}</h3>
-                  
-                {{ item['id']}}
-
-                <input type="hidden" value="{{ item['id'] }}" name="item_id">
-
-              </div>
-
-              <div class="menuRight">
-                <h4> RM {{ item['price'] }}</h4>
-              </div> 
-            </div>
-
-            <p>{{ item['description'] }}</p>
-
-            <div class="iconwrap">
-             <div class="rate">
-              <a href="#"><i class='bx bxs-star'></i></a>
-              <a href="#"><i class='bx bxs-star'></i></a>
-              <a href="#"><i class='bx bxs-star'></i></a>
-              <a href="#"><i class='bx bxs-star'></i></a>
-              <a href="#"><i class='bx bxs-star'></i></a>
-             </div>
-             <div class="addtocart">
-              <button class="addcart">
-                  <a href="/add-to-cart/{{ item.id }}"></a>
-                  <i class='bx bx-cart-add'></i>
-              </button>
-              
-              
-
-             </div>
-            </div>
-          </div>
-        </div>
-      </form>
-    {% endfor %}
-
-          <!--second-->
-          <div class="row">
-            <image src="{{ url_for ('static', filename='image/breakfast2.jpeg')}}">
-            <div class="menuText">
-              <div class="menuLeft">
-                <h3>Wanpaku sandwhich</h3>
+                <h3 class="p-name">Egg&Meat Sandwhich</h3>
               </div>
               <div class="menuRight">
-                <h4>RM 20</h4>
+                <h4 class="p-price">RM 14</h4>
               </div>
             </div>
-            <p>The Wanpaku Sandwich offers a playful twist with tender meats, 
-              zesty sauces, and crunchy veggies. Pair it with our 
-              wholesome Cereal Bowl, featuring crunchy cornflakes, fresh milk,
-              and a touch of honey. </p>
+            <p>farm-fresh eggs, savory meats, creamy avocado, rich cheese, and crisp greens, all between freshly baked bread. A symphony of flavors and textures in every bite</p>
               <div class="iconwrap">
                   <div class="rate">
                    <a href="#"><i class='bx bxs-star'></i></a>
@@ -136,24 +94,56 @@
                    <a href="#"><i class='bx bx-star'></i></a>
                   </div>
                   <div class="addtocart">
-                   <button class="addcart">
+                   <button type="submit"  class="add-to-cart" value="Add to cart">
                        <i class='bx bx-cart-add'></i>
                    </button>
                   </div>
               </div>
           </div>
-          <!--third-->
+       
+          <!--second-->
+       
           <div class="row">
-            <image src="{{ url_for ('static', filename='image/breakfast3.jpeg')}}">
+            <img src="{{ url_for ('static', filename='image/breakfast2.jpeg')}}">
             <div class="menuText">
               <div class="menuLeft">
-                <h3>Croissant Egg&Meat</h3>
+                <h3 class="p-name">Wanpaku sandwhich</h3>
               </div>
               <div class="menuRight">
-                <h4>RM 18.50</h4>
+                <h4 class="p-price">RM 20</h4>
               </div>
             </div>
-            <p>Croissant Breakfast Sandwich, a delightful blend of buttery croissant, fluffy eggs, savory meats, creamy avocado, and tangy cheese. A delicious twist on a classic favorite.</p>
+            <p>The Wanpaku Sandwich offers a playful twist with tender meats, zesty sauces, and crunchy veggies. Pair it with our wholesome Cereal Bowl, featuring crunchy cornflakes, fresh milk,and a touch of honey</p>
+              <div class="iconwrap">
+                  <div class="rate">
+                   <a href="#"><i class='bx bxs-star'></i></a>
+                   <a href="#"><i class='bx bxs-star'></i></a>
+                   <a href="#"><i class='bx bxs-star'></i></a>
+                   <a href="#"><i class='bx bxs-star'></i></a>
+                   <a href="#"><i class='bx bx-star'></i></a>
+                  </div>
+                  <div class="addtocart">
+                   <button type="submit" class="add-to-cart" value="Add to cart">
+                       <i class='bx bx-cart-add'></i>
+                   </button>
+                  </div>
+              </div>
+          </div>
+        
+          <!--third-->
+        <form method = "post"> 
+          <div class="row">
+            <img src="{{ url_for ('static', filename='image/breakfast3.jpeg')}}">
+            <div class="menuText">
+              <div class="menuLeft">
+                <h3 class="p-name">Croissant Egg & Meat</h3>
+                
+              </div>
+              <div class="menuRight">
+                <h4 class="p-price">RM 18.50</h4>
+              </div>
+            </div>
+            <p>Croissant Breakfast Sandwich, a delightful blend of buttery croissant, fluffy eggs, savory meats, creamy avocado, and tangy cheese. A delicious twist on a classic favorite</p>
             <div class="iconwrap">
               <div class="rate">
                <a href="#"><i class='bx bxs-star'></i></a>
@@ -163,24 +153,27 @@
                <a href="#"><i class='bx bxs-star-half' ></i></a>
               </div>
               <div class="addtocart">
-               <button class="addcart">
+               <button type="submit"  class="add-to-cart" value="Add to cart">
                    <i class='bx bx-cart-add'></i>
                </button>
               </div>
              </div>
           </div>
-          <!--forth-->
+        </form>
+
+        <!--forth-->
           <div class="row">
-            <image src="{{ url_for ('static', filename='image/breakfast4.jpeg')}}">
+            <img src="{{ url_for ('static', filename='image/breakfast4.jpeg')}}">
             <div class="menuText">
               <div class="menuLeft">
-                <h3>Ice cream with berries </h3>
+                <h3 class="p-name">Ice cream with berries</h3>
+                
               </div>
               <div class="menuRight">
-                <h4>RM 16</h4>
+                <h4 class="p-price">RM 16</h4>
               </div>
             </div>
-            <p>Experience our Berry Bliss Bread: soft bread topped with creamy scoops and fresh berries. A heavenly delight in every bite."</p>
+            <p>Experience our Berry Bliss Bread: soft bread topped with creamy scoops and fresh berries. A heavenly delight in every bite</p>
             <div class="iconwrap">
               <div class="rate">
                <a href="#"><i class='bx bxs-star'></i></a>
@@ -189,20 +182,271 @@
                <a href="#"><i class='bx bxs-star-half' ></i></a>
                <a href="#"><i class='bx bx-star' ></i></a>
               </div>
-  
               <div class="addtocart">
-               <button class="addcart">
-                   <i class='bx bx-cart-add'></i>
-               </button>
+                <button type="submit" class="add-to-cart">
+                    <i class='bx bx-cart-add'></i>
+                </button>
               </div>
              </div>
           </div>
-          
-     
-        
-  
+      </div>   
+  </section>
+
+  <section class="lunch" id="lunch">
+    <div class="mainText">
+      <h2>Lunch menu</h2>
+    </div>
+
+      <!--first-->
+    <div class="items">
+      <div class="row" id="1">
+        <img src="{{ url_for ('static', filename='image/lunch1.jpeg')}}">
+        <div class="menuText">
+          <div class="menuLeft">
+            <h3 class="p-name">Shrimp Alfredo</h3>
+          </div>
+          <div class="menuRight">
+            <h4 class="p-price">RM 15</h4>
+          </div>
         </div>
-      </section>
+        <p>A delectable dish featuring succulent shrimp nestled in creamy Alfredo sauce, served over a bed of perfectly cooked pasta.</p>
+          <div class="iconwrap">
+              <div class="rate">
+               <a href="#"><i class='bx bxs-star'></i></a>
+               <a href="#"><i class='bx bxs-star'></i></a>
+               <a href="#"><i class='bx bxs-star'></i></a>
+               <a href="#"><i class='bx bxs-star'></i></a>
+               <a href="#"><i class='bx bx-star'></i></a>
+              </div>
+              <div class="addtocart">
+               <button type="submit"  class="add-to-cart" value="Add to cart">
+                   <i class='bx bx-cart-add'></i>
+               </button>
+              </div>
+          </div>
+      </div>
+    </form>
+      <!--second-->
+    <form method = "post">
+      <div class="row" id="2">
+        <img src="{{ url_for ('static', filename='image/lunch2.jpeg')}}">
+        <div class="menuText">
+          <div class="menuLeft">
+            <h3 class="p-name">Rice & curry prawn</h3>
+          </div>
+          <div class="menuRight">
+            <h4 class="p-price">RM 17.50</h4>
+          </div>
+        </div>
+        <p>Fragrant rice paired with succulent prawns simmered in a flavorful curry sauce, offering a delightful fusion of aromatic spices and tender seafood.</p>
+          <div class="iconwrap">
+              <div class="rate">
+               <a href="#"><i class='bx bxs-star'></i></a>
+               <a href="#"><i class='bx bxs-star'></i></a>
+               <a href="#"><i class='bx bxs-star'></i></a>
+               <a href="#"><i class='bx bxs-star'></i></a>
+               <a href="#"><i class='bx bx-star'></i></a>
+              </div>
+              <div class="addtocart">
+               <button type="submit" class="add-to-cart" value="Add to cart">
+                   <i class='bx bx-cart-add'></i>
+               </button>
+              </div>
+          </div>
+      </div>
+    </form>
+      <!--third-->
+    
+      <div class="row" id="3">
+        <img src="{{ url_for ('static', filename='image/lunch3.jpeg')}}">
+        <div class="menuText">
+          <div class="menuLeft">
+            <h3 class="p-name">Garlic bread bits</h3>
+            
+          </div>
+          <div class="menuRight">
+            <h4 class="p-price">RM 10</h4>
+          </div>
+        </div>
+        <p>Crispy, bite-sized pieces of bread infused with savory garlic flavor, perfect for snacking or adding a delicious crunch to salads and soups.</p>
+        <div class="iconwrap">
+          <div class="rate">
+           <a href="#"><i class='bx bxs-star'></i></a>
+           <a href="#"><i class='bx bxs-star'></i></a>
+           <a href="#"><i class='bx bxs-star'></i></a>
+           <a href="#"><i class='bx bxs-star'></i></a>
+           <a href="#"><i class='bx bxs-star-half' ></i></a>
+          </div>
+          <div class="addtocart">
+           <button type="submit"  class="add-to-cart" value="Add to cart">
+               <i class='bx bx-cart-add'></i>
+           </button>
+          </div>
+         </div>
+      </div>
+    
+
+      <!--forth-->
+  
+    <form method = "post" id="4">
+      <div class="row">
+        <img src="{{ url_for ('static', filename='image/lunch4.jpeg')}}">
+        <div class="menuText">
+          <div class="menuLeft">
+            <h3 class="p-name">Honey BBQ Boneless Chicken</h3>
+            
+          </div>
+          <div class="menuRight">
+            <h4 class="p-price">RM 19</h4>
+          </div>
+        </div>
+        <p> Tender chicken strips glazed with a sweet honey-infused barbecue sauce, creating a mouthwatering blend of savory and sweet flavors that are sure to satisfy your cravings.</p>
+        <div class="iconwrap">
+          <div class="rate">
+           <a href="#"><i class='bx bxs-star'></i></a>
+           <a href="#"><i class='bx bxs-star'></i></a>
+           <a href="#"><i class='bx bxs-star'></i></a>
+           <a href="#"><i class='bx bxs-star-half' ></i></a>
+           <a href="#"><i class='bx bx-star' ></i></a>
+          </div>
+          <div class="addtocart">
+            <button type="submit" class="add-to-cart">
+                <i class='bx bx-cart-add'></i>
+            </button>
+          </div>
+         </div>
+      </div>
+    </form>
+  </div>   
+</section>
+
+<section class="dinner" id="dinner">
+  <div class="mainText">
+    <h2>Dinner menu</h2>
+  </div>
+
+    <!--first-->
+  <div class="items">
+    <div class="row">
+      <img src="{{ url_for ('static', filename='image/dinner1.jpeg')}}">
+      <div class="menuText">
+        <div class="menuLeft">
+          <h3 class="p-name">Garlic Butter Steak & Potatoes skillet</h3>
+        </div>
+        <div class="menuRight">
+          <h4 class="p-price">RM 20</h4>
+        </div>
+      </div>
+      <p>A sizzling skillet dish featuring succulent steak and tender potatoes cooked to perfection in a rich garlic butter sauce, creating a hearty and flavorful meal </p>
+        <div class="iconwrap">
+            <div class="rate">
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bx-star'></i></a>
+            </div>
+            <div class="addtocart">
+             <button type="submit"  class="add-to-cart" value="Add to cart">
+                 <i class='bx bx-cart-add'></i>
+             </button>
+            </div>
+        </div>
+    </div>
+  </form>
+    <!--second-->
+  <form method = "post">
+    <div class="row">
+      <img src="{{ url_for ('static', filename='image/dinner2.jpeg')}}">
+      <div class="menuText">
+        <div class="menuLeft">
+          <h3 class="p-name">Farfalle with Spinach, Mushrooms, Caramelized Onions</h3>
+        </div>
+        <div class="menuRight">
+          <h4 class="p-price">RM 19</h4>
+        </div>
+      </div>
+      <p>Delicate bowtie pasta tossed with sautéed spinach, earthy mushrooms, and sweet caramelized onions, creating a comforting and flavorful dish that's both hearty and satisfying.</p>
+        <div class="iconwrap">
+            <div class="rate">
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bx-star'></i></a>
+            </div>
+            <div class="addtocart">
+             <button type="submit" class="add-to-cart" value="Add to cart">
+                 <i class='bx bx-cart-add'></i>
+             </button>
+            </div>
+        </div>
+    </div>
+  </form>
+    <!--third-->
+  <form method = "post"> 
+    <div class="row">
+      <img src="{{ url_for ('static', filename='image/dinner3.jpeg')}}">
+      <div class="menuText">
+        <div class="menuLeft">
+          <h3 class="p-name">Herby lemon chicken skewers</h3>
+          
+        </div>
+        <div class="menuRight">
+          <h4 class="p-price">RM 12</h4>
+        </div>
+      </div>
+      <p>Juicy chicken pieces marinated in a zesty blend of fresh herbs and tangy lemon juice, threaded onto skewers and grilled to perfection, offering a burst of vibrant flavors in every bite.</p>
+      <div class="iconwrap">
+        <div class="rate">
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star-half' ></i></a>
+        </div>
+        <div class="addtocart">
+         <button type="submit"  class="add-to-cart" value="Add to cart">
+             <i class='bx bx-cart-add'></i>
+         </button>
+        </div>
+       </div>
+    </div>
+  </form>
+
+    <!--forth-->
+
+  <form method = "post">
+    <div class="row">
+      <img src="{{ url_for ('static', filename='image/dinner4.jpeg')}}">
+      <div class="menuText">
+        <div class="menuLeft">
+          <h3 class="p-name">Futomaki Fat sushi with veggies</h3>
+          
+        </div>
+        <div class="menuRight">
+          <h4 class="p-price">RM 13</h4>
+        </div>
+      </div>
+      <p>A colorful and satisfying sushi roll filled with an assortment of fresh vegetables, including cucumber, avocado, carrot, and bell pepper, wrapped in seasoned sushi rice and nori seaweed, offering a delightful and nutritious dining experience.</p>
+      <div class="iconwrap">
+        <div class="rate">
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star-half' ></i></a>
+         <a href="#"><i class='bx bx-star' ></i></a>
+        </div>
+        <div class="addtocart">
+          <button type="submit" class="add-to-cart">
+              <i class='bx bx-cart-add'></i>
+          </button>
+        </div>
+       </div>
+    </div>
+  </form>
+</div>   
+</section>
 
 
 
