@@ -1,7 +1,48 @@
-{% extends "base.html" %} 
-{% block title %}Home{% endblock %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 
-{% block content %}
-<h1>RAILWAYGO </h1>
-<h2>HOMEPAGE</h2>
-   {% endblock %}
+
+</script>
+
+
+  <title></title>
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <h4>railwaygo</h4>
+
+    </div>
+    <ul class="nav-links">
+      <li>
+        
+        <a href="{{url_for('views.home')}}">Home</a>
+        </li>
+        <li>
+          <a href="{{url_for('auth.login')}}">Login</a>
+        </li>
+        <li>
+          <a href="{{url_for('auth.sign_up')}}">Sign-up</a>
+        </li>
+    </ul>
+    <div class="navline">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div> 
+
+  </nav>
+
+ 
+  <script type="text/javascript" src="{{ url_for('static', filename='css/script/script.js')}}"></script>
+
+</body>
+
+</html>

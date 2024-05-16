@@ -1,22 +1,43 @@
 
-<link rel="stylesheet" href="{{url_for('static',filename='css/login_signup.css')}}">
-<form method ="POST">
-    <h3 align="center">Login</h3>
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="text" 
-        id="email" name="email"
-         class="form-control" 
-         placeholder="Enter Email"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <title>Login</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            
+          <h4>
+            <a href="{{url_for('views.home')}}">railwaygo</a>
+        </h4>
 
-         <label for="password">Password</label>
-        <input type="password" 
-        id="password" 
-        name="password"
-         class="form-control" 
-         placeholder="Enter Password"/>
-         <br/>
-         <button class="btn"
+        </div>
+    
+      </nav>
 
-    </div>
-</form>
+      <section class="main-wrapper">
+        <div class="branding">
+            <h1 class="logo2">railwaygo</h1>
+            <h2 class="slogan">your journey begins here with railwaygo</h2>
+        </div>
+      
+
+
+
+   <div class="form-container">
+    <form action="" method="post">
+        <h3>Login</h3>
+        <input type="email" name="email" required placeholder="enter your email">
+        <input type="password" name="password" required placeholder="confirm your password">
+        <input type="submit"name="submit" value="register now" class="form-btn"
+         <p>Don't have an account? <a href="{{url_for('auth.sign_up')}}">Sign-up now</a></p>
+    </form>
+   </div>
+</section>
+
+</body>
+</html>
