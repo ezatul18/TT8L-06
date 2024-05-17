@@ -78,12 +78,12 @@
       padding: 6px 5px;
       background: var(--main-color);
       border-radius: 2rem;
-      box-shadow: black 0px 1px 5px;
+      box-shadow: rgba(0, 0, 0, 0.15);
   }
   
   .icons i {
       vertical-align: middle;
-      color:black;
+      color:white;
       margin-right: 6px;
       margin-left: 7px;
       transition: all 0.50s ease;
@@ -324,6 +324,62 @@
 
 }
 
+/*contact*/
+
+.main-contact {
+    margin: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+}
+
+.contact-content p {
+    line-height: 35px;
+ 
+}
+
+.contact-content1 p {
+    top: 10px;
+    line-height: 20px;
+ 
+}
+
+.logobtm {
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+}
+
+.logobtm i {
+    font-size: 30px;
+    margin-top: 40px;
+}
+
+.logobtm .fcb i {
+    color:#1877F2;
+}
+
+.logobtm .ins i {
+    background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d, #f56040, #f77737, #fcaf45, #ffdc80);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+}
+.logobtm .twt i {
+    color: #1DA1F2;
+
+}
+
+
+hr {
+    border: none;
+    border-top: 2px solid;
+    margin: 10px auto;
+    color: #DDDDDD;
+    width: 100%;
+    align-items: center;
+}
+
 
 
   /*container*/
@@ -393,6 +449,25 @@
   
   }
   
+  .logobtm .main {
+    font-size: 30px;
+
+  }
+
+  .scroll {
+    position: fixed;
+    bottom: 2.2rem;
+    border-top: 2rem;
+    right: 3.2rem;
+
+  }
+
+  .scroll i {
+    font-size: 30px;
+    color:#E4AEC5;
+    padding: 10px;
+  }
+
   /*shop section*/
   
   .items {
@@ -469,18 +544,7 @@
     display: flex;
   }
  
-  /* cart table*/
 
-  table {
-    border-collapse: collapse;
-    margin: auto;
-    width: 80%;
-    margin-top: 4em;
-    
 
-  }
 
-  td, th {
-    border: 1px black solid;
 
-  }

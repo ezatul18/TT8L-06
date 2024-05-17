@@ -5,6 +5,10 @@ window.addEventListener("scroll", function() {
     header.classList.toggle("sticky", window.scrollY > 80);
 })
 
+
+
+
+
 //horizontol scroll//
 let scrollContainer = document.querySelector(".box");
 let backbton = document.getElementById("backbton");
@@ -25,3 +29,4 @@ backbton.addEventListener("click", ()=>{
     scrollContainer.style.scrollBehavior = "smooth";
     scrollContainer.scrollLeft -= 900;
 });
+
