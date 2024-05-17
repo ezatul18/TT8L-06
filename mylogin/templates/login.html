@@ -18,13 +18,22 @@
         </div>
     
       </nav>
-
+      
       <section class="main-wrapper">
         <div class="branding">
             <h1 class="logo2">railwaygo</h1>
             <h2 class="slogan">your journey begins here with railwaygo</h2>
         </div>
-      
+        {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
 
 
 

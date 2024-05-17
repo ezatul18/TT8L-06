@@ -21,12 +21,20 @@
     
       </nav>
 
+      {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+      <div class="flash-messages">
+          {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+          {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
 
 
 
 
-
-
+      
    <div class="form-container">
     <form action="" method="POST">
         <h3>Sign-Up</h3>
@@ -43,6 +51,7 @@
          </p>   
     </form>
    </div>
+   
 
 </body>
 </html>
