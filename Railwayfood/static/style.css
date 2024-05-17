@@ -65,7 +65,7 @@
   }
   
   .navlist a:hover{
-      color: var(--main-color);
+      color: var(--text-color);
       transform: scale(1.1);
       
   }
@@ -86,7 +86,8 @@
       color:black;
       margin-right: 6px;
       margin-left: 7px;
-      transition: all 0.50s ease,
+      transition: all 0.50s ease;
+      font-size: 20px;
   
   }
   
@@ -119,42 +120,224 @@
   }
   
   .home1 span {
-      color: var(--main-color);
+      color: var(--text-color);
       font-family: "Finger Paint", sans-serif;
   }
   
   .home1 a {
-      color: black;
+      color: white;
       font-weight: 550;
   }
+
   
   .button1 {
-      display: inlike-block;
       padding: 10px 15px;
       background-color: var(--main-color);
-      border-radius: 5px;
+      border-radius: 1rem;
       transition: all 0.50s ease;
       box-shadow: black 0px 1px 5px;
   }
   
-  .button2 {
-      padding: 10px 15px;
-      background-color: var(--main-color);
-      border-radius: 6px;
-      transition: all 0.50s ease;
-      box-shadow: black 0px 1px 5px;
+  .button1:hover {
+      background-color: var(--text-color) ;
   }
-  
-  /*button hover*/
   
   header.sticky {
       padding: 12px 10px;
       background: #FFFF;
       box-shadow: black 0.1rem;
   }
-  
+
+
+  /*help section*/
+
+.help h2 {
+    text-align: center;
+}
+
+
+.container1 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 100px 50px;
+    padding: 100px 50px;
+}
+
+.container1 .card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 260px;
+    height: 350px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.15);
+    transition: 0.5s;
+}
+
+.container1 .card:hover {
+    height: 300px;
+}
+
+.container1 .card .imgbox {
+    position: absolute;
+    top: 20px;
+    width: 200px;
+    height: 215px; 
+    border-radius: 12px;
+    overflow:hidden;
+    transition: 0.5s;
+
+}
+
+
+.container1 .card:hover .imgbox {
+    top:-100px;
+    scale: 0.75;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+}
+
+.imgbox .img_1 {
+    width: 100%;
+    height: auto;
+    
+}
+
+.imgbox .img_2 {
+    width: 212px;
+    height: auto;
+}
+
+.container1 .card .content {
+    position: absolute;
+    top: 242px;
+    width: 100%;
+    padding: 0 30px;
+    height: 25px;
+    overflow: hidden;
+    text-align: center; 
+    transition: 0.5s;
+}
+
+.container1 .card:hover .content {
+    height: 200px;
+    top: 140px;
+
+}
+.container1 .card:hover .content h3 {
+    
+    font-weight: 700;
+    color: var(--logo-color) 
+}
+
+.container1 .card:hover .content p {
+    font-size: 1em;
+   
+}
+
+.container1 .card:hover .content a {
+    position: relative;
+    top: 8px;
+    display: inline-block;
+    padding: 12px 15px;
+    background: var(--main-color);
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 1rem;
+}
+
+.container1 .card:hover .content a:hover {
+    background-color: #82A284;
+    
+}
+
+/*review*/
+.middle-text {
+    line-height: 50px;
+}
+.middle-text h4{
+    text-align: center;
+    color: var(--text-color);
+    font-size: 20px;
+
+
+}
+.middle-text h2 {
+    text-align: center;
+
+}
+.review-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    gap: 2rem;
+    align-items: center;
+    margin-top: 4rem;
+
+}
+
+.bx-img img {
+    width: 80px;
+    height: auto;
+}
+
+.box1 {
+    padding: 35px;
+    background:white;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+    border-radius: 3rem;
+}
+
+.box1 p {
+    line-height: 30px;
+    margin-bottom: 1.5rem;
+
+}
+
+.in-box {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+}
+
+.b0x-text h4{
+    margin: 5rem 0;
+    font-size: 18px;
+
+}
+.box-text h5 {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.rating i{
+    color: #A91D3A;
+    font-size: 18px; 
+    margin-right: 5px;
+
+}
+
+
+
   /*container*/
+ .container {
+    margin-top: 50px;
+ }
+  .container h3 {
+    text-align: center;
+  }
   
+  .container h4{
+    text-align: center;
+  }
+
   .box {
       width: 900px;
       display: flex;

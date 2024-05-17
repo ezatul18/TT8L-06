@@ -32,13 +32,12 @@
         <ul class="navlist">
             <li><a href="#home">Home</a></li>
             <li><a href="/store">Menu</a></li>
-            <li><a href="#review">Our Customer</a></li>
-            
+            <li><a href="#reviews">Our Customer</a></li>
          </ul>
 
          <ul class="icons">
-            <li><a href="/cart" ><i class='bx bx-cart'></i></a></li>
-            <li><a href="#search" ><i class='bx bx-search-alt-2'></i></a></li>
+            <li><a href="#help" ><i class='bx bx-help-circle' ></i></a></li>
+            
          </ul>
     </header>
     
@@ -55,10 +54,122 @@
 
       <div class="home1">
         <h2>Arrive hungry,<br>leave happy<br>Pre-order your<br>meals<span> now!</span></h2>
-        <a href="#" class="button1"><i class='bx bx-food-menu'></i></a>
-        <a href="#" class="button2">Order now</a>
+        
+        <a href="/store" class="button1">Order now</a>
       </div>
     </section>
+
+    <!--help-->
+  <section class="help" id="help">
+      <h2>How this works?</h2>
+    
+      <div class="container1">
+        <div class="card">
+          <div class="imgbox">
+           <img class="img_1" src="{{ url_for ('static', filename='image/1.png')}}">
+          </div>
+          <div class="content">
+            <h3>1. Order your food</h3>
+            <p> We got every food from every region to suit your taste bud, western, asian, and local!</p>
+            <h4><a href="/store">Order now!</a></h4>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="imgbox">
+           <img class="img_2" src="{{ url_for ('static', filename='image/2.png')}}">
+          </div>
+          <div class="content">
+            <h3>2. Pickup or delivery?</h3>
+            <p>Pick your preffered method : Self pickup to ensure your food are freshly made or delivery to your seat for more convenience!</p>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="imgbox">
+           <img class="img_1" src="{{ url_for ('static', filename='image/3.png')}}">
+          </div>
+          <div class="content">
+            <h3>3. Checkout your order</h3>
+            <p>Pay online! Online banking, FPX, Debit and credit card!</p>
+            
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!--Review section-->
+  <section class="review" id="reviews">
+    <div class="middle-text">
+      <h4>Our customer Review</h4>
+      <h2>Clients review about our food </h2>
+    </div>
+
+    <div class="review-content">
+      <div class="box1">
+        <p>Ordered the Wanpaku Sandwich onboard the train, and it surpassed all expectations. Who knew train food could be this delicious? It made my journey even more enjoyable.</p>
+        <div class="in-box">
+          <div class="bx-img">
+            <img src="{{ url_for ('static', filename='image/profilepic.png')}}">
+          </div>
+          <div class="box-text">
+            <h4>Adi Faris</h4>
+            <h5>Food vlogger</h5>
+            <div class="rating">
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star-half' ></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box1">
+        <p>As a frequent traveler, I'm used to limited onboard food options, but I was pleasantly surprised by the variety and quality available. The honey BBQ boneless chicken, shrimp Alfredo, and garlic bread bits were especially delicious.</p>
+        <div class="in-box">
+          <div class="bx-img">
+            <img src="{{ url_for ('static', filename='image/profilepic1.png')}}">
+          </div>
+          <div class="box-text">
+            <h4>Nur Malia</h4>
+            <h5>Travel influencer</h5>
+            <div class="rating">
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="box1">
+        <p>Wow, just had the garlic butter steak and potatoes skillet from this train's onboard shop, and I'm blown away! Seriously, who knew train food could be this good? Each bite was packed with flavor, and it made my journey so much more enjoyable. Definitely coming back for more on my next train ride!</p>
+        <div class="in-box">
+          <div class="bx-img">
+            <img src="{{ url_for ('static', filename='image/profilepic3.png')}}">
+          </div>
+          <div class="box-text">
+            <h4>Arissa Qistina</h4>
+            <h5>Event planner</h5>
+            <div class="rating">
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+              <a href="#"><i class='bx bxs-star'></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
     
 
