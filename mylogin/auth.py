@@ -58,8 +58,8 @@ def sign_up():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user ,remember=True)
-        flash('User created')
-        return redirect(url_for('views.home'))
+        flash('User created', category='success')
+        return redirect(url_for('auth.login'))
 
 
 
