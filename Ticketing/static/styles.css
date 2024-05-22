@@ -60,7 +60,7 @@ ul li a:hover {
     color: lemonchiffon;
 }
 
-.select {
+.origin {
     padding: 8px 12px;
     margin-left: 50px;
     color: #333333;
@@ -79,9 +79,12 @@ ul li a:hover {
     padding-right: 30px;
 }
 
-.select:focus,
-.select:hover {
+.origin:focus,
+.origin:hover {
     outline: none;
     border: 1px solid #bbbbbb;
 }
 
+.destination {
+    
+}
