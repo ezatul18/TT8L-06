@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+  
+  <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 
 
 </script>
@@ -42,7 +42,7 @@
 
   <div class="section_container header_container">
     <div class="header_image_container">
-      <img src="/static/ets.jpg" alt="etshomepage">
+      <img src="{{ url_for('static', filename='images/ets.jpg') }}">
       <div class="header_content">
         <h1>Enjoy your vacation with Railwaygo</h1>
         <p>Book train tickets,hotels and ordering foods at lower price</p>

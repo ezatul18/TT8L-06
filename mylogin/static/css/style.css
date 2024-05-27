@@ -1,7 +1,8 @@
 
 
 
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
 
 
 *{
@@ -10,7 +11,9 @@
     box-sizing: border-box;
 }
 body {
-    font-family: 'Rubik';font-size: 16px;
+    body {
+        font-family: 'Rubik', sans-serif;
+    }
 }
 
 
@@ -29,8 +32,8 @@ nav{
   color: #E4AEC5;  
   text-transform: uppercase;
   letter-spacing: 5px;
-  font-size: 20px;
-  font-family: rubik;
+  font-size: 30px;
+  font-family: 'Rubik', sans-serif;
 
 
 }
@@ -53,6 +56,7 @@ nav{
  letter-spacing: 3px;
  font-weight: bold;
  font-size: 14px;
+ font-family: 'Rubik', sans-serif;
 }
 .nav-links li {
     list-style: none;
@@ -154,6 +158,7 @@ nav{
     text-transform: uppercase;
     margin-bottom: 10px;
     color:white;
+    font-family: 'Rubik', sans-serif;
     
 
  }
@@ -168,6 +173,7 @@ nav{
     border-radius: 6px;
     border: 1px solid #E4AEC5;
     outline: 1px solid var(#fbd0d9);
+    font-family: 'Rubik', sans-serif;
     
 }
 
@@ -181,6 +187,7 @@ nav{
     text-transform: capitalize;
     font-size: 20px;
     cursor: pointer;
+    font-family: 'Rubik', sans-serif;
  
  }
  .form-container form .form-btn:hover{
@@ -192,6 +199,7 @@ nav{
     margin-top: 10px;
     font-size: 10px;
     color:white;
+    font-family: 'Rubik', sans-serif;
  }
  
  .logo h4 a {
@@ -217,12 +225,14 @@ nav{
     font-size: 2.5rem;
     font-weight: lighter;
     color: #82a284;
+    font-family: 'Rubik', sans-serif;
 }
 .logo2 {
     color: #E4AEC5;  
   text-transform: uppercase;
   letter-spacing: 5px;
   font-size: 3.7rem;
+  font-family: 'Rubik', sans-serif;
   
   margin:20px 0;
 }
@@ -242,6 +252,7 @@ nav{
 }
 .slogan{
     font-size: 1.7rem;
+    font-family: 'Rubik', sans-serif;
 }
 .flash-message{
     position: fixed;
@@ -291,7 +302,8 @@ nav{
     font-size: 3.5rem;
     line-height: 4rem;
     font-weight: 600;
-    color:#E4AEC5
+    color:#E4AEC5;
+    font-family :'Rubik', sans-serif;
 
 }
 
