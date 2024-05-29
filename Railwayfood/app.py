@@ -5,6 +5,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.config['DATABASE'] = 'your_database.db'
 
+
 def get_db():
     return sqlite3.connect(app.config['DATABASE'])
 
@@ -22,6 +23,7 @@ def init_db():
         db.commit()
 
 
+              
 @app.route ("/home")
 def home():
     return render_template("home.html")
@@ -31,7 +33,10 @@ def store():
     if request.method == 'POST':
         query = request.form['query']
         return redirect(url_for('search', query=query))
+    
+
     return render_template("store.html")
+
 
 @app.route ("/search")
 def search():
