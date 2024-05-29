@@ -34,3 +34,42 @@ document.addEventListener('DOMContentLoaded', function() {
         updateOptions(originValue, destinationSelect);
     });
 });
+
+$(document).ready(function() {
+    $('#depart_date').datetimepicker({
+      format: 'YYYY-MM-DD',
+      minDate: moment(),
+      useCurrent: false,
+      widgetPositioning: {
+        horizontal: 'auto',
+        vertical: 'bottom'
+      }
+    });
+  
+    $('#arrival_date').datetimepicker({
+      format: 'YYYY-MM-DD',
+      minDate: moment(),
+      useCurrent: false,
+      widgetPositioning: {
+        horizontal: 'auto',
+        vertical: 'bottom'
+      }
+    });
+  
+    $("#depart_date").on("dp.change", function (e) {
+      $('#arrival_date').data("DateTimePicker").minDate(e.date);
+    });
+    
+    $("#arrival_date").on("dp.change", function (e) {
+      $('#depart_date').data("DateTimePicker").maxDate(e.date);
+    });
+  
+    $("#depart_date").focus(function() {
+      $(this).data("DateTimePicker").show();
+    });
+  
+    $("#arrival_date").focus(function() {
+      $(this).data("DateTimePicker").show();
+    });
+  });
+  
