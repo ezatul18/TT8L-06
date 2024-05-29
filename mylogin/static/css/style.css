@@ -12,6 +12,9 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: 'Rubik', sans-serif;
+    text-decoration: none;
+    scroll-behavior: smooth;
+    
 }
 body {
     body {
@@ -19,7 +22,12 @@ body {
     }
 }
 
-
+:root {
+    --text-color: #82A284;
+    --logo-color: #E4AEC5;
+    --main-color: #FFC4DD; 
+  
+}
 
 nav{
     display: flex;
@@ -28,18 +36,24 @@ nav{
     min-height: 11vh;
     background-color: whitesmoke;
     
+    
 }
 
 
 .logo {
-  color: #E4AEC5;  
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  font-size: 30px;
-  font-family: 'Rubik', sans-serif;
-
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 35px;
+    font-family: 'Rubik', sans-serif;
+    color: var(--logo-color); 
+    font-weight: 500;
 }
+
+
+
 
 
 .nav-links{
@@ -60,6 +74,7 @@ nav{
  font-weight: bold;
  font-size: 14px;
  font-family: 'Rubik', sans-serif;
+ 
 }
 .nav-links li {
     list-style: none;
@@ -208,6 +223,7 @@ nav{
  .logo h4 a {
     text-decoration: none; /* Remove underline */
     color: inherit; /* Inherit text color */
+    font-weight: 500;
 }
  .main-wrapper{
   width:400px;
@@ -315,7 +331,11 @@ nav{
     transform: translate(-50%, -50%);
     border-radius: 2rem;
     
+    
   }
+
+
+
 
 .header_content h1 {
     margin-bottom: 1rem;
@@ -342,3 +362,87 @@ nav{
     text-align: left;
 }
 
+.book_button button {
+    background-color:#E4AEC5;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.book_button button:hover {
+    background-color: #fbd0d9;
+}
+
+
+
+/*contact*/
+
+.main-contact {
+    margin: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+}
+
+.contact-content p {
+    line-height: 35px;
+ 
+}
+
+.contact-content1 p {
+    top: 10px;
+    line-height: 20px;
+ 
+}
+
+.logobtm {
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+}
+
+.logobtm i {
+    font-size: 30px;
+    margin-top: 40px;
+}
+
+.logobtm .fcb i {
+    color:#1877F2;
+}
+
+.logobtm .ins i {
+    background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d, #f56040, #f77737, #fcaf45, #ffdc80);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+}
+.logobtm .twt i {
+    color: #1DA1F2;
+
+}
+
+
+hr {
+    border: none;
+    border-top: 2px solid;
+    margin: 10px auto;
+    color: #DDDDDD;
+    width: 100%;
+    align-items: center;
+}
+.main {
+    display: flex;
+    align-items: center;
+    margin: 50px;
+    color: var(--text-color);
+    font-size: 35px;
+    
+}
+
+.main span {
+    color: var(--logo-color)
+}
