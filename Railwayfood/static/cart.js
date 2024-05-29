@@ -84,20 +84,20 @@ document.addEventListener('DOMContentLoaded', () =>{
         const cartIcon = document.querySelector('.cart-icon');
         const closeButton = document.querySelector('.sidebar-close');
 
-// Function to open the sidebar
+
         function openSidebar() {
         sidebar.classList.add('open');
         }
 
-// Function to close the sidebar
+
         function closeSidebar() {
         sidebar.classList.remove('open');
         }
 
-// Event listener to open the sidebar when clicking the cart icon
+
         cartIcon.addEventListener('click', openSidebar);
 
-// Event listener to close the sidebar when clicking the close button
+
         closeButton.addEventListener('click', closeSidebar);
       
     });
