@@ -468,13 +468,13 @@ hr {
   
   .bx {
     vertical-align: middle;
-    margin-left: 5px; /* Adjust the spacing between text and icon */
+    margin-left: 5px; 
   }
 
   
   .ets_ktm_box {
-    max-width: 968px; /* Adjust this width as needed */
-    margin: 0 auto; /* Center the container horizontally */
+    max-width: 968px; 
+    margin: 0 auto; 
 }
 .ets_ktm_box h2 {
     display: flex;
@@ -518,7 +518,49 @@ hr {
   .transport-image:hover {
     filter: grayscale(100%);
   }
+  .trainschedule {
+    max-width: 100%; 
+    margin: 0 auto; 
+    margin-top: 20%;
+}
 
+.schedule_box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, auto));
+    
+    
+    
+}
 
+.ktm_schedule,
+.ets_schedule {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+}
 
+.ktm_schedule img,
+.ets_schedule img {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%; 
+    height:auto;
+    object-fit: contain;
+    object-position: center;
+    
+}
+
+.trainschedule h2 {
+    color: #FFC4DD;
+    font-weight: bold; 
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5%;
+    font-size: 35px;
+    
+}
 
