@@ -17,7 +17,7 @@
 <body>
   <nav>
     <div class="logo">
-      <p>railwaygo</p>
+      <p><span class="railway">Railway</span><span class="go">Go</span></p>
   </div>
     <ul class="nav-links">
       <li>
@@ -48,38 +48,32 @@
         <p>Book train tickets,hotels and ordering foods at lower price</p>
         <div class="book_button">
       
-          <button>Book Now</button>
+          <button onclick="scrollToTransportation()">Book Now</button>
       
       </div>
       </div>
     </div>
-   <!--categories-->
-   <section class="categories" id="categories">
-    <div class="heading">.
-      <h1>Choose your transportation<br><span></h1>
-        <a href="#" class="btn">About<i class='bx bx-right-arrow-alt'></i></a>
-    </div>
-   </section>
 
     <!--categories content-->
-    <div class="categories-container">
-      <!--box1-->
-      <div class="box">
-        <img src="{{ url_for('static', filename='css/images/ets1.jpeg')}}">
-        <h2>ETS</h2>
-        <span>About ETS</span>
-        <i class='bx bx-right-arrow-alt'></i>
-
-      </div>
-      <!--box2-->
-      <div class="box">
-        <img src="{{ url_for('static', filename='css/images/ktm.jpg')}}">
-        <h2>KTM</h2>
-        <span>About KTM</span>
-        <i class='bx bx-right-arrow-alt'></i>
-
+    <div class="ets_ktm_box" id="transportation">
+      <h2>Choose your transportation</h2>
+      <div class="categories-container">
+        <!--box1-->
+        <div class="box">
+          <img src="{{ url_for('static', filename='css/images/ets1.jpeg')}}" alt="ETS" class="transport-image" onmouseover="toggleAbout(this, 'ETS')" onmouseout="toggleAbout(this)">
+          <h2>ETS</h2>
+          
+        </div>
+        <!--box2-->
+        <div class="box">
+          <img src="{{ url_for('static', filename='css/images/ktm.jpg')}}" alt="KTM" class="transport-image" onmouseover="toggleAbout(this, 'KTM')" onmouseout="toggleAbout(this)">
+          <h2>KTM</h2>
+          
+        </div>
       </div>
     </div>
+    
+    
 
 
 
