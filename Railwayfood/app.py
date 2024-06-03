@@ -51,10 +51,11 @@ def search():
 
     return render_template('search_results.html', query=query, results=results)
 
-@app.route ("/cart")
-def cart():
-    return render_template("cart.html")
 
+
+@app.route ("/checkout")
+def checkout():
+    return render_template("checkout.html")
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     let cartItems = [];
     let totalAmount = 0;
 
+    
     addToCartButtons.forEach((button, index)=> {
         button.addEventListener('click', ()=>{
             const item ={
