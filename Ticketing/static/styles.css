@@ -109,6 +109,10 @@ ul li a:hover {
     user-select: none;
 }
 
+.date-picker:hover {
+    background-color: #f3f3f3;
+}
+
 .date-picker .selected-date {
     width: 100%;
     height: 100%;
@@ -121,4 +125,10 @@ ul li a:hover {
 
 .date-picker .dates {
     display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+
 }
