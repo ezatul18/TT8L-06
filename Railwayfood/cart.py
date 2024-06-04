@@ -15,7 +15,16 @@ def store2():
     conn = get_db_connection()
     products = conn.execute('SELECT * FROM products').fetchall()
     conn.close()
-    return render_template('store2.html', products=products)
+
+    products_with_images = []
+    for product in products:
+        
+        image_path = product[3] 
+        product_dict = dict(product)
+        product_dict['image_path'] = image_path
+        products_with_images.append(product_dict)
+        
+    return render_template('store2.html', products=products_with_images)
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
