@@ -135,3 +135,28 @@ ul li a:hover {
 .date-picker .dates.active {
     display: block;
 }
+
+.date-picker .dates .month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+}
+
+.date-picker .dates .month .arrows {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #313131;
+    font-size: 20px;
+}
+
+.date-picker .dates .month .arrows:hover {
+    background-color: #f3f3f3;
+}
+
+.date-picker .dates .month .arrows:active {
+    background-color: #00CA85;
+}
