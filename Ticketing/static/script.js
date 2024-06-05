@@ -57,6 +57,11 @@ let selectedYear = year;
 
 mth_element.textContent = months[month] + ' ' + year;
 
+selected_date_element.textContent = formatDate(date);
+selected_date_element.dataset.value = selectedDate;
+
+populateDates();
+
 date_picker_element.addEventListener('click', toggleDatePicker);
 next_mth_element.addEventListener('click', goToNextMonth);
 prev_mth_element.addEventListener('click', goToPrevMonth);
@@ -74,6 +79,7 @@ function goToNextMonth (e) {
         year++;
     }
     mth_element.textContent = months[month] + ' ' + year;
+    populateDates();
 }
 
 function goToPrevMonth (e) {
@@ -83,8 +89,41 @@ function goToPrevMonth (e) {
         year--;
     }
     mth_element.textContent = months[month] + ' ' + year;
+    populateDates();
 }
 
+function populateDates (e) {
+    days_element.innerHTML = '';
+    let amount_days = 31;
+
+    if  (month == 1) {
+        amount_days = 28;
+    }
+
+    for (let i = 0; i < amount_days; i++) {
+        const day_element = document.createElement('div');
+        day_element.classList.add('day');
+        day_element.textContent = i + 1;
+
+        if (selectedDay = (i + 1) && selectedYear == year && selectedMonth == month) {
+            day_element.classList.add('selected');
+        }
+
+        day_element.addEventListener('click', function () {
+            selectedDate = new Date(year + '-' + (month + 1) + '-' + (i + 1) );
+            selectedDay = (i + 1);
+            selectedMonth = month;
+            selectedYear = year;
+
+            selected_date_element.textContent = formatDate(selectedDate);
+            selected_date_element.dataset.value = selectedDate;
+
+            populateDates();
+        });
+
+        days_element.appendChild(day_element);
+    }
+}
 
 function checkEventPathForClass (path, selector) {
     for (let i = 0; i < path; i++) {
@@ -94,4 +133,20 @@ function checkEventPathForClass (path, selector) {
     }
     
     return false;
+}
+
+function formatDate (d) {
+    let day = d.getDate();
+    if (day < 10) {
+        day = '0' + day;
+    }
+
+    let month = d.getMonth() + 1;
+    if (month < 10) {
+        month = '0' + month;
+    }
+
+    let year = d.getFullYear();
+
+    return day + ' / ' + month + ' / ' + year;
 }
