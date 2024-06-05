@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    
     <title>Cart</title>
 </head>
 <body>
@@ -14,6 +17,7 @@
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Subtotal</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +27,12 @@
                 <td>{{ item.price }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.price * item.quantity }}</td>
+                <td>
+                    <form action="{{ url_for('remove_from_cart') }}" method="post">
+                        <input type="hidden" name="product_id" value="{{ item.id }}">
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

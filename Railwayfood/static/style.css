@@ -492,6 +492,19 @@ hr {
 .card--price .price {
     font-weight: 600;
 }
+
+.card--price input[type="number"] {
+   padding: 5px;
+   border: 1px solid;
+   border-radius: 1px;
+   width: 50px;
+}
+.card--price button[type="submit"] {
+    border: none;
+    background: transparent;
+
+}
+
  .bxs-cart-add{
     font-size: 15px;
     background: maroon;
@@ -507,6 +520,21 @@ hr {
 
  }
 
+ /*cart page*/
+ table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    align-items: center;
+ }
+
+ th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+ }
+
+ 
  /*cart side*/
  .sidebar {
     width: 300px;

@@ -16,9 +16,9 @@ def store2():
     products = conn.execute('SELECT * FROM products').fetchall()
     conn.close()
 
+
     products_with_images = []
     for product in products:
-        
         image_path = product[3] 
         product_dict = dict(product)
         product_dict['image_path'] = image_path
@@ -49,6 +49,29 @@ def cart():
     conn.close()
     total_price = sum(item['price'] * item['quantity'] for item in cart_items)
     return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+
+@app.route('/remove_from_cart', methods=['POST'])
+def remove_from_cart():
+    try:
+        product_id = request.form['product_id']
+
+        conn = get_db_connection()
+        conn.execute('DELETE FROM cart WHERE product_id = ?', (product_id,))
+        conn.commit()
+        
+      
+        cursor = conn.cursor()
+        cursor.execute('SELECT p.name, p.price, c.quantity FROM products p JOIN cart c ON p.id = c.product_id')
+        cart_items = [dict(row) for row in cursor.fetchall()]
+        
+        total_price = sum(item['price'] * item['quantity'] for item in cart_items)
+        
+        conn.close()
+
+        return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 
 if __name__ == "__main__":
