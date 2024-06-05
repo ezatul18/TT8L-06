@@ -5,7 +5,7 @@ from mylogin.models import Product, Cart
 
 routes = Blueprint("routes", __name__)
 
-# SQLAlchemy setup
+
 DB_NAME = "database.db"
 engine = create_engine(f'sqlite:///{DB_NAME}')
 Session = sessionmaker(bind=engine)

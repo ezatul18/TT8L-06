@@ -13,6 +13,8 @@ from models import Product, Cart, User
 @app.before_first_request
 def create_tables():
     db.create_all()
+def create_tables():
+    db.create_all()
     products_data = [
         {'name': 'Egg&Slice meat Sandwhich', 'price': 15},
         {'name': 'Wanpaku Sandwhich', 'price': 12},
@@ -32,7 +34,7 @@ def create_tables():
         db.session.add(product)
     db.session.commit()
 
-    # Example of adding data to the cart
+    
     cart_item = Cart(product_id=1, quantity=2)  
     db.session.add(cart_item)
     db.session.commit()
@@ -41,3 +43,4 @@ from mylogin import create_app
 
 if __name__ == '__main__':
     app.run(debug=True)
+
