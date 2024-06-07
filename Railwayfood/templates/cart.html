@@ -9,7 +9,25 @@
     <title>Cart</title>
 </head>
 <body>
-    <h1>Cart</h1>
+    <header>
+        <a href="/main" class="main">Railway<span>Food</span></a>
+
+        <ul class="navlist">
+            <li><a href="#home">Home</a></li>
+            <li><a href="/store">Menu</a></li>
+            <li><a href="#reviews">Our Customer</a></li>
+         </ul>
+
+         <ul class="icons">
+            <li><a href="#help" ><i class='bx bxs-help-circle' ></i></a></li>
+            
+         </ul>
+    </header>
+
+
+
+    <section class="cart--table">
+    <h1>Your Cart</h1>
     <table>
         <thead>
             <tr>
@@ -24,19 +42,21 @@
             {% for item in cart_items %}
             <tr>
                 <td>{{ item.name }}</td>
-                <td>{{ item.price }}</td>
+                <td>{{ item.price }}0</td>
                 <td>{{ item.quantity }}</td>
-                <td>{{ item.price * item.quantity }}</td>
+                <td>{{ item.price * item.quantity }}0</td>
                 <td>
                     <form action="{{ url_for('remove_from_cart') }}" method="post">
                         <input type="hidden" name="product_id" value="{{ item.id }}">
-                        <button type="submit">Remove</button>
+                        <button type="submit"><i class='bx bx-x'></i></button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <p>Total Price: {{ total_price }}</p>
+    <p><i class='bx bx-purchase-tag' ></i>Total Price: RM{{ total_price }}0</p>
+</section>
+    
 </body>
 </html>

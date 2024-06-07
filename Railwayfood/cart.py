@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 import sqlite3
 import os
 
@@ -47,8 +47,10 @@ def cart():
     conn = get_db_connection()
     cart_items = conn.execute('SELECT p.name, p.price, c.quantity FROM products p JOIN cart c ON p.id = c.product_id').fetchall()
     conn.close()
+   
     total_price = sum(item['price'] * item['quantity'] for item in cart_items)
     return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+
 
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
@@ -58,17 +60,10 @@ def remove_from_cart():
         conn = get_db_connection()
         conn.execute('DELETE FROM cart WHERE product_id = ?', (product_id,))
         conn.commit()
-        
-      
-        cursor = conn.cursor()
-        cursor.execute('SELECT p.name, p.price, c.quantity FROM products p JOIN cart c ON p.id = c.product_id')
-        cart_items = [dict(row) for row in cursor.fetchall()]
-        
-        total_price = sum(item['price'] * item['quantity'] for item in cart_items)
-        
         conn.close()
 
-        return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+      
+        return redirect(url_for('cart')) 
     except Exception as e:
         return jsonify({'error': str(e)})
 
