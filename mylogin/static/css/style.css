@@ -30,26 +30,31 @@ body {
 }
 
 nav{
-    display: flex;
-    justify-content:space-around ;
-    align-items: center;
-    min-height: 11vh;
-    background-color: whitesmoke;
-    
-    
-}
-
-
-.logo {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    letter-spacing: 3px;
+    min-height: 11vh;
+    background-color: whitesmoke;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+}
+
+
+.logo p {
     font-size: 35px;
     font-family: 'Rubik', sans-serif;
-    color: var(--logo-color); 
+    color: #E4AEC5;
     font-weight: 450;
+    margin: 0;
+    padding: 0;
 }
+
 .logo .railway {
     color: #82A284;
 }
@@ -63,27 +68,48 @@ nav{
 
 .nav-links{
     display: flex;
-    background-color:whitesmoke ;
+    background-color: whitesmoke;
     justify-content: space-around;
     width: 25%;
-   
+    list-style: none; 
 
 
 }
 
 
-.nav-links a{
- color:#82a284  ;
- text-decoration: none;
- letter-spacing: 3px;
- font-weight: bold;
- font-size: 14px;
- font-family: 'Rubik', sans-serif;
- 
+.nav-links ul li a {
+    color: #82a284;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: 'Rubik', sans-serif;
 }
-.nav-links li {
+
+.nav-links ul {
     list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
+
+.nav-links ul li {
+    margin-left: 20px; 
+}
+
+.nav-links ul li:first-child {
+    margin-left: 0;
+}
+
+
+.nav-links a {
+    color: #82A284;
+}
+
+
+
 .navline {
     display: none;
     cursor: pointer;
@@ -237,6 +263,7 @@ nav{
   margin-top: 40px;
   display: flex;
   flex-direction: column;
+  padding-top: 70px; 
 
 }
 .branding{
@@ -500,7 +527,7 @@ hr {
     align-items: center;
     padding: 20px;
     border-radius: 10px; 
-    border: 4px solid  #82a284; ;
+    border: 2px solid  black; ;
 }
 
 .categories-container .box img {
@@ -567,4 +594,3 @@ hr {
     font-size: 35px;
     
 }
-
