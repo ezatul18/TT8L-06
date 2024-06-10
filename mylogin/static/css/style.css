@@ -32,8 +32,8 @@ body {
 nav{
     position: fixed;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-around;
     min-height: 11vh;
     background-color: whitesmoke;
     padding: 0 20px;
