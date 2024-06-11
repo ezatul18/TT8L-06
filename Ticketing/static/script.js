@@ -36,35 +36,64 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const depart_picker_element = document.querySelector('.depart-picker');
-const selected_date_element = document.querySelector('.depart-picker .selected-date');
-const dates_element = document.querySelector('.depart-picker .dates');
-const mth_element = document.querySelector('.depart-picker .dates .month .mth');
-const next_mth_element = document.querySelector('.depart-picker .dates .month .next-mth');
-const prev_mth_element = document.querySelector('.depart-picker .dates .month .prev-mth');
-const days_element = document.querySelector('.depart-picker .dates .days');
+const depart_selected_date_element = document.querySelector('.depart-picker .selected-date');
+const depart_dates_element = document.querySelector('.depart-picker .dates');
+const depart_mth_element = document.querySelector('.depart-picker .dates .month .mth');
+const depart_next_mth_element = document.querySelector('.depart-picker .dates .month .next-mth');
+const depart_prev_mth_element = document.querySelector('.depart-picker .dates .month .prev-mth');
+const depart_days_element = document.querySelector('.depart-picker .dates .days');
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-let date = new Date();
-let day = date.getDate();
-let month = date.getMonth();
-let year = date.getFullYear();
+let departDate = new Date();
+let departDay = departDate.getDate();
+let departMonth = departDate.getMonth();
+let departYear = departDate.getFullYear();
 
-let selectedDate = date;
-let selectedDay = day;
-let selectedMonth = month;
-let selectedYear = year;
+let departSelectedDate = departDate;
+let departSelectedDay = departDay;
+let departSelectedMonth = departMonth;
+let departSelectedYear = departYear;
 
-mth_element.textContent = months[month] + ' ' + year;
+depart_mth_element.textContent = months[departMonth] + ' ' + departYear;
 
-selected_date_element.textContent = formatDate(date);
-selected_date_element.dataset.value = selectedDate;
+depart_selected_date_element.textContent = formatDate(departDate);
+depart_selected_date_element.dataset.value = departSelectedDate;
 
-populateDates();
+populateDepartDates();
 
-depart_picker_element.addEventListener('click', toggleDatePicker);
-next_mth_element.addEventListener('click', goToNextMonth);
-prev_mth_element.addEventListener('click', goToPrevMonth);
+depart_picker_element.addEventListener('click', toggleDatePicker(e, depart_dates_element));
+depart_next_mth_element.addEventListener('click', goToNextMonth(e, 'depart'));
+depart_prev_mth_element.addEventListener('click', goToPrevMonth(e, 'depart'));
+
+const arrival_picker_element = document.querySelector('.arrival-picker');
+const arrival_selected_date_element = document.querySelector('.arrival-picker .selected-date');
+const arrival_dates_element = document.querySelector('.arrival-picker .dates');
+const arrival_mth_element = document.querySelector('.arrival-picker .dates .month .mth');
+const arrival_next_mth_element = document.querySelector('.arrival-picker .dates .month .next-mth');
+const arrival_prev_mth_element = document.querySelector('.arrival-picker .dates .month .prev-mth');
+const arrival_days_element = document.querySelector('.arrival-picker .dates .days');
+
+let arrivalDate = new Date();
+let arrivalDay = arrivalDate.getDate();
+let arrivalMonth = arrivalDate.getMonth();
+let arrivalYear = arrivalDate.getFullYear();
+
+let arrivalSelectedDate = arrivalDate;
+let arrivalSelectedDay = arrivalDay;
+let arrivalSelectedMonth = arrivalMonth;
+let arrivalSelectedYear = arrivalYear;
+
+arrival_mth_element.textContent = months[arrivalMonth] + ' ' + arrivalYear;
+
+arrival_selected_date_element.textContent = formatDate(arrivalDate);
+arrival_selected_date_element.dataset.value = arrivalSelectedDate;
+
+populateArrivalDates();
+
+arrival_picker_element.addEventListener('click', toggleDatePicker(e, arrival_dates_element));
+arrival_next_mth_element.addEventListener('click', goToNextMonth(e, 'arrival'));
+arrival_prev_mth_element.addEventListener('click', goToPrevMonth(e, 'arrival'));
 
 function toggleDatePicker (e) {
     if (!checkEventPathForClass(e.path, 'dates')) {
@@ -72,31 +101,53 @@ function toggleDatePicker (e) {
     }
 }
 
-function goToNextMonth (e) {
-    month++;
-    if (month > 11) {
-        month = 0;
-        year++;
+function goToNextMonth (e, type) {
+    if (type === 'depart') {
+        departMonth++;
+        if (departMonth > 11) {
+            departMonth = 0;
+            departYear++;
+        }
+        depart_mth_element.textContent = months[departMonth] + ' ' + departYear;
+        populateDepartDates();
     }
-    mth_element.textContent = months[month] + ' ' + year;
-    populateDates();
+    else {
+        arrivalMonth++;
+        if (arrivalMonth > 11) {
+            arrivalMonth = 0;
+            arrivalYear++;
+        }
+        arrival_mth_element.textContent = months[arrivalMonth] + ' ' + arrivalYear;
+        populateArrivalDates();
+    }
 }
 
-function goToPrevMonth (e) {
-    month--;
-    if (month < 0) {
-        month = 11;
-        year--;
+function goToPrevMonth (e, type) {
+    if (type === 'depart') {
+        departMonth--;
+        if (departMonth < 0) {
+            departMonth = 11;
+            departYear--;
+        }
+        depart_mth_element.textContent = months[departMonth] + ' ' + departYear;
+        populateDepartDates();
     }
-    mth_element.textContent = months[month] + ' ' + year;
-    populateDates();
+    else {
+        arrivalMonth--;
+        if (arrivalMonth < 0) {
+            arrivalMonth = 11;
+            arrivalYear--;
+        }
+        arrival_mth_element.textContent = months[arrivalMonth] + ' ' + arrivalYear;
+        populateArrivalDates();
+    }
 }
 
-function populateDates (e) {
-    days_element.innerHTML = '';
+function populateDepartDates (e) {
+    depart_days_element.innerHTML = '';
     let amount_days = 31;
 
-    if  (month == 1) {
+    if  (departMonth == 1) {
         amount_days = 28;
     }
 
@@ -105,23 +156,56 @@ function populateDates (e) {
         day_element.classList.add('day');
         day_element.textContent = i + 1;
 
-        if (selectedDay = (i + 1) && selectedYear == year && selectedMonth == month) {
+        if (departSelectedDay = (i + 1) && departSelectedYear == departYear && departSelectedMonth == departMonth) {
             day_element.classList.add('selected');
         }
 
         day_element.addEventListener('click', function () {
-            selectedDate = new Date(year + '-' + (month + 1) + '-' + (i + 1) );
-            selectedDay = (i + 1);
-            selectedMonth = month;
-            selectedYear = year;
+            departSelectedDate = new Date(departYear + '-' + (departMonth + 1) + '-' + (i + 1) );
+            departSelectedDay = (i + 1);
+            departSelectedMonth = departMonth;
+            departSelectedYear = departYear;
 
-            selected_date_element.textContent = formatDate(selectedDate);
-            selected_date_element.dataset.value = selectedDate;
+            depart_selected_date_element.textContent = formatDate(departSelectedDate);
+            depart_selected_date_element.dataset.value = departSelectedDate;
 
-            populateDates();
+            populateDepartDates();
         });
 
-        days_element.appendChild(day_element);
+        depart_days_element.appendChild(day_element);
+    }
+}
+
+function populateArrivalDates (e) {
+    arrival_days_element.innerHTML = '';
+    let amount_days = 31;
+
+    if  (departMonth == 1) {
+        amount_days = 28;
+    }
+
+    for (let i = 0; i < amount_days; i++) {
+        const day_element = document.createElement('div');
+        day_element.classList.add('day');
+        day_element.textContent = i + 1;
+
+        if (arrivalSelectedDay = (i + 1) && arrivalSelectedYear == arrivalYear && arrivalSelectedMonth == arrivalMonth) {
+            day_element.classList.add('selected');
+        }
+
+        day_element.addEventListener('click', function () {
+            arrivalSelectedDate = new Date(arrivalYear + '-' + (arrivalMonth + 1) + '-' + (i + 1) );
+            arrivalSelectedDay = (i + 1);
+            arrivalSelectedMonth = arrivalMonth;
+            arrivalSelectedYear = arrivalYear;
+
+            arrival_selected_date_element.textContent = formatDate(arrivalSelectedDate);
+            arrival_selected_date_element.dataset.value = arrivalSelectedDate;
+
+            populateArrivalDates();
+        });
+
+        arrival_days_element.appendChild(day_element);
     }
 }
 
