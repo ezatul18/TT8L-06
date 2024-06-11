@@ -259,3 +259,11 @@ ul li a:hover {
 .arrival-picker .dates .days .day.selected {
     background-color: brown;
 }
+
+.pax {
+    padding: 8px 12px;
+    padding-right: 10px;
+    padding-top: -20px;
+    margin-top: -90px;
+    margin-left: 1130px;
+}
