@@ -619,7 +619,7 @@ hr {
 }
 .about {
     position: relative;
-    margin-bottom: 300px;
+    margin-bottom: 450px;
   }
   
   .about img {
@@ -635,7 +635,7 @@ hr {
     font-weight: 500;
     margin-bottom: 20px;
     padding-left: 10px;
-    color: var(--logo-color);
+    color: black;
     font-weight: 500;
   }
   
@@ -653,6 +653,7 @@ hr {
         margin-top: 0; 
         margin-left: -5%;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+        
       
   }
 
@@ -681,5 +682,50 @@ hr {
     border-radius: 5px;
     margin-bottom: 10px;
   }
+  .places-text{
+    margin-bottom: 100px;
+  }
+  .places-text h2{
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-right: 55px;
+    text-align: right;
+    color: black;
+    font-weight: 500;
+  }
+  .places, .places2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  
+  
+  
+  
+  .places-box img, .places2-box img {
+    width: 255px;
+    height: 255px;
+    object-fit: cover;
+    padding: 0;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    transition: transform 0.3s ease; 
+  }
+  
+  .places-box img:hover, .places2-box img:hover {
+    transform: scale(1.1); 
+  }
+  
+  .places-box h3, .places2-box h3 {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  
+  
+  
+  
   
   
