@@ -43,6 +43,30 @@ const handleFixedNavbar = () => {
       }
   });
 };
+const cardsSlider = document.querySelector('.cards-slider');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+const cardWidth = document.querySelector('.card').offsetWidth;
+let currentPosition = 0;
+
+prevBtn.addEventListener('click', () => {
+  if (currentPosition > 0) {
+    currentPosition -= cardWidth;
+    cardsSlider.style.transform = `translateX(-${currentPosition}px)`;
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  const maxPosition = (cardsSlider.children.length - 1) * cardWidth;
+  if (currentPosition < maxPosition) {
+    currentPosition += cardWidth;
+    cardsSlider.style.transform = `translateX(-${currentPosition}px)`;
+  }
+});
+
+
+
+
 
 // Call the functions
 navSlide();
