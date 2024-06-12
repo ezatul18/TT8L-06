@@ -54,9 +54,6 @@ def cart():
     total_price = sum(item['price'] * item['quantity'] for item in cart_items)
     return render_template('cart.html', cart_items=cart_items, total_price=total_price)
 
-
-
-
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
         product_id = request.form['product_id'] 
@@ -68,8 +65,6 @@ def remove_from_cart():
 
         return redirect(url_for('cart'))
     
-    
-
 @app.route('/update_delivery', methods=['POST'])
 def update_delivery():
     return jsonify({'delivery_charge': 2.00})
