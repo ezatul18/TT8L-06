@@ -1,10 +1,8 @@
 
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from .models import User
-from flask_login import login_user, logout_user, login_required, current_user
+from .models import add_user, get_user_by_email, get_user_by_username
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import db  
 
 auth = Blueprint("auth", __name__)
 
@@ -14,12 +12,11 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        user = User.query.filter_by(email=email).first()
+        user = get_user_by_email(email)
         if user:
-            if check_password_hash(user.password, password):
+            if check_password_hash(user[3], password):  
                 flash('Logged in')
-                login_user(user, remember=True)
-                return redirect(url_for('views.home'))
+                
             else:
                 flash('Password is incorrect', category='error')
         else:
@@ -35,8 +32,8 @@ def sign_up():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        email_exists = User.query.filter_by(email=email).first()
-        username_exists = User.query.filter_by(username=username).first()
+        email_exists = get_user_by_email(email)
+        username_exists = get_user_by_username(username)
 
         if email_exists:
             flash('Email is already in use.', category='error')
@@ -49,11 +46,10 @@ def sign_up():
         elif len(email) < 4:
             flash('Email is invalid.', category='error')
         else:
-            new_user = User(email=email, username=username, password=generate_password_hash(password, method='pbkdf2:sha256'))
-            db.session.add(new_user)
-            db.session.commit()
-            login_user(new_user, remember=True)
+            hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+            add_user(email, username, hashed_password)
             flash('User created', category='success')
             return redirect(url_for('auth.login'))
 
     return render_template("sign_up.html")
+

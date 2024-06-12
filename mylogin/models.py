@@ -1,27 +1,32 @@
-from . import db
-from flask_login import UserMixin
-from sqlalchemy.sql import func
+import sqlite3
 
+def connect_db():
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute('''CREATE TABLE IF NOT EXISTS users
+                   (id INTEGER PRIMARY KEY, email TEXT UNIQUE, username TEXT UNIQUE, password TEXT, date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+    conn.commit()
+    conn.close()
 
-class User(db.Model, UserMixin):
-    __tablename__ = 'user'
-    id = db.Column(db.Integer,primary_key=True)
-    email =db.Column(db.String(150),unique=True)
-    username = db.Column(db.String(150),unique=True)
-    password = db.Column(db.String(150))
-    date_created = db.Column(db.DateTime(timezone=True),default=func.now())
+def add_user(email, username, password):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("INSERT INTO users (email, username, password) VALUES (?, ?, ?)", (email, username, password))
+    conn.commit()
+    conn.close()
 
+def get_user_by_email(email):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE email=?", (email,))
+    user = cur.fetchone()
+    conn.close()
+    return user
 
-
-class Product(db.Model):
-    __tablename__ = 'products'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    price = db.Column(db.Float, nullable=False)
-
-class Cart(db.Model):
-    __tablename__ = 'cart'
-    id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-    product = db.relationship("Product")
+def get_user_by_username(username):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE username=?", (username,))
+    user = cur.fetchone()
+    conn.close()
+    return user
