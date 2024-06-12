@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    
+    <title>Your Cart</title>
+</head>
+<body>
+    <header>
+        <a href="/home" class="main">Railway<span>Food</span></a>
+
+        <ul class="navlist">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/store2">Menu</a></li>
+            <li><a href="#contact">Our Contacts</a></li>
+         </ul>
+
+         <ul class="icons">
+            <li><a href="/home#help" ><i class='bx bxs-help-circle' ></i></a></li>
+            
+         </ul>
+    </header>
+
+
+
+    <section class="cart--table">
+    <h1>Your Cart</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}0</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price * item.quantity }}0</td>
+                <td>
+                    <form action="/remove_from_cart" method="post">
+                        <input type="hidden" name="product_id" value="{{ item.id }}">
+                        <button type="submit"><i class='bx bx-x'></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Pick how you want to be serve!</h3>
+    <p class="payBtn">
+        <button onclick="updateTotal('delivery')">Delivery (+RM 2.00)</button>
+        <button onclick="updateTotal('selfpickup')">Self-Pickup</button>
+    </p>
+    <p><i class='bx bx-purchase-tag' ></i>Total Price: RM<span id="total_price">{{ total_price }}0</span></p>
+
+    <p><button class="checkout-Btn" id="checkoutBtn" onclick="checkout()" disabled>Checkout</button></p>
+</section>
+
+ <!--contact-->
+ 
+ <section class="contact" id="contact">
+    <hr>
+    <div class="main-contact">
+      <div class="contact-content1">
+        <h4><i class='bx bx-copyright'>Railwayfood Malaysia</i></h4>
+        <p>Delivery Hero Malaysia Sdn Bhd</p>
+        <p>202304159806 (987654-W)</p>
+        <p>12th Floor, Wisma Foo,</p>
+        <p>Jalan Raja Chulan,</p>
+        <p>50200 Kuala Lumpur,</p>
+        <p>Malaysia.</p>
+      </div>
+      <div class="contact-content">
+        <h4>Services</h4>
+        <p><a href="#">Press</a></p>
+        <p><a href="#">Privacy policy</a></p>
+        <p><a href="#">RailwayGo</a></p>
+        <p><a href="#">Railwayfood magazine</a></p>
+        <p><a href="#">Ramdan</a></p>
+      </div>
+      <div class="contact-content">
+        <h4>Partner</h4>
+        <p><a href="#">Partner with us</a></p>
+        <p><a href="#">Foodpanda</a></p>
+        <p><a href="#">Foodie</a></p>
+        <p><a href="#">Shoppee foood</a></p>
+        <p><a href="#">Bekal</a></p>
+      </div>
+      <div class="contact-content">
+        <h4>Contact</h4>
+        <p><a href="#">Contact us</a></p>
+        <p><a href="#">Facebook</a></p>
+        <p><a href="#">Instagram</a></p>
+        <p><a href="#">Pinterest</a></p>
+      </div>
+    </div>
+    <hr>
+    <div class="logobtm">
+      <a href="/main" class="main">Railway<span>Food</span></a>
+      <div class="logo-btm">
+        <a href="#" class="fcb"><i class='bx bxl-facebook-circle'></i></a>
+      </div>
+      <div class="logo-btm">
+        <a href="#" class="ins"><i class='bx bxl-instagram-alt' ></i></a>
+      </div>
+      <div class="logo-btm">
+        <a href="#" class="twt"><i class='bx bxl-twitter' ></i></a>
+      </div>
+    </div>
+   
+    </div>
+  </section>
+  
+
+
+<script>
+  //delivery charge//
+    function updateTotal(option) {
+    var total_price = parseFloat(document.getElementById("total_price").innerText);
+    if (option === 'delivery') {
+        fetch('/update_delivery', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            total_price += data.delivery_charge;
+            document.getElementById("total_price").innerText = total_price.toFixed(2);
+            enableCheckoutButton();
+        });
+    } else {
+        fetch('/update_selfpickup', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            total_price += data.delivery_charge;
+            document.getElementById("total_price").innerText = total_price.toFixed(2);
+            enableCheckoutButton();
+        });
+    }
+}
+
+function enableCheckoutButton() {
+    document.getElementById("checkoutBtn").removeAttribute("disabled");
+}
+
+function checkout() {
+    alert("Proceed to checkout!");
+}
+
+</script>
+
+<script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>
