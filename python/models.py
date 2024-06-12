@@ -24,6 +24,8 @@ def connect_db():
     conn.commit()
     conn.close()
 
+connect_db()
+
 def add_user(email, username, password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
