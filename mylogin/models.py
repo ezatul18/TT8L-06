@@ -4,7 +4,11 @@ def connect_db():
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
     cur.execute('''CREATE TABLE IF NOT EXISTS users
-                   (id INTEGER PRIMARY KEY, email TEXT UNIQUE, username TEXT UNIQUE, password TEXT, date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+                   (id INTEGER PRIMARY KEY, 
+                    email VARCHAR(150) UNIQUE, 
+                    username VARCHAR(150) UNIQUE, 
+                    password TEXT, 
+                    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
     conn.commit()
     conn.close()
 
