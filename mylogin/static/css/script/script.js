@@ -1,3 +1,5 @@
+// nav.js
+
 const navSlide = () => {
   const navLine = document.querySelector('.navline');
   const nav = document.querySelector('.nav-links');
@@ -20,8 +22,8 @@ const navSlide = () => {
 function toggleAbout(element, transportation) {
   var aboutButton = element.parentElement.querySelector('.about-button');
   if (aboutButton) {
-    aboutButton.style.display = (aboutButton.style.display === 'none') ? 'block' : 'none';
-    aboutButton.textContent = 'About ' + transportation;
+      aboutButton.style.display = (aboutButton.style.display === 'none') ? 'block' : 'none';
+      aboutButton.textContent = 'About ' + transportation;
   }
 }
 
@@ -30,7 +32,6 @@ function scrollToTransportation() {
   transportationSection.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Function to handle fixed navbar
 const handleFixedNavbar = () => {
   const nav = document.querySelector('nav');
   const navHeight = nav.offsetHeight;
@@ -43,31 +44,8 @@ const handleFixedNavbar = () => {
       }
   });
 };
-const cardsSlider = document.querySelector('.cards-slider');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
-const cardWidth = document.querySelector('.card').offsetWidth;
-let currentPosition = 0;
-
-prevBtn.addEventListener('click', () => {
-  if (currentPosition > 0) {
-    currentPosition -= cardWidth;
-    cardsSlider.style.transform = `translateX(-${currentPosition}px)`;
-  }
-});
-
-nextBtn.addEventListener('click', () => {
-  const maxPosition = (cardsSlider.children.length - 1) * cardWidth;
-  if (currentPosition < maxPosition) {
-    currentPosition += cardWidth;
-    cardsSlider.style.transform = `translateX(-${currentPosition}px)`;
-  }
-});
-
-
-
-
 
 // Call the functions
 navSlide();
 handleFixedNavbar();
+

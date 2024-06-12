@@ -727,120 +727,138 @@ hr {
     margin-top: 10px;
   }
   
-  .main-container {
+
+  .slide-container {
     display: flex;
-    justify-content: center;
-    margin-top: 60px;
-  }
-  
-  .box-main {
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 120px;
+    height: 500px;  
     width: 100%;
-  }
-  
-  .image-container {
-    position: relative;
-    width: 100%;
-    height: 400px;
-  }
-  
-  .image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  
-  .image-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.5));
-    animation: fadeIn 2s ease forwards; /* Apply animation */
-    opacity: 0; /* Set initial opacity to 0 */
-  }
-  
-  .text-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    text-align: left;
-    opacity: 2; 
-  }
-  
-  .text-overlay h2 {
-    margin: 0;
-    color: whitesmoke;
-    font-size: 45px;
-    font-weight: 500;
-    transition: font-size 0.3s ease; 
-  }
-  
-  .text-overlay:hover h2 {
-    font-size: 50px; 
-  }
+}
+
   
   
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0; 
-    }
-    100% {
-      opacity: 2; 
-    }
-  }
-  
-  .slider-container {
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-  
-  .cards-slider {
-    display: flex;
-    transition: transform 0.5s ease;
+  .card-wrapper {
+    margin-top: 20px;
+    width: 500px; 
+    height: 250px;
   }
   
   .card {
-    flex: 0 0 auto;
-    width: 200px;
-    height: 150px;
-    background-color: #f0f0f0;
-    margin-right: 10px;
-    border-radius: 8px;
+    margin-top: 20px;
     display: flex;
-    justify-content: center;
+  flex-direction: column;
+  border-radius: 25px;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  height: 400px;
+  width: 320px;
+  position: relative;
+  transition: transform 0.3s ease;
+  }
+  .card:hover {
+    transform: scale(1.09); 
+}
+  
+  .image-content {
+    width: 100%; 
+    justify-content: center; 
+    row-gap: 5px;
+  }
+  
+  .card-image {
+    width: 190px; 
+    height: 190px; 
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%;
+    margin-left: 60px;
+    margin-top: 5px;
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+    
+  }
+  .overlay {
+      position: absolute;
+      height: 50%; 
+      width: 100%; 
+      left: 0;
+      top: 0;
+      background-color: var(--main-color);
+      opacity: 0.5; 
+      border-top-left-radius: 25px; 
+      border-top-right-radius: 25px; 
+      
+  }
+  
+  
+
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    font-size: 20px;
+    padding: 10px 14px;
+    flex-grow: 1; 
+
   }
   
-  .prev-btn,
-  .next-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 10px;
-    border: none;
-    background-color: #ccc;
-    cursor: pointer;
-    border-radius: 4px;
+  .name {
+    margin-top: 10px; 
+    font-size: 18px;
+    font-weight: 300px;
   }
   
-  .prev-btn {
-    left: 10px;
-  }
-  
-  .next-btn {
-    right: 10px;
+  .description {
+    margin-bottom: 0; 
+    font-size: 15.5px;
+    text-align: center;
+    font-weight: 300;
+    color: gray;
   }
   
   
+  .swiper-navBtn {
+    color: #6E93f7;
+    transition: color 0.3s ease;
+    font-size: 35px;
+}
+
+.swiper-navBtn:hover {
+    color: #4070F4;
+}
+
+.swiper-button-next {
+    right: 0;
+}
+
+.swiper-button-prev {
+    left: 0;
+}
+
+.swiper-pagination-bullet {
+    background-color: #6E93f7;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #4070F4;
+}
+
+@media screen and (max-width: 768px) {
+    .slide-content {
+        margin: 0 10px;
+    }
+    .swiper-navBtn {
+        display: none;
+    }
+}
+
   
   
   
