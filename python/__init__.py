@@ -3,7 +3,7 @@ from flask_login import LoginManager
 from .models import connect_db
 
 def create_app():
-    app = Flask(__name__,template_folder='templates')
+    app = Flask(__name__, template_folder='templates')
     app.config['SECRET_KEY'] = "testtest"  
 
     connect_db()

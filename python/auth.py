@@ -1,5 +1,4 @@
 
-
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from .models import add_user, get_user_by_email, get_user_by_username
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -52,3 +51,6 @@ def sign_up():
             return redirect(url_for('auth.login'))
 
     return render_template("sign_up.html")
+
+
+
