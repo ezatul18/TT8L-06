@@ -71,5 +71,3 @@ def update_selfpickup():
     return jsonify({'delivery_charge': 0.00})
 
 
-if __name__ == "__main__":
-    app.run(debug = True)
