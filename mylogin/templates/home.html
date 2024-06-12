@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+</script>
+
+
+  <title></title>
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <p><span class="railway">Railway</span><span class="go">Go</span></p>
+  </div>
+    <ul class="nav-links">
+      <li>
+        
+        <a href="{{url_for('views.home')}}">Home</a>
+        </li>
+        <li>
+          <a href="{{url_for('auth.login')}}">Login</a>
+        </li>
+        <li>
+          <a href="{{url_for('auth.sign_up')}}">Sign-up</a>
+        </li>
+    </ul>
+    <div class="navline">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div> 
+
+  </nav>
+
+  <div class="section_container header_container">
+    <div class="header_image_container">
+      <img src="{{ url_for('static', filename='css/images/ets.jpg')}}">
+    </div>
+      <div class="header_content">
+        <h1>Enjoy your vacation with Railwaygo</h1>
+        <p>Book train tickets,hotels and ordering foods at lower price</p>
+        <div class="book_button">
+      
+          <button onclick="scrollToTransportation()">Book Now</button>
+      
+      </div>
+      </div>
+    </div>
+<div class="about">
+  <h2>
+    You plan your destination,we'll bring you there
+  </h2>
+  <img src="{{ url_for('static', filename='css/images/ktmkl.jpg')}}">
+  <div class="about-box">
+    <h3>
+      Ride the Rails with RailwayGo.
+    </h3>
+    <h4>Do you want to travel easier? Experience the ultimate convenience with RailwayGo – your one-stop solution for seamless train travel. 
+    </h4>
+  
+      <h4>From booking tickets to coordinating arrivals and departures, we've got you covered every step of the way.
+      </h4>
+  
+      <h4>Join RailwayGo today and embark on a journey where travel meets comfort and convenience. Let's make every trip a memorable experience together!
+      
+    </h4>
+    <button><a href="/about">Explore more</a></button>
+  </div>
+  
+</div>
+<div class="places-text">
+<h2>Discover these amazing destinations with our train.</h2>
+<div class="places">
+  
+  <div class="places-box">
+    
+      <img src="{{ url_for('static', filename='css/images/ipoh.jpg')}}" alt="Ipoh ">
+      <h3>Ipoh</h3>
+  </div>
+  <div class="places-box">
+    
+      <img src="{{ url_for('static', filename='css/images/taiping.jpg')}}" alt="taiping">
+      <h3>Taiping</h3>
+  </div>
+  <div class="places-box">
+    
+    <img src="{{ url_for('static', filename='css/images/padangbesar.jpg')}}" alt="padangbesar">
+    <h3>Padang Besar</h3>
+</div>
+<div class="places-box">
+    
+  <img src="{{ url_for('static', filename='css/images/gemas.jpg')}}" alt="gemas">
+  <h3>Gemas</h3>
+</div>
+<div class="places-box">
+    
+  <img src="{{ url_for('static', filename='css/images/butterworth.jpg')}}" alt="butterworth">
+  <h3>Butterworth</h3>
+</div>
+</div>
+<div class="places2">
+<div class="places2-box">
+    
+  <img src="{{ url_for('static', filename='css/images/batucaves.jpg')}}" alt="batucaves">
+  <h3>Batu Caves</h3>
+</div>
+<div class="places2-box">
+    
+  <img src="{{ url_for('static', filename='css/images/johor.png')}}" alt="johor">
+  <h3>Johor Bahru</h3>
+</div>
+<div class="places2-box">
+    
+  <img src="{{ url_for('static', filename='css/images/tumpat.jpg')}}" alt="johor">
+  <h3>Tumpat</h3>
+</div>
+<div class="places2-box">
+    
+  <img src="{{ url_for('static', filename='css/images/woodland.jpeg')}}" alt="Woodland">
+  <h3>woodland</h3>
+</div>
+<div class="places2-box">
+    
+  <img src="{{ url_for('static', filename='css/images/bukitmertajam.jpg')}}" alt="bukitmertajam">
+  <h3>Bukit Mertajam</h3>
+</div>
+
+</div>
+</div>
+
+
+
+
+
+
+    <!--categories content-->
+    <div class="ets_ktm_box" id="transportation">
+      <h2>Choose your transportation</h2>
+      <div class="categories-container">
+        <!--box1-->
+        <div class="box">
+          <img src="{{ url_for('static', filename='css/images/ets1.jpeg')}}" alt="ETS" class="transport-image" onmouseover="toggleAbout(this, 'ETS')" onmouseout="toggleAbout(this)">
+          <h2>ETS</h2>
+          
+        </div>
+        <!--box2-->
+        <div class="box">
+          <img src="{{ url_for('static', filename='css/images/ktm.jpg')}}" alt="KTM" class="transport-image" onmouseover="toggleAbout(this, 'KTM')" onmouseout="toggleAbout(this)">
+          <h2>KTM</h2>
+          
+        </div>
+      </div>
+    </div>
+    <div class="trainschedule">
+      <h2>Train schedule</h2>
+      <div class="schedule_box">
+      <div class="ktm_schedule">
+        <h3>Ktm schedule</h3>
+        <img src="{{ url_for('static', filename='css/images/ktm2.png')}}">
+        <h3>KTM routes</h3>
+        <h4>
+          <li>
+            Batu Caves – Pulau Sebang
+          </li>
+          <li>
+            Tanjung Malim – Pelabuhan Klang
+          </li>
+          <li>
+            Padang Rengas – Bukit Mertajam
+
+          </li>
+          <li>
+            Butterworth – Padang Besar
+          </li>
+          
+        </h4>
+        
+      </div>
+      <div class="ets_schedule">
+        <h3>ets schedule</h3>
+        <img src="{{ url_for('static', filename='css/images/ets3.png')}}">
+      </div>
+    </div>
+    
+    
+
+
+
+     <!--contact-->
+     
+  
+  <section class="contact">
+    <hr>
+    <div class="main-contact">
+      <div class="contact-content1">
+        <h4><i class='bx bx-copyright'>Railwayfood Malaysia</i></h4>
+        <p>Delivery Hero Malaysia Sdn Bhd</p>
+        <p>202304159806 (987654-W)</p>
+        <p>12th Floor, Wisma Foo,</p>
+        <p>Jalan Raja Chulan,</p>
+        <p>50200 Kuala Lumpur,</p>
+        <p>Malaysia.</p>
+      </div>
+      <div class="contact-content">
+        <h4>Services</h4>
+        <p><a href="#">Press</a></p>
+        <p><a href="#">Privacy policy</a></p>
+        <p><a href="#">RailwayGo</a></p>
+        <p><a href="#">Railwayfood magazine</a></p>
+        <p><a href="#">Ramdan</a></p>
+      </div>
+      <div class="contact-content">
+        <h4>Partner</h4>
+        <p><a href="#">Partner with us</a></p>
+        <p><a href="#">Foodpanda</a></p>
+        <p><a href="#">Foodie</a></p>
+        <p><a href="#">Shoppee foood</a></p>
+        <p><a href="#">Bekal</a></p>
+      </div>
+      <div class="contact-content">
+        <h4>Contact</h4>
+        <p><a href="#">Contact us</a></p>
+        <p><a href="#">Facebook</a></p>
+        <p><a href="#">Instagram</a></p>
+        <p><a href="#">Pinterest</a></p>
+      </div>
+    </div>
+    <hr>
+    <div class="logobtm">
+      <a href="/foodhome.html" class="main">Railway<span>Food</span></a>
+      <div class="logo-btm">
+        <a href="#" class="fcb"><i class='bx bxl-facebook-circle'></i></a>
+      </div>
+      <div class="logo-btm">
+        <a href="#" class="ins"><i class='bx bxl-instagram-alt' ></i></a>
+      </div>
+      <div class="logo-btm">
+        <a href="#" class="twt"><i class='bx bxl-twitter' ></i></a>
+      </div>
+    </div>
+      
+  </section>
+
+  <!--scroll top-->
+  <a href="#" class="scroll">
+    <i class='bx bxs-up-arrow-circle'></i>
+  </a>
+
+   
+
+ 
+  <script type="text/javascript" src="{{ url_for('static', filename='css/script/script.js')}}"></script>
+
+</body>
+
+</html>

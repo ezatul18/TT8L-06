@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  
+
+
+</script>
+
+
+  <title></title>
+</head>
+<body>
+  <nav>
+    <div class="logo">
+        <p><span class="railway">Railway</span><span class="go">Go</span></p>
+    </div>
+    <div class="nav-links">
+        <ul>
+            <li><a href="{{url_for('views.home')}}">Home</a></li>
+        </ul>
+    </div>
+    <div class="navline">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+</nav>
+
+
+  {% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+  <div class="flash-messages">
+    {% for category, message in messages %}
+    <div class="flash-message {{ category }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+
+ 
+  <script type="text/javascript" src="{{ url_for('static', filename='css/script/script.js')}}"></script>
+
+</body>
+
+</html>

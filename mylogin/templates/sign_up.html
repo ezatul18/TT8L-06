@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+
+    <title>Sign-up</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            
+          <p>
+            <a href="{{url_for('views.home')}}">
+                <span class="railway">Railway</span><span class="go">Go</span>
+            </a>    
+        </p>
+
+        </div>
+    
+    
+       
+    
+      </nav>
+
+      {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+      <div class="flash-messages">
+          {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+          {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+
+
+
+
+      
+   <div class="form-container">
+    <form action="" method="POST">
+        <h3>Sign-Up</h3>
+        <input type="text" name="username" required placeholder="Enter your username">
+        <input type="email" name="email" required placeholder="Enter your email">
+        <input type="password" name="password" required placeholder="Confirm your password">
+        <select name="user_type">
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+        </select>
+        <input type="submit"name="submit" value="register now" class="form-btn"
+         <p>already have an account?
+             <a href="{{url_for('auth.login')}}" class="linknow">Login now</a>
+         </p>   
+    </form>
+   </div>
+   
+
+</body>
+</html>
