@@ -14,7 +14,7 @@
     
   }
   
-  /*will put body background here*/
+  /*header*/
   
   header {
       position: fixed;
@@ -325,6 +325,11 @@
 }
 
 /*contact*/
+.contact-content a {
+    text-decoration: none;
+    color: black;
+}
+
 
 .main-contact {
     margin: 50px;
@@ -407,6 +412,9 @@ hr {
     font-size: 20px;
     cursor: pointer;
 }
+
+
+
 .search--box button {
     background-color: transparent;
     outline: none;
@@ -423,13 +431,24 @@ hr {
     display: flex;
     align-items: center;
     gap: 10px;
+    
 }
+.menu--icons a {
+    text-decoration: none;
+    color: #E4AEC5;
+}
+
+.menu--icons i:hover {
+    background-color: #D4E2D4;
+    color: #AEC3AE;
+}
+
 .menu--icons i {
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 20px;
-    background: #AEC3AE;
+    background: #FFE1E1;
 }
 .cart-icon .bx-cart {
     background: transparent !important;
@@ -439,6 +458,15 @@ hr {
 .cart-icon {
     position: relative;
     cursor: pointer;
+}
+
+.cart-icon i:hover{
+    background-color: #FFE1E1 ;
+    color:var(--logo-color);
+}
+.cart-icon:hover{
+    background-color: #FFE1E1 ;
+    border-radius: 10px;
 }
 
 .cart-icon span {
@@ -458,6 +486,18 @@ hr {
 }
 
 /*all items(shop)*/
+.allfood h2 {
+    text-align: center;
+    padding: 10px;
+    font-size: 30px;
+}
+
+.allfood h3 {
+    text-align: center;
+    padding: 10px;
+    color: var(--text-color)
+}
+
 .card--list {
     display: flex;
     gap: 10px;
@@ -524,6 +564,7 @@ hr {
 
 .cart--table {
     align-items: center;
+    padding-top: 16%;
 }
 
 .cart--table h1 {
@@ -580,7 +621,40 @@ hr {
     border-radius: 1rem;
 }
 
- 
+.cart--table h3{
+    text-align: right;
+    padding-top: 20px;
+}
+
+.payBtn button {
+    padding: 5px;
+    font-size: 17px;
+    background-color: maroon;
+    color: white;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all ease 0.32s;
+}
+.payBtn button:hover {
+    background-color: var(--logo-color);
+    transform: scale(0.95);
+    
+}
+
+.checkout-Btn {
+    padding: 5px;
+    font-size: 17px;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+
+}
+
+.checkout-Btn:hover {
+    background-color: var(--text-color);
+    transform: scale(1.2);
+    transition: all .35s ease;
+}
 
  
  /*cart side*/

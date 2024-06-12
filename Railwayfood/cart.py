@@ -9,6 +9,9 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+@app.route ("/home")
+def home():
+    return render_template("home.html")
 
 @app.route('/store2')
 def store2():
@@ -37,7 +40,7 @@ def add_to_cart():
         conn.execute('INSERT INTO cart (product_id, quantity) VALUES (?, ?)', (product_id, quantity))
         conn.commit()
         conn.close()
-        return jsonify({'message': 'Product added to cart successfully'})
+        return redirect(url_for('cart'))
     else:
         conn.close()
         return jsonify({'error': 'Product not found'})
@@ -52,21 +55,28 @@ def cart():
     return render_template('cart.html', cart_items=cart_items, total_price=total_price)
 
 
+
+
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
-    try:
-        product_id = request.form['product_id']
+        product_id = request.form['product_id'] 
 
         conn = get_db_connection()
         conn.execute('DELETE FROM cart WHERE product_id = ?', (product_id,))
         conn.commit()
         conn.close()
 
-      
-        return redirect(url_for('cart')) 
-    except Exception as e:
-        return jsonify({'error': str(e)})
+        return redirect(url_for('cart'))
+    
+    
 
+@app.route('/update_delivery', methods=['POST'])
+def update_delivery():
+    return jsonify({'delivery_charge': 2.00})
+
+@app.route('/update_selfpickup', methods=['POST'])
+def update_selfpickup():
+    return jsonify({'delivery_charge': 0.00})
 
 
 if __name__ == "__main__":

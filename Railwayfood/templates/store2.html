@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     
-    <title>Products</title>
+    <title>ShopFood</title>
 </head>
 <body>
     
@@ -22,9 +22,10 @@
       </div>
       <div class="menu--icons">
         <a href="#all"><i class='bx bxs-bowl-rice'></i></a>
+        <a href="#contact"><i class='bx bxs-contact'></i></a>
         <div class="cart-icon">
           <a href="/cart"><i class='bx bx-cart'></i></a>
-          <span>0</span>
+          <span id="cartCount">0</span>
         </div>
       </div>
     </nav>
@@ -294,7 +295,7 @@
     <img src="{{ url_for ('static', filename='image/dinner2.jpeg')}}">
     <div class="menuText">
       <div class="menuLeft">
-        <h3 class="p-name">Farfalle with Spinach, Mushrooms, Caramelized Onions</h3>
+        <h3 class="p-name">Farfalle with Spinach and Caramelized Onions</h3>
       </div>
       <div class="menuRight">
         <h4 class="p-price">RM 19</h4>
@@ -348,10 +349,135 @@
   </div>
 </div>   
 </section>
+
+<section class="dessert" id="dessert">
+  <div class="mainText">
+    <h2>Best Seller - Dessert&Beverages</h2>
+  </div>
+  
+    <!--first-->
+  <div class="items">
+    <div class="row">
+      <img src="{{ url_for ('static', filename='image/dessert2.jpg')}}">
+      <div class="menuText">
+        <div class="menuLeft">
+          <h3 class="p-name">Soft choco chips cookies</h3>
+        </div>
+        <div class="menuRight">
+          <h4 class="p-price">RM 7</h4>
+        </div>
+      </div>
+      <p>Indulge in the sheer delight of our Soft Choco Chip Cookies. Each bite offers a heavenly blend of soft, chocolate-infused goodness. Perfectly sized for a satisfying treat, they promise to elevate any moment with their irresistible taste. Treat yourself to pure indulgence today! </p>
+        <div class="iconwrap">
+            <div class="rate">
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bx-star'></i></a>
+            </div>
+            <div class="addtocart">
+             <button class="add-toCart">
+              <i class='bx bxs-plus-circle'></i>
+             </button>
+            </div>
+        </div>
+    </div>
+  </form>
+    <!--second-->
+  
+    <div class="row">
+      <img src="{{ url_for ('static', filename='image/dessert5.jpg')}}">
+      <div class="menuText">
+        <div class="menuLeft">
+          <h3 class="p-name">Caramel pudding</h3>
+        </div>
+        <div class="menuRight">
+          <h4 class="p-price">RM 7</h4>
+        </div>
+      </div>
+      <p>Satisfy your sweet cravings with our homemade caramel pudding, a single-serving delight that melts in your mouth. With its luscious caramel glaze and creamy vanilla-infused custard, every spoonful is a journey into pure indulgence. Treat yourself to this heavenly treat today!</p>
+        <div class="iconwrap">
+            <div class="rate">
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bxs-star'></i></a>
+             <a href="#"><i class='bx bx-star'></i></a>
+            </div>
+            <div class="addtocart">
+             <button class="add-toCart" >
+              <i class='bx bxs-plus-circle'></i>
+             </button>
+            </div>
+        </div>
+    </div>
+  
+    <!--third-->
+    <div class="row">
+      <img src="{{ url_for ('static', filename='image/drink1.jpg')}}">
+      <div class="menuText">
+        <div class="menuLeft">
+          <h3 class="p-name">Strawberry-ice-ade</h3>
+          
+        </div>
+        <div class="menuRight">
+          <h4 class="p-price">RM 7.50</h4>
+        </div>
+      </div>
+      <p> Quench your thirst with our Strawberry-Ade! Made with ripe strawberries and a hint of citrus, it's a refreshing burst of summer in every sip. Perfect for any occasion, enjoy the sweet and tangy flavors of sunshine in a glass.</p>
+      <div class="iconwrap">
+        <div class="rate">
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star'></i></a>
+         <a href="#"><i class='bx bxs-star-half' ></i></a>
+        </div>
+        <div class="addtocart">
+         <button class="add-toCart" >
+          <i class='bx bxs-plus-circle'></i>
+         </button>
+        </div>
+       </div>
+    </div>
+    
+  <!--FOURTH-->
+  <div class="row">
+    <img src="{{ url_for ('static', filename='image/drink4.jpg')}}">
+    <div class="menuText">
+      <div class="menuLeft">
+        <h3 class="p-name">Ice water</h3>
+        
+      </div>
+      <div class="menuRight">
+        <h4 class="p-price">RM 3</h4>
+      </div>
+    </div>
+    <p>Stay hydrated with the pure simplicity of our ice-cold water. Crisp, refreshing, and oh-so-satisfying, it's the perfect way to quench your thirst and invigorate your senses. Just pure, clean hydration, served ice-cold and ready to refresh.</p>
+    <div class="iconwrap">
+      <div class="rate">
+       <a href="#"><i class='bx bxs-star'></i></a>
+       <a href="#"><i class='bx bxs-star'></i></a>
+       <a href="#"><i class='bx bxs-star'></i></a>
+       <a href="#"><i class='bx bxs-star'></i></a>
+       <a href="#"><i class='bx bxs-star-half' ></i></a>
+      </div>
+      <div class="addtocart">
+       <button class="add-toCart" >
+        <i class='bx bxs-plus-circle'></i>
+       </button>
+      </div>
+     </div>
+  </div>
+</div>   
+</div> 
+  </section>
  
 
     <section class="allfood" id="all">
-        <h2 class="section--heading">Food Meal</h2>
+        <h2>All food</h2>
+        <h3>Food meal - Desserts - Beverages</h3>
         <div class="card--list">
         {% for product in products %}
         <form action="/add_to_cart" method="post">
@@ -374,7 +500,7 @@
 
     <!--contact-->
  
-<section class="contact">
+<section class="contact" id="contact">
   <hr>
   <div class="main-contact">
     <div class="contact-content1">
@@ -426,6 +552,19 @@
  
   </div>
 </section>
+
+<script>
+  var cartCountSpan = document.getElementById("cartCount");
+  var addToCartButtons = document.querySelectorAll('.card--price button[type="submit"]');
+    addToCartButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+           
+            var currentCount = parseInt(cartCountSpan.textContent);
+            cartCountSpan.textContent = currentCount + 1;
+        });
+    });
+  
+</script>
 
 
     <script src="{{url_for('static', filename='script.js')}}"></script>
