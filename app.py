@@ -1,4 +1,4 @@
-from python import create_app
+from RailwayGo import create_app
 
 app = create_app()
 
