@@ -42,7 +42,7 @@ def add_to_cart():
         conn.close()
         return jsonify({'error': 'Product not found'})
     
-@app.route('/cart_food')
+@app.route('/cart')
 def cart():
     conn = get_db_connection()
     cart_items = conn.execute('SELECT p.name, p.price, c.quantity FROM products p JOIN cart c ON p.id = c.product_id').fetchall()
