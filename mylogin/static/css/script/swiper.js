@@ -20,12 +20,11 @@ nextBtn.addEventListener('click', () => {
         cardsSlider.style.transform = `translateX(-${currentPosition}px)`;
     }
 });
-// swiper.js
 
 // Initialize Swiper
 var swiper = new Swiper(".slide-container", {
     slidesPerView: 3,
-    spaceBetween: 10, // Adjust this value to reduce the gap
+    spaceBetween: 9, 
     loop: true,
     grabCursor: true,
     pagination: {
@@ -36,21 +35,26 @@ var swiper = new Swiper(".slide-container", {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
     },
+    autoplay: {
+        delay: 4000, 
+        disableOnInteraction: false, 
+    },
     breakpoints: {
         0: {
             slidesPerView: 1,
-            spaceBetween: 5, // Adjust for smaller screens if needed
+            spaceBetween: 5, 
         },
         520: {
             slidesPerView: 2,
-            spaceBetween: 5, // Adjust for smaller screens if needed
+            spaceBetween: 5, 
         },
         950: {
             slidesPerView: 3,
-            spaceBetween: 10, // Adjust this value to reduce the gap
+            spaceBetween: 9, 
         },
     },
 });
+
 
 
 
