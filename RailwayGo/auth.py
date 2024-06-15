@@ -89,7 +89,7 @@ def add_to_cart():
         conn.execute('INSERT INTO cart (product_id, quantity) VALUES (?, ?)', (product_id, quantity))
         conn.commit()
         conn.close()
-        return redirect(url_for('cart_food'))
+        return redirect(url_for('auth.cart'))
     else:
         conn.close()
         return jsonify({'error': 'Product not found'})
@@ -97,22 +97,34 @@ def add_to_cart():
 @auth.route('/cart')
 def cart():
     conn = get_db_connection()
-    cart_items = conn.execute('SELECT p.name, p.price, c.quantity FROM products p JOIN cart c ON p.id = c.product_id').fetchall()
-    conn.close()
-   
+    cart_items = conn.execute('''
+        SELECT p.id, p.name, p.price, c.quantity
+        FROM products p
+        JOIN cart c ON p.id = c.product_id
+        WHERE c.status = 'active'
+    ''').fetchall()
+
     total_price = sum(item['price'] * item['quantity'] for item in cart_items)
+    conn.close()
+    
     return render_template('cart_food.html', cart_items=cart_items, total_price=total_price)
 
 @auth.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
-        product_id = request.form['product_id'] 
+    product_id = request.form['product_id']
 
-        conn = get_db_connection()
-        conn.execute('DELETE FROM cart WHERE product_id = ?', (product_id,))
+    conn = get_db_connection()
+    try:
+        conn.execute('UPDATE cart SET status = "deleted" WHERE product_id = ?', (product_id,))
         conn.commit()
+        flash('Product removed from cart', category='success')
+    except Exception as e:
+        flash('Error removing product from cart', category='error')
+        conn.rollback()
+    finally:
         conn.close()
+        return redirect(url_for('auth.cart'))
 
-        return redirect(url_for('cart_food'))
     
 @auth.route('/update_delivery', methods=['POST'])
 def update_delivery():

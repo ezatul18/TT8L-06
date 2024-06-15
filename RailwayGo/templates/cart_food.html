@@ -46,7 +46,7 @@
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.price * item.quantity }}0</td>
                 <td>
-                    <form action="/remove_from_cart" method="post">
+                    <form action="{{ url_for('auth.remove_from_cart') }}" method="post">
                         <input type="hidden" name="product_id" value="{{ item.id }}">
                         <button type="submit"><i class='bx bx-x'></i></button>
                     </form>
