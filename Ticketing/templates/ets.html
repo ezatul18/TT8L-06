@@ -22,6 +22,13 @@
         </div>
     </div>
 
+    <ul>
+        {% for train in trains %}
+            <li><a href="../app.py">{{ train['train_number'] }} - {{ train['departure_station'] }} to {{ train['arrival_station'] }}</a></li>
+        {% endfor %}
+    </ul>
+
+
     <script src="../static/script.js"></script>
 
 

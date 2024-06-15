@@ -22,6 +22,25 @@
         </div>
     </div>
 
+    <h1>{{ train['train_number'] }} - {{ train['departure_station'] }} to {{ train['arrival_station'] }}</h1>
+    <p>Departure: {{ train['departure_time'] }}</p>
+    <p>Arrival: {{ train['arrival_time'] }}</p>
+    <h2>Available Seats</h2>
+    <ul>
+        {% for seat in seats %}
+            <li>
+                {{ seat['seat_number'] }} - {{ seat['status'] }}
+                {% if seat['status'] == 'available' %}
+                    <form action="../app.py" method="post">
+                        <input type="hidden" name="train_id" value="{{ train['id'] }}">
+                        <input type="hidden" name="seat_number" value="{{ seat['seat_number'] }}">
+                        <button type="submit">Book</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
 </body>
 
 </html>
