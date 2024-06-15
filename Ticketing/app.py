@@ -8,7 +8,7 @@ def index():
 
 @app.route('/book')
 def book():
-    return render_template('book.html')
+    return render_template('komuter.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
