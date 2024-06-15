@@ -1,13 +1,12 @@
 
-from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
+from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify, session
 from .models import add_user, get_user_by_email, get_user_by_username
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os
 auth = Blueprint("auth", __name__)
 
-#LOGIN -SIGNUP
-
+## LOGIN -SIGNUP ##
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -55,8 +54,7 @@ def sign_up():
 
     return render_template("sign_up.html")
 
-#ADD TO CART- FOOD
-
+## ADD TO CART- FOOD ##
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
@@ -109,6 +107,7 @@ def cart():
     
     return render_template('cart_food.html', cart_items=cart_items, total_price=total_price)
 
+## REMOVE FROM CART ##
 @auth.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
     product_id = request.form['product_id']
@@ -125,7 +124,7 @@ def remove_from_cart():
         conn.close()
         return redirect(url_for('auth.cart'))
 
-    
+## DELIVERY METHOD ##
 @auth.route('/update_delivery', methods=['POST'])
 def update_delivery():
     return jsonify({'delivery_charge': 2.00})
@@ -133,4 +132,28 @@ def update_delivery():
 @auth.route('/update_selfpickup', methods=['POST'])
 def update_selfpickup():
     return jsonify({'delivery_charge': 0.00})
+
+## SUMMARY PAGE ##
+@auth.route('/summary')
+def summary():
+    conn = get_db_connection()
+    
+    
+    user_id = session.get('user_id') 
+    user = conn.execute('SELECT email, username FROM users WHERE id = ?', (user_id,)).fetchone()
+
+    
+    cart_items = conn.execute('''
+        SELECT p.name, p.price, c.quantity 
+        FROM products p 
+        JOIN cart c ON p.id = c.product_id 
+        WHERE c.status = "active"
+    ''').fetchall()
+
+    
+    total_price = sum(item['price'] * item['quantity'] for item in cart_items)
+
+    conn.close()
+
+    return render_template('summary.html', user=user, cart_items=cart_items, total_price=total_price)
 

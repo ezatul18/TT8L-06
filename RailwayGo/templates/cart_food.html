@@ -13,8 +13,8 @@
         <a href="/home_food" class="main">Railway<span>Food</span></a>
 
         <ul class="navlist">
-            <li><a href="/home_food">Home</a></li>
-            <li><a href="/store_food">Menu</a></li>
+            <li><a href="/homefood">Home</a></li>
+            <li><a href="/storefood">Menu</a></li>
             <li><a href="#contact">Our Contacts</a></li>
          </ul>
 
@@ -151,11 +151,11 @@
 
 function enableCheckoutButton() {
     document.getElementById("checkoutBtn").removeAttribute("disabled");
+    document.getElementById("checkoutBtn").addEventListener("click", function() {
+        window.location.href = "/summary";
+    });
 }
 
-function checkout() {
-    alert("Proceed to checkout!");
-}
 
 </script>
 
