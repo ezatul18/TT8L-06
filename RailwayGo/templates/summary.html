@@ -3,16 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_summary.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <title>Order Summary</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+
     <header>
-        <h1>Order Summary</h1>
+            <a href="/main" class="main">Railway<span>Food</span></a>
+    
+            <ul class="navlist">
+                <li><a href="#home">Log out</a></li>
+             </ul>
+    
     </header>
 
-    <main>
+<body>
         <section class="summary">
+            <h1>Order Summary</h1>
             <h2>Order Details for {{ user.username }}</h2>
             <p>Email: {{ user.email }}</p>
             <table>
@@ -42,6 +49,7 @@
                 </tfoot>
             </table>
         </section>
-    </main>
+    
+    <script src="{{url_for('static', filename='script_food.js')}}"></script>
 </body>
 </html>
