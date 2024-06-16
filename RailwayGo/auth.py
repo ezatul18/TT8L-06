@@ -16,6 +16,7 @@ def login():
         user = get_user_by_email(email)
         if user:
             if check_password_hash(user[3], password):  
+                session['user_id'] = user[0]
                 flash('Logged in')
                 return redirect(url_for('views.home'))
             else:
@@ -24,6 +25,12 @@ def login():
             flash('Email does not exist', category='error')
 
     return render_template("login.html")
+@auth.route("/logout")
+def logout():
+    session.clear()  
+    flash('You have been logged out', 'success')
+    return redirect(url_for('auth.login'))
+
 
 
 @auth.route("/sign-up", methods=['GET', 'POST'])
