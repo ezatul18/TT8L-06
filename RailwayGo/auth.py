@@ -28,9 +28,26 @@ def login():
 
 @auth.route("/logout")
 def logout():
+    conn = get_db_connection()
+    try:
+        conn.execute('''
+            UPDATE cart
+            SET status = 'deleted'
+            WHERE status = 'active'
+        ''')
+        conn.commit()
+    except Exception as e:
+       
+        print(f"Error updating cart items: {e}")
+        conn.rollback()
+    finally:
+        conn.close()
+
     session.clear()
-    flash('You have been logged out', 'success')
+
     return redirect(url_for('auth.login'))
+
+
 
 @auth.route("/sign-up", methods=['GET', 'POST'])
 def sign_up():
