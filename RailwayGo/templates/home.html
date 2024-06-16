@@ -29,6 +29,11 @@
         </li>
         <li>
           <a href="{{url_for('auth.sign_up')}}">Sign-up</a>
+
+        </li>
+        <li>
+          <a href="{{url_for('views.homefood')}}">RailwayFood</a>
+
         </li>
     </ul>
     <div class="navline">
@@ -96,8 +101,8 @@
 </div>
 <div class="places-box">
     
-  <img src="{{ url_for('static', filename='image_login/gemas.jpg')}}" alt="gemas">
-  <h3>Gemas</h3>
+  <img src="{{ url_for('static', filename='image_login/nilai.png')}}" alt="nilai">
+  <h3>Nilai</h3>
 </div>
 <div class="places-box">
     
@@ -123,8 +128,8 @@
 </div>
 <div class="places2-box">
     
-  <img src="{{ url_for('static', filename='image_login/woodland.jpeg')}}" alt="Woodland">
-  <h3>woodland</h3>
+  <img src="{{ url_for('static', filename='image_login/kl.jpg')}}" alt="KL">
+  <h3>KL</h3>
 </div>
 <div class="places2-box">
     
@@ -162,30 +167,41 @@
       <h2>Train schedule</h2>
       <div class="schedule_box">
       <div class="ktm_schedule">
-        <h3>Ktm schedule</h3>
+        <h3>KTM Routes</h3>
         <img src="{{ url_for('static', filename='image_login/ktm2.png')}}">
-        <h3>KTM routes</h3>
         <h4>
           <li>
-            Batu Caves – Pulau Sebang
+            KL Central
           </li>
           <li>
-            Tanjung Malim – Pelabuhan Klang
+            Batu Caves
           </li>
           <li>
-            Padang Rengas – Bukit Mertajam
+            Nilai
 
           </li>
-          <li>
-            Butterworth – Padang Besar
-          </li>
+          
           
         </h4>
         
       </div>
       <div class="ets_schedule">
-        <h3>ets schedule</h3>
+        <h3>ETS Routes</h3>
         <img src="{{ url_for('static', filename='image_login/ets3.png')}}">
+        <h4>
+          <li>
+            Alor setar
+          </li>
+          <li>
+            Kuala Lumpur
+          </li>
+          <li>
+            Batang Melaka
+
+          </li>
+          
+          
+        </h4>
       </div>
     </div>
     
