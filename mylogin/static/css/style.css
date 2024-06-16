@@ -604,13 +604,17 @@ hr {
 }
 
 .trainschedule h4{
-    margin-top: 10px;
+    margin-top: 60px;
     list-style: none;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 500;
     color: black;
+    text-align: left;
+    transition: transform 0.3s ease;
     
-    
+}
+.trainschedule h4:hover {
+    transform: translateY(-5px);
 }
 
 .trainschedule h4 li {
@@ -737,7 +741,7 @@ hr {
     width: 100%;
     margin-left: auto;
     margin-right: auto; 
-    background-color: ghostwhite;
+    background-color:white;
     border-radius: 10px;
 }
 
