@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='style_login.css')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.4/swiper-bundle.min.css">
+    
+    <title>About</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            
+          <p>
+            <a href="{{url_for('views.home')}}">
+                <span class="railway">Railway</span><span class="go">Go</span>
+            </a>
+        </p>
+
+        </div>
+    
+      </nav>'
+      
+
+      <div class="slide-container swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="card">
+                    <div class="overlay"></div>
+                    <div class="image-content">
+                        <div class="card-image">
+                            <img src="{{ url_for('static', filename='image_login/people.jpg')}}" alt="people">
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="name">RailwayGo</h2>
+                        <p class="description">Elevate your travel experience with our railway services. With our modern and efficient KTM and ETS trains, we ensure a seamless journey that brings joy to you and your loved ones. Let us be your companions in creating unforgettable memories on your travels.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="card">
+                    <div class="overlay"></div>
+                    <div class="image-content">
+                        <div class="card-image">
+                            <img src="{{ url_for('static', filename='image_login/food.png')}}"  alt="food">
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="name">RailwayFood</h2>
+                        <p class="description">Our train journey promises to tantalize your taste buds with flavors from around the globe, right from your carriage window. From spicy street bites to comforting classics, get ready to savor the diverse flavors of the world without ever leaving your seat!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="card">
+                    <div class="overlay"></div>
+                    <div class="image-content">
+                        <div class="card-image">
+                            <img src="{{ url_for('static', filename='image_login/ets5.jpg')}}" alt="ets">
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="name">ETS</h2>
+                        <p class="description">Malaysia's ETS, operated by Keretapi Tanah Melayu Berhad, is the country's fastest inter-city rail, reaching speeds of up to 140 km/h (87 mph). It runs between Gemas and Padang Besar near the Malaysia-Thai border.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <div class="overlay"></div>
+                    <div class="image-content">
+                        <div class="card-image">
+                            <img src="{{ url_for('static', filename='image_login/ktm3.jpg')}}" alt="ktm">
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="name">KTM</h2>
+                        <p class="description">KTM Komuter: Malaysia's commuter rail, launched in 1995, serves Kuala Lumpur and nearby areas. Expanded to northern states in 2015, it offers air-conditioned trains and 'Park & Ride' facilities, providing convenient travel for urban and suburban commuters.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <div class="overlay"></div>
+                    <div class="image-content">
+                        <div class="card-image">
+                            <img src="{{ url_for('static', filename='image_login/service.jpg')}}" alt="service">
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="name">RailwayService</h2>
+                        <p class="description">Your premier rail service for seamless travel experiences. From punctual departures to onboard comfort, we're dedicated to serving you better. Sit back, relax, and let us take you where you need to go, ensuring every journey is a pleasure from start to finish.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <div class="overlay"></div>
+                    <div class="image-content">
+                        <div class="card-image">
+                            <img src="{{ url_for('static', filename='image_login/food.png')}}" alt="food">
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="name">RailwayFood</h2>
+                        <p class="description">Elevate your travel experience with our railway services. With our modern and efficient KTM and ETS trains, we ensure a seamless journey that brings joy to you and your loved ones. Let us be your companions in creating unforgettable memories on your travels.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="swiper-button-prev swiper-navBtn"></div>
+        <div class="swiper-button-next swiper-navBtn"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.4/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='script_login2.js')}}"></script>
+</body>
+</html>
