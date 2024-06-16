@@ -16,37 +16,40 @@
 
         <div class="menu">
             <ul>
-                <li><a href="/ets">ETS/INTERCITY</a></li>
+                <li><a href="/">ETS/INTERCITY</a></li>
                 <li><a href="/komuter">KOMUTER</a></li>
                 <li><a href="/ets/train/<int:train_id>">KOMUTER</a></li>
             </ul>
         </div>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Train Number</th>
-                <th>Departure Station</th>
-                <th>Arrival Station</th>
-                <th>Departure Time</th>
-                <th>Arrival Time</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for train in trains %}
-            <tr>
-                <td>{{ train.train_number }}</td>
-                <td>{{ train.departure_station }}</td>
-                <td>{{ train.arrival_station }}</td>
-                <td>{{ train.departure_time }}</td>
-                <td>{{ train.arrival_time }}</td>
-                <td><a href="../templates/book.html">View Details</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form action="/book" method="post">
+        <label for="schedule">Select Schedule:</label>
+        <select id="schedule" name="schedule">
+
+        </select>
+        <br><br>
+        
+        <label for="class">Select Class:</label>
+        <select id="class" name="class">
+            <option value="business">Business</option>
+            <option value="economy">Economy</option>
+        </select>
+        <br><br>
+        
+        <label for="seat">Select Seat:</label>
+        <select id="seat" name="seat">
+
+        </select>
+        <br><br>
+
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+
+        <button type="submit">Book Ticket</button>
+    </form>
+
 
     <script src="../static/script.js"></script>
 
