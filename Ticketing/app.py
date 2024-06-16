@@ -21,7 +21,7 @@ def ets_train_details(train_id):
     train = conn.execute('SELECT * FROM ets_trains WHERE id = ?', (train_id,)).fetchone()
     seats = conn.execute('SELECT * FROM ets_seats WHERE train_id = ?', (train_id,)).fetchall()
     conn.close()
-    return render_template('komuter.html', train=train, seats=seats)
+    return render_template('book.html', train=train, seats=seats, book_url='ets_book_seat')
 
 @app.route('/ets/book', methods=('GET', 'POST'))
 def ets_book_seat():
@@ -33,14 +33,13 @@ def ets_book_seat():
         conn.commit()
         conn.close()
         return redirect(url_for('ets_train_details', train_id=train_id))
-    return render_template('book.html')
 
 @app.route('/komuter')
 def komuter_trains():
     conn = get_db_connection()
     komuter_trains = conn.execute('SELECT * FROM komuter_trains').fetchall()
     conn.close()
-    return render_template('ets.html', trains=komuter_trains)
+    return render_template('komuter.html', trains=komuter_trains)
 
 @app.route('/komuter/train/<int:train_id>')
 def komuter_train_details(train_id):
@@ -48,7 +47,7 @@ def komuter_train_details(train_id):
     train = conn.execute('SELECT * FROM komuter_trains WHERE id = ?', (train_id,)).fetchone()
     seats = conn.execute('SELECT * FROM komuter_seats WHERE train_id = ?', (train_id,)).fetchall()
     conn.close()
-    return render_template('komuter.html', train=train, seats=seats)
+    return render_template('book.html', train=train, seats=seats, book_url='komuter_book_seat')
 
 @app.route('/komuter/book', methods=('GET', 'POST'))
 def komuter_book_seat():
@@ -60,7 +59,6 @@ def komuter_book_seat():
         conn.commit()
         conn.close()
         return redirect(url_for('komuter_train_details', train_id=train_id))
-    return render_template('book.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
