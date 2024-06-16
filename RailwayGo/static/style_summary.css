@@ -128,4 +128,95 @@ table {
     font-size: 20px;
  }
 
+/* PAY */
 
+
+.pay--nav {
+    display: flex;
+    font-size: 14px;
+    
+}
+
+.navbar {
+    margin: auto;
+    padding: 0.5rem 1.5rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link, .drop-down li {
+    list-style: none;
+    height: 100%;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: currentColor;
+}
+
+.drop-down {
+    position: absolute;
+    padding: 0.5rem 0;
+    margin: 0.5rem -0.5rem;
+    background: antiquewhite;
+    color: black;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    font-size: 12px;
+    display: none;
+}
+
+.nav-link:hover {
+    background-color: black;
+    color: #fff;
+    border-radius: 0.5rem;
+}
+
+.paydwn:hover .drop-down {
+    display: block;
+}
+
+.paydwn a {
+    display: flex;
+    align-items: center;
+}
+
+.paydwn .bxs-down-arrow {
+    font-size: 18px;
+    position: relative;
+    right: -5px;
+    transform: rotate(0deg);
+    transition: 0.3s ease-in-out all;
+}
+
+.paydwn:hover .bxs-down-arrow {
+    transform: rotate(180deg);
+}
+
+.drop-down li:hover {
+    background: black;
+    color: #fff;
+    border-radius: 0.5rem;
+}
+
+.pay p{
+    text-align: center;
+    padding-top: 80px;
+}
+
+.pay button {
+    font-size: 20px;
+    color: white;
+    background-color: green;
+    padding: 5px;
+    cursor: pointer;
+}

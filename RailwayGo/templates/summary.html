@@ -51,9 +51,35 @@
         </section>
 
         <section class="pay">
-            <button>Online Banking</button>
-            <button>Debit/Credit Card</button>
-            <button>Checkout</button>
+            <div class="pay--nav">
+                <nav class="navbar">
+                    <ul class="nav-links">
+                        <li class="nav-link paydwn">
+                            <a href="#">FPX
+                                <span><i class='bx bxs-down-arrow'></i></span>
+                            </a>
+                            <ul class="drop-down">
+                                <li>Maybank</li>
+                                <li>Bank muamalat</li>
+                                <li>Bank Islam</li>
+                            </ul>
+                        </li>
+                        <li class="nav-link paydwn">
+                            <a href="#">Card
+                                <span><i class='bx bxs-down-arrow'></i></span>
+                            </a>
+                            <ul class="drop-down">
+                                <li>Debit card</li>
+                                <li>Credit card</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <p>
+                <button>Checkout</button>
+            </p>
         </section>
     
     <script src="{{url_for('static', filename='script_food.js')}}"></script>
