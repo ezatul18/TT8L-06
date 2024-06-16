@@ -22,12 +22,30 @@
         </div>
     </div>
 
-    <ul>
-        {% for train in trains %}
-            <li><a href="../app.py">{{ train['train_number'] }} - {{ train['departure_station'] }} to {{ train['arrival_station'] }}</a></li>
-        {% endfor %}
-    </ul>
-
+    <table>
+        <thead>
+            <tr>
+                <th>Train Number</th>
+                <th>Departure Station</th>
+                <th>Arrival Station</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for train in trains %}
+            <tr>
+                <td>{{ train.train_number }}</td>
+                <td>{{ train.departure_station }}</td>
+                <td>{{ train.arrival_station }}</td>
+                <td>{{ train.departure_time }}</td>
+                <td>{{ train.arrival_time }}</td>
+                <td><a href="../app.py">View Details</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <script src="../static/script.js"></script>
 
