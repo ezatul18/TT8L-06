@@ -5,7 +5,7 @@ def init_db():
     cursor = conn.cursor()
 
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS trains (
+        CREATE TABLE IF NOT EXISTS ets_trains (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             train_number TEXT NOT NULL,
             departure_station TEXT NOT NULL,
@@ -16,12 +16,33 @@ def init_db():
     ''')
 
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS seats (
+        CREATE TABLE IF NOT EXISTS ets_seats (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             train_id INTEGER,
             seat_number TEXT NOT NULL,
             status TEXT NOT NULL,
-            FOREIGN KEY (train_id) REFERENCES trains(id)
+            FOREIGN KEY(train_id) REFERENCES ets_trains(id)
+        )
+    ''')
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS komuter_trains (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            train_number TEXT NOT NULL,
+            departure_station TEXT NOT NULL,
+            arrival_station TEXT NOT NULL,
+            departure_time TEXT NOT NULL,
+            arrival_time TEXT NOT NULL
+        )
+    ''')
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS komuter_seats (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            train_id INTEGER,
+            seat_number TEXT NOT NULL,
+            status TEXT NOT NULL,
+            FOREIGN KEY(train_id) REFERENCES komuter_trains(id)
         )
     ''')
 
