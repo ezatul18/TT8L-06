@@ -5,7 +5,22 @@
     <title>Book Seat</title>
     <link rel="stylesheet" href="../static/styles.css">
 </head>
+
 <body>
+    <div class="navbar">
+        <div class="icon">
+            <h2 class="logo">RailwayTicket</h2>
+        </div>
+
+        <div class="menu">
+            <ul>
+                <li><a href="/ets">ETS/INTERCITY</a></li>
+                <li><a href="/komuter">KOMUTER</a></li>
+                <li><a href="book.html">KOMUTER</a></li>
+            </ul>
+        </div>
+    </div>
+
     <h1>Train Details - {{ train.train_number }}</h1>
     <p>Departure Station: {{ train.departure_station }}</p>
     <p>Arrival Station: {{ train.arrival_station }}</p>
@@ -28,7 +43,7 @@
                 <td>{{ seat.status }}</td>
                 <td>
                     {% if seat.status == 'available' %}
-                    <form action="../app.py" method="post">
+                    <form action="../templates/book.html" method="post">
                         <input type="hidden" name="train_id" value="{{ train.id }}">
                         <input type="hidden" name="seat_number" value="{{ seat.seat_number }}">
                         <button type="submit">Book</button>
