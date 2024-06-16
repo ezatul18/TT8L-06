@@ -26,28 +26,6 @@ def login():
 
     return render_template("login.html")
 
-@auth.route("/logout")
-def logout():
-    conn = get_db_connection()
-    try:
-        conn.execute('''
-            UPDATE cart
-            SET status = 'deleted'
-            WHERE status = 'active'
-        ''')
-        conn.commit()
-    except Exception as e:
-       
-        print(f"Error updating cart items: {e}")
-        conn.rollback()
-    finally:
-        conn.close()
-
-    session.clear()
-
-    return redirect(url_for('auth.login'))
-
-
 
 @auth.route("/sign-up", methods=['GET', 'POST'])
 def sign_up():
@@ -76,6 +54,28 @@ def sign_up():
             return redirect(url_for('auth.login'))
 
     return render_template("sign_up.html")
+
+## LOG OUT ##
+@auth.route("/logout")
+def logout():
+    conn = get_db_connection()
+    try:
+        conn.execute('''
+            UPDATE cart
+            SET status = 'deleted'
+            WHERE status = 'active'
+        ''')
+        conn.commit()
+    except Exception as e:
+       
+        print(f"Error updating cart items: {e}")
+        conn.rollback()
+    finally:
+        conn.close()
+
+    session.clear()
+
+    return redirect(url_for('auth.login'))
 
 ## ADD TO CART- FOOD ##
 def get_db_connection():
