@@ -1,30 +1,28 @@
 import sqlite3
 
-def populate_data():
-    conn = sqlite3.connect('Ticketing.db')
-    c = conn.cursor()
+def insert_sample_data():
+    conn = sqlite3.connect('train_booking.db')
+    cursor = conn.cursor()
 
-    c.execute('INSERT INTO ets_trains (train_number, departure_station, arrival_station, departure_time, arrival_time) VALUES (?, ?, ?, ?, ?)',
-              ('ETS123', 'Station A', 'Station B', '09:00', '12:00'))
-    c.execute('INSERT INTO ets_trains (train_number, departure_station, arrival_station, departure_time, arrival_time) VALUES (?, ?, ?, ?, ?)',
-              ('ETS456', 'Station C', 'Station D', '14:00', '17:00'))
+    cursor.execute("INSERT INTO Trains (train_name, total_seats) VALUES ('Express Train', 100)")
+    cursor.execute("INSERT INTO Trains (train_name, total_seats) VALUES ('Local Train', 200)")
 
-    c.execute('INSERT INTO komuter_trains (train_number, departure_station, arrival_station, departure_time, arrival_time) VALUES (?, ?, ?, ?, ?)',
-              ('KOM123', 'Station E', 'Station F', '07:00', '09:00'))
-    c.execute('INSERT INTO komuter_trains (train_number, departure_station, arrival_station, departure_time, arrival_time) VALUES (?, ?, ?, ?, ?)',
-              ('KOM456', 'Station G', 'Station H', '15:00', '17:00'))
+    cursor.execute("INSERT INTO Schedules (train_id, departure_time, arrival_time) VALUES (1, '2024-06-20 08:00', '2024-06-20 12:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_time, arrival_time) VALUES (2, '2024-06-20 09:00', '2024-06-20 11:00')")
 
-    for i in range(1, 11):
-        c.execute('INSERT INTO ets_seats (train_id, seat_number, status) VALUES (?, ?, ?)', (1, f'A{i}', 'available'))
-        c.execute('INSERT INTO ets_seats (train_id, seat_number, status) VALUES (?, ?, ?)', (2, f'B{i}', 'available'))
+    cursor.execute("INSERT INTO Seats (schedule_id, seat_class, seat_number) VALUES (1, 'business', 'B1')")
+    cursor.execute("INSERT INTO Seats (schedule_id, seat_class, seat_number) VALUES (1, 'economy', 'E1')")
+    cursor.execute("INSERT INTO Seats (schedule_id, seat_class, seat_number) VALUES (2, 'business', 'B2')")
+    cursor.execute("INSERT INTO Seats (schedule_id, seat_class, seat_number) VALUES (2, 'economy', 'E2')")
 
-    for i in range(1, 11):
-        c.execute('INSERT INTO komuter_seats (train_id, seat_number, status) VALUES (?, ?, ?)', (1, f'C{i}', 'available'))
-        c.execute('INSERT INTO komuter_seats (train_id, seat_number, status) VALUES (?, ?, ?)', (2, f'D{i}', 'available'))
+    cursor.execute("INSERT INTO Bookings (schedule_id, seat_id, customer_name, booking_time) VALUES (1, 1, 'Alice', '2024-06-15 10:00')")
+    cursor.execute("INSERT INTO Bookings (schedule_id, seat_id, customer_name, booking_time) VALUES (2, 3, 'Bob', '2024-06-15 11:00')")
 
     conn.commit()
     conn.close()
+    print("Sample data inserted successfully.")
 
-if __name__ == '__main__':
-    populate_data()
+if __name__ == "__main__":
+    insert_sample_data()
+
 
