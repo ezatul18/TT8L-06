@@ -13,9 +13,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
         });
 
-
-        document.getElementById('departure_station').addEventListener('change', function() {
-            fetch(`/get_schedules?departure_station_id=${this.value}&arrival_station_id=${document.getElementById('arrival_station').value}`)
+    function updateSchedules() {
+        const departureStationId = document.getElementById('departure_station').value;
+        const arrivalStationId = document.getElementById('arrival_station').value;
+        if (departureStationId && arrivalStationId) {
+            fetch(`/get_schedules?departure_station_id=${departureStationId}&arrival_station_id=${arrivalStationId}`)
                 .then(response => response.json())
                 .then(data => {
                     const scheduleSelect = document.getElementById('schedule');
@@ -27,36 +29,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         scheduleSelect.appendChild(option);
                     });
                 });
-        });
+        }
+    }
 
-        document.getElementById('arrival_station').addEventListener('change', function() {
-            fetch(`/get_schedules?departure_station_id=${document.getElementById('departure_station').value}&arrival_station_id=${this.value}`)
+    document.getElementById('departure_station').addEventListener('change', updateSchedules);
+    document.getElementById('arrival_station').addEventListener('change', updateSchedules);
+
+    function updateSeats() {
+        const scheduleId = document.getElementById('schedule').value;
+        const seatClass = document.getElementById('class').value;
+        if (scheduleId && seatClass) {
+            fetch(`/get_seats/${scheduleId}/${seatClass}`)
                 .then(response => response.json())
                 .then(data => {
-                    const scheduleSelect = document.getElementById('schedule');
-                    scheduleSelect.innerHTML = '';
-                    data.schedules.forEach(schedule => {
+                    const seatSelect = document.getElementById('seat');
+                    seatSelect.innerHTML = '';
+                    data.seats.forEach(seat => {
+                        console.log(`Seat: ${seat.seat_number}`);  // Debug print
                         const option = document.createElement('option');
-                        option.value = schedule.schedule_id;
-                        option.text = `Train: ${schedule.train_name} Departure: ${schedule.departure_time} Arrival: ${schedule.arrival_time}`;
-                        scheduleSelect.appendChild(option);
+                        option.value = seat.seat_id;
+                        option.text = `Seat: ${seat.seat_number}`;
+                        seatSelect.appendChild(option);
                     });
                 });
-        });
+        }
+    }
 
-    document.getElementById('schedule').addEventListener('change', function() {
-        const scheduleId = this.value;
-        fetch(`/get_seats/${scheduleId}`)
-            .then(response => response.json())
-            .then(data => {
-                const seatSelect = document.getElementById('seat');
-                seatSelect.innerHTML = '';
-                data.seats.forEach(seat => {
-                    const option = document.createElement('option');
-                    option.value = seat.seat_id;
-                    option.text = `Seat: ${seat.seat_number} (${seat.seat_class})`;
-                    seatSelect.appendChild(option);
-                });
-            });
-    });
+    document.getElementById('schedule').addEventListener('change', updateSeats);
+    document.getElementById('class').addEventListener('change', updateSeats);
 });

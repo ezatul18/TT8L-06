@@ -25,30 +25,35 @@
 
     <form action="/book" method="post">
 
-        <label for="departure_station">Select Departure Station:</label>
+        <label for="departure_station">Departure Station:</label>
         <select id="departure_station" name="departure_station">
+            <option value="">-- Select Departure Station --</option>
         </select>
         <br><br>
         
-        <label for="arrival_station">Select Arrival Station:</label>
+        <label for="arrival_station">Arrival Station:</label>
         <select id="arrival_station" name="arrival_station">
+            <option value="">-- Select Arrival Station --</option>
         </select>
         <br><br>
 
-        <label for="schedule">Select Schedule:</label>
+        <label for="schedule">Schedule:</label>
         <select id="schedule" name="schedule">
+            <option value="">-- Select Schedule --</option>
         </select>
         <br><br>
         
-        <label for="class">Select Class:</label>
+        <label for="class">Class:</label>
         <select id="class" name="class">
+            <option value="">-- Select Class --</option>
             <option value="business">Business</option>
             <option value="economy">Economy</option>
         </select>
         <br><br>
         
-        <label for="seat">Select Seat:</label>
-        <select id="seat" name="seat">
+        <label for="seat">Seat:</label>
+        <select id="seat" name="seat" required>
+            <option value="">-- Select Seat --</option>
         </select>
         <br><br>
 

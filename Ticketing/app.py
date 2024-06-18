@@ -22,13 +22,17 @@ def get_stations():
 
 @app.route('/get_schedules', methods=['GET'])
 def get_schedules():
+    departure_station_id = request.args.get('departure_station_id')
+    arrival_station_id = request.args.get('arrival_station_id')
+
     conn = sqlite3.connect('train_booking.db')
     cursor = conn.cursor()
     cursor.execute('''
         SELECT S.schedule_id, T.train_name, S.departure_time, S.arrival_time
         FROM Schedules S
         JOIN Trains T ON S.train_id = T.train_id
-    ''')
+        WHERE S.departure_station_id = ? AND S.arrival_station_id = ?
+    ''',(departure_station_id, arrival_station_id))
     schedules = cursor.fetchall()
     conn.close()
 
@@ -39,19 +43,19 @@ def get_schedules():
     return jsonify({'schedules': schedules_list})
 
 
-@app.route('/get_seats/<int:schedule_id>', methods=['GET'])
-def get_seats(schedule_id):
+@app.route('/get_seats/<int:schedule_id>/<string:seat_class>', methods=['GET'])
+def get_seats(schedule_id, seat_class):
     conn = sqlite3.connect('train_booking.db')
     cursor = conn.cursor()
     cursor.execute('''
-        SELECT seat_id, seat_class, seat_number 
+        SELECT seat_id, seat_number 
         FROM Seats 
-        WHERE schedule_id = ? AND is_available = 1
-    ''', (schedule_id,))
+        WHERE schedule_id = ? AND seat_class = ? AND is_available = 1
+    ''', (schedule_id, seat_class))
     seats = cursor.fetchall()
     conn.close()
 
-    seats_list = [{'seat_id': seat[0], 'seat_class': seat[1], 'seat_number': seat[2]} for seat in seats]
+    seats_list = [{'seat_id': seat[0], 'seat_class': seat[1]} for seat in seats]
     
     return jsonify({'seats': seats_list})
 
