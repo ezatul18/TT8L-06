@@ -8,6 +8,18 @@ app = Flask(__name__)
 def booking_page():
     return render_template('ets.html')
 
+@app.route('/get_stations', methods=['GET'])
+def get_stations():
+    conn = sqlite3.connect('train_booking.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT station_id, station_name FROM Stations')
+    stations = cursor.fetchall()
+    conn.close()
+
+    stations_list = [{'station_id': station[0], 'station_name': station[1]} for station in stations]
+    
+    return jsonify({'stations': stations_list})
+
 @app.route('/get_schedules', methods=['GET'])
 def get_schedules():
     conn = sqlite3.connect('train_booking.db')
@@ -25,6 +37,7 @@ def get_schedules():
     for schedule in schedules]
     
     return jsonify({'schedules': schedules_list})
+
 
 @app.route('/get_seats/<int:schedule_id>', methods=['GET'])
 def get_seats(schedule_id):
