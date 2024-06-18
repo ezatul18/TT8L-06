@@ -4,6 +4,11 @@ def create_tables():
     conn = sqlite3.connect('train_booking.db')
     cursor = conn.cursor()
 
+    cursor.execute('''CREATE TABLE IF NOT EXISTS Stations (
+                   station_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   station_name TEXT NOT NULL
+                   )''')
+
     cursor.execute('''CREATE TABLE IF NOT EXISTS Trains (
                         train_id INTEGER PRIMARY KEY AUTOINCREMENT,
                         train_name TEXT NOT NULL,
@@ -13,9 +18,13 @@ def create_tables():
     cursor.execute('''CREATE TABLE IF NOT EXISTS Schedules (
                         schedule_id INTEGER PRIMARY KEY AUTOINCREMENT,
                         train_id INTEGER,
+                        departure_station_id INTEGER,
+                        darrival_station_id INTEGER,
                         departure_time TEXT NOT NULL,
                         arrival_time TEXT NOT NULL,
                         FOREIGN KEY (train_id) REFERENCES Trains(train_id)
+                        FOREIGN KEY (departure_station_id) REFERENCES Stations(station_id),
+                        FOREIGN KEY (arrival_station_id) REFERENCES Stations(station_id)
                      )''')
 
     cursor.execute('''CREATE TABLE IF NOT EXISTS Seats (
