@@ -1,6 +1,7 @@
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify, session
 from .models import add_user, get_user_by_email, get_user_by_username
+from .models import connect_db, add_booking, get_stations
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os
@@ -179,4 +180,30 @@ def summary():
     conn.close()
 
     return render_template('summary.html', user=user, cart_items=cart_items, total_price=total_price)
+## KTM FUNCTION FOR STATIONS ##
+@auth.route('/ktm')
+def ktm():
+    stations = get_stations()
+    return render_template('ktm.html', stations=stations)
 
+
+## BOOK TICKET ROUTE ##
+@auth.route('/book_ticket', methods=['POST'])
+def book_ticket():
+    if request.method == 'POST':
+        origin = request.form.get('origin')
+        destination = request.form.get('destination')
+        date = request.form.get('date')
+
+        # Example of adding booking to database using db.py function
+        add_booking(origin, destination, date)
+
+        return jsonify({'message': 'Booking successful!'})
+
+    return jsonify({'error': 'Invalid request'})
+
+
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
+    return conn

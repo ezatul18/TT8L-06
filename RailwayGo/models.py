@@ -39,3 +39,28 @@ def get_user_by_username(username):
 
 
 
+def add_booking(origin, destination, date):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("INSERT INTO bookings (origin, destination, date) VALUES (?, ?, ?)", (origin, destination, date))
+    conn.commit()
+    conn.close()
+
+def add_station(name):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("INSERT INTO stations (name) VALUES (?)", (name,))
+    conn.commit()
+    conn.close()
+
+def get_stations():
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM stations")
+    stations = cur.fetchall()
+    conn.close()
+    return stations
+
+
+
+
