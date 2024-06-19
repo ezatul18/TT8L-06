@@ -65,6 +65,14 @@ ul li a:hover {
     gap: 10px;
     margin-top: 20px;
 }
+
+.seat-map {
+    display: grid;
+    grid-template-columns: repeat(5, 50px); 
+    gap: 10px;
+    margin-top: 20px;
+}
+
 .seat {
     width: 50px;
     height: 50px;
@@ -74,14 +82,17 @@ ul li a:hover {
     line-height: 50px;
     cursor: pointer;
 }
+
 .seat.selected {
     background-color: green;
     color: white;
 }
+
 .seat.unavailable {
     background-color: red;
     cursor: not-allowed;
 }
+
 .popup {
     display: none;
     position: fixed;
@@ -93,6 +104,7 @@ ul li a:hover {
     border: 1px solid #333;
     z-index: 1000;
 }
+
 .popup-overlay {
     display: none;
     position: fixed;

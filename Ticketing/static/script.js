@@ -58,34 +58,64 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     document.querySelectorAll('.seat').forEach(seat => {
                         if (!seat.classList.contains('unavailable')) {
                             seat.addEventListener('click', function() {
-                                document.querySelectorAll('.seat.selected').forEach(s => s.classList.remove('selected'));
-                                seat.classList.add('selected');
-                                document.getElementById('seat').value = seat.innerText;
+                                const selectedSeats = document.querySelectorAll('.seat.selected').length;
+                                const maxPax = parseInt(document.getElementById('num_pax').value);
+                                if (selectedSeats < maxPax) {
+                                    seat.classList.toggle('selected');
+                                } else if (seat.classList.contains('selected')) {
+                                    seat.classList.remove('selected');
+                                }
+
+                                const selectedSeatNumbers = Array.from(document.querySelectorAll('.seat.selected')).map(s => s.innerText);
+                                document.getElementById('seat').value = selectedSeatNumbers.join(', ');
                             });
                         }
                     });
+
+                    showPopup();
+                })
+                .catch(error => {
+                    console.error('Error fetching seats:', error);
                 });
         }
     }
 
     document.getElementById('schedule').addEventListener('change', updateSeats);
     document.getElementById('class').addEventListener('change', updateSeats);
+    document.getElementById('num_pax').addEventListener('change', updateSeats);
 
-    const popupOverlay = document.querySelector('.popup-overlay');
-    const popup = document.querySelector('.popup');
-    document.getElementById('select-seat-btn').addEventListener('click', () => {
+    function showPopup() {
+        const popupOverlay = document.querySelector('.popup-overlay');
+        const popup = document.querySelector('.popup');
         popupOverlay.style.display = 'block';
         popup.style.display = 'block';
+    }
+
+    document.getElementById('select-seat-btn').addEventListener('click', () => {
         updateSeats();
     });
 
     document.getElementById('close-popup').addEventListener('click', () => {
+        const popupOverlay = document.querySelector('.popup-overlay');
+        const popup = document.querySelector('.popup');
         popupOverlay.style.display = 'none';
         popup.style.display = 'none';
     });
 
+    const popupOverlay = document.querySelector('.popup-overlay');
     popupOverlay.addEventListener('click', () => {
+        const popupOverlay = document.querySelector('.popup-overlay');
+        const popup = document.querySelector('.popup');
         popupOverlay.style.display = 'none';
         popup.style.display = 'none';
     });
+
+    const numPaxSelect = document.getElementById('num_pax');
+    for (let i = 1; i <= 13; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        numPaxSelect.appendChild(option);
+    }
 });
+
