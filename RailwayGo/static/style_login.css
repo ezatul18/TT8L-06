@@ -372,6 +372,7 @@ nav{
     font-weight: 600;
     color: #E4AEC5;
     font-family: 'Rubik', sans-serif;
+    
 
 }
 
@@ -384,7 +385,7 @@ nav{
 .header_content {
     position: absolute;
     top: 50%;
-    left: 35%;
+    left: 25%;
     transform: translate(-50%, -50%);
     z-index: 1; 
     text-align: left;
