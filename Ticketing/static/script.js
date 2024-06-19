@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    function fetchSeats() {
+    let maxPassengers = 1; 
+
+    function updateSeats() {
         const seatClass = document.getElementById('class').value;
         fetch(`/get_seats/${seatClass}`)
             .then(response => response.json())
@@ -12,12 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     seatDiv.dataset.seatId = seat.seat_id;
                     seatDiv.innerText = seat.seat_number;
                     seatDiv.addEventListener('click', () => {
-                        seatDiv.classList.toggle('selected');
-                        updateSelectedSeats(); 
+                        if (seatDiv.classList.contains('selected')) {
+                            seatDiv.classList.remove('selected');
+                        } else {
+                            const selectedSeats = document.querySelectorAll('.seat.selected').length;
+                            if (selectedSeats < maxPassengers) {
+                                seatDiv.classList.add('selected');
+                            }
+                        }
+                        updateSelectedSeats();
                     });
                     seatMap.appendChild(seatDiv);
                 });
-                showPopup(); 
+                showPopup();
             })
             .catch(error => {
                 console.error('Error fetching seats:', error);
@@ -25,10 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateSelectedSeats() {
-        const selectedSeatIds = Array.from(document.querySelectorAll('.seat.selected'))
-            .map(seat => seat.dataset.seatId);
-        document.getElementById('seat').value = selectedSeatIds.join(',');
+        const selectedSeats = document.querySelectorAll('.seat.selected');
+        const selectedSeatNumbers = Array.from(selectedSeats)
+            .map(seat => seat.innerText);
+        document.getElementById('seat').value = selectedSeatNumbers.join(', ');
     }
+
+    document.getElementById('select-seat-btn').addEventListener('click', () => {
+        maxPassengers = parseInt(document.getElementById('num_pax').value) || 1;
+        updateSeats();
+    });
 
     function showPopup() {
         const popupOverlay = document.querySelector('.popup-overlay');
@@ -37,49 +52,40 @@ document.addEventListener('DOMContentLoaded', () => {
         popup.style.display = 'block';
     }
 
-    function closePopup() {
+    document.getElementById('close-popup').addEventListener('click', () => {
         const popupOverlay = document.querySelector('.popup-overlay');
         const popup = document.querySelector('.popup');
         popupOverlay.style.display = 'none';
         popup.style.display = 'none';
-    }
-
-    document.getElementById('select-seat-btn').addEventListener('click', fetchSeats);
-
-    document.getElementById('close-popup').addEventListener('click', closePopup);
+    });
 
     const popupOverlay = document.querySelector('.popup-overlay');
-    popupOverlay.addEventListener('click', closePopup);
+    popupOverlay.addEventListener('click', () => {
+        const popupOverlay = document.querySelector('.popup-overlay');
+        const popup = document.querySelector('.popup');
+        popupOverlay.style.display = 'none';
+        popup.style.display = 'none';
+    });
 
     const numPaxSelect = document.getElementById('num_pax');
+    numPaxSelect.addEventListener('change', () => {
+        maxPassengers = parseInt(numPaxSelect.value) || 1;
+        const selectedSeats = document.querySelectorAll('.seat.selected');
+        if (selectedSeats.length > maxPassengers) {
+            selectedSeats.forEach(seat => seat.classList.remove('selected'));
+        }
+        updateSelectedSeats();
+    });
+
     for (let i = 1; i <= 13; i++) {
         const option = document.createElement('option');
         option.value = i;
         option.textContent = i;
         numPaxSelect.appendChild(option);
     }
-
-    function bookSeats() {
-        const formData = new FormData(document.getElementById('booking-form'));
-        fetch('/book', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(message => {
-            console.log('Booking response:', message);
-        })
-        .catch(error => {
-            console.error('Error booking seats:', error);
-        });
-    }
-
-    document.getElementById('booking-form').addEventListener('submit', function(event) {
-        event.preventDefault(); 
-        bookSeats(); 
-    });
-
 });
+
+
 
 
 
