@@ -15,6 +15,14 @@ def about():
 def homefood():
     return render_template("home_food.html")
 
+@views.route("/ets")  
+def ets():
+    return render_template("ets.html")
+
+@views.route("/ktm")  
+def ktm():
+    return render_template("ktm.html")
+
 
 
 
