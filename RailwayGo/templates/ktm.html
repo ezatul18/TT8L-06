@@ -50,9 +50,9 @@
                             <!-- Loop through stations fetched from Flask backend -->
                             {% for station in stations %}
                             <div class="station">
-                                <input name="dest_type" id="s{{ station.id }}" style="display: none;" value="{{ station.name }}" type="radio" unchecked />
-                                <label for="s{{ station.id }}" class="seat booked">
-                                    {{ station.name }}
+                                <input name="dest_type" id="s{{ stations.id }}" style="display: none;" value="{{ stations.name }}" type="radio" unchecked />
+                                <label for="s{{ stations.id }}" class="seat booked">
+                                    {{ stations.name }}
                                 </label>
                             </div>
                             {% endfor %}
