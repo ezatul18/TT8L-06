@@ -1,78 +1,79 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, render_template, jsonify
 import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
 
-@app.route('/')
-def booking_page():
-    return render_template('ets.html')
-
-@app.route('/get_stations', methods=['GET'])
-def get_stations():
+def get_db_connection():
     conn = sqlite3.connect('train_booking.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT station_id, station_name FROM Stations')
-    stations = cursor.fetchall()
+    conn.row_factory = sqlite3.Row
+    return conn
+
+@app.route('/')
+def index():
+    return render_template('book.html')
+
+@app.route('/get_stations')
+def get_stations():
+    conn = get_db_connection()
+    stations = conn.execute('SELECT * FROM Stations').fetchall()
     conn.close()
+    return jsonify({'stations': [dict(row) for row in stations]})
 
-    stations_list = [{'station_id': station[0], 'station_name': station[1]} for station in stations]
-    
-    return jsonify({'stations': stations_list})
-
-@app.route('/get_schedules', methods=['GET'])
+@app.route('/get_schedules')
 def get_schedules():
     departure_station_id = request.args.get('departure_station_id')
     arrival_station_id = request.args.get('arrival_station_id')
-    conn = sqlite3.connect('train_booking.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        SELECT s.schedule_id, t.train_name, s.departure_time, s.arrival_time
+    date = request.args.get('date')
+    conn = get_db_connection()
+    schedules = conn.execute('''
+        SELECT s.schedule_id, t.train_name, s.departure_time, s.arrival_time 
         FROM Schedules s
         JOIN Trains t ON s.train_id = t.train_id
-        WHERE s.departure_station_id = ? AND s.arrival_station_id = ?
-    ''', (departure_station_id, arrival_station_id))
-    schedules = cursor.fetchall()
+        WHERE s.departure_station_id = ? AND s.arrival_station_id = ? AND date(s.departure_time) = ?
+    ''', (departure_station_id, arrival_station_id, date)).fetchall()
     conn.close()
+    return jsonify({'schedules': [dict(row) for row in schedules]})
 
-    schedules_list = [{'schedule_id': sched[0], 'train_name': sched[1], 'departure_time': sched[2], 'arrival_time': sched[3]} for sched in schedules]
-
-    return jsonify({'schedules': schedules_list})
-
-@app.route('/get_seats/<int:schedule_id>/<seat_class>', methods=['GET'])
+@app.route('/get_seats/<int:schedule_id>/<string:seat_class>')
 def get_seats(schedule_id, seat_class):
-    conn = sqlite3.connect('train_booking.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT seat_id, seat_number, is_available FROM Seats WHERE schedule_id = ? AND seat_class = ?", (schedule_id, seat_class))
-    seats = cursor.fetchall()
-    seat_data = [{'seat_id': seat[0], 'seat_number': seat[1], 'is_available': seat[2]} for seat in seats]
+    conn = get_db_connection()
+    seats = conn.execute('''
+        SELECT seat_id, seat_number, seat_class, is_available
+        FROM Seats
+        WHERE schedule_id = ? AND seat_class = ?
+    ''', (schedule_id, seat_class)).fetchall()
     conn.close()
-    return jsonify({'seats': seat_data})
+    return jsonify({'seats': [dict(row) for row in seats]})
 
-@app.route('/book', methods=['POST'])
+@app.route('/book_ticket', methods=['POST'])
 def book_ticket():
-    schedule_id = request.form['schedule']
-    seat_id = request.form['seat']
-    customer_name = request.form['name']
-    booking_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    data = request.get_json()
+    schedule_id = data.get('schedule_id')
+    seat_id = data.get('seat_id')
+    num_passengers = data.get('num_passengers')
 
-    conn = sqlite3.connect('train_booking.db')
+    conn = get_db_connection()
     cursor = conn.cursor()
-
-    cursor.execute('''
-        INSERT INTO Bookings (schedule_id, seat_id, customer_name, booking_time)
-        VALUES (?, ?, ?, ?)
-    ''', (schedule_id, seat_id, customer_name, booking_time))
-
-    cursor.execute('''
-        UPDATE Seats SET is_available = 0 WHERE seat_id = ?
-    ''', (seat_id,))
     
+    cursor.execute('''
+        INSERT INTO Bookings (schedule_id, seat_id, num_passengers, booking_date)
+        VALUES (?, ?, ?, ?)
+    ''', (schedule_id, seat_id, num_passengers, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+
+    cursor.execute('''
+        UPDATE Seats
+        SET is_available = 0
+        WHERE seat_id = ?
+    ''', (seat_id,))
+
     conn.commit()
+    booking_id = cursor.lastrowid
     conn.close()
 
-    return "Booking successful!"
+    return jsonify({'status': 'success', 'booking_id': booking_id})
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
+
 

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Booking</title>
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <header>
+       <div class="header">
+        <div class="logo">
+            <img src="./images/pinktrain.png" alt="">
+        </div>
+        <div class="bar">
+            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-xmark" id="hdcross"></i>
+        </div>
+        <div class="nav">
+            <ul>
+                <a href="#">
+                    <li>Home</li>
+                </a>
+                <a href="ets.html">
+                    <li>ETS/Intercity</li>
+                </a>
+                <a href="komuter.html">
+                    <li>Komuter</li>
+                </a>
+
+                </a>
+              
+            </ul>
+        </div>
+        
+        <div class="profile">
+            <ul>
+                <a href="#">
+                    <li>
+                        <i class="fa-solid fa-user" id="user-lap"></i>
+                    </li>
+                </a>
+        </ul>
+    </div>
+       </div>
+    </header>
+    
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ticket Booking</title>
+        <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+        rel="stylesheet"
+      />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
+     
+    </head>
+<body>
+    <div class="center">
+        <div class="tickets">
+            <div class="ticket-selector">
+                <fieldset class="field" data-role="controlgroup" data-type="horizontal">
+                    <div class="head">
+                        <div class="title">ETS</div>
+                    </div>
+                    <div class="seats">
+                        <div class="all-seats">
+                            <div class="station">
+                                <input name="dest_type" id="s1" style="display: none;" value="ALOR SETAR" type="radio" unchecked />
+                                <label for="s1" class="seat booked">
+                                    ALOR SETAR
+                                </label>
+                            </div>
+                            <div class="station">
+                                <input name="dest_type" id="s2" style="display: none;" value="KUALA LUMPUR" type="radio" unchecked />
+                                <label for="s2" class="seat booked">
+                                    KUALA LUMPUR
+                                </label>
+                            </div>
+                            <div class="station">
+                                <input name="dest_type" id="s3" style="display: none;" value="BATANG MELAKA" type="radio" unchecked/>
+                                <label for="s3" class="seat booked">
+                                    BATANG MELAKA
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timings">
+                        
+                        <form>
+                            <div class="dates">
+                                <label class="calendar">Select Date</label>
+                                <input type="date">
+                            </div>
+                            <div class="selectors">
+                                <div class="select-group">
+                                    <button button id="reset-button" class="select-label" for="select-origin">Origin</button>
+                                    <input class="selection" type="text" id="select-origin">
+                                </div>
+                                <div class="select-group2">
+                                    <button class="select-label" for="select-destination">Destination</button>
+                                    <input class="selection" type="text" id="select-destination">
+                                </div>
+                                <div class="price">
+                                    <button id="fetch-schedules">Book</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    
+                </fieldset>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="schedule-container"></div>
+
+    <div id="seat-selection"></div>
+
+    <div id="booking-status"></div>
+
+    <script>
+                $(document).ready(function() {
+            fetchStations();
+
+
+            function fetchStations() {
+                $.ajax({
+                    url: '/get_stations',
+                    type: 'GET',
+                    success: function(data) {
+                        const stations = data.stations;
+                        const selectOrigin = $('#select-origin');
+                        const selectDestination = $('#select-destination');
+
+                        stations.forEach(station => {
+                            selectOrigin.append(`<option value="${station.station_id}">${station.station_name}</option>`);
+                            selectDestination.append(`<option value="${station.station_id}">${station.station_name}</option>`);
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error fetching stations:', error);
+                    }
+                });
+            }
+
+            $('#fetch-schedules').click(function() {
+                const departureStationId = $('#select-origin').val();
+                const arrivalStationId = $('#select-destination').val();
+                const selectedDate = $('#select-date').val();
+
+                $.ajax({
+                    url: `/get_schedules?departure_station_id=${departureStationId}&arrival_station_id=${arrivalStationId}&date=${selectedDate}`,
+                    type: 'GET',
+                    success: function(data) {
+                        const schedules = data.schedules;
+                        const scheduleContainer = $('#schedule-container');
+
+                        scheduleContainer.empty();
+                        schedules.forEach(schedule => {
+                            const scheduleHtml = `
+                                <div>
+                                    <p>Train: ${schedule.train_name}</p>
+                                    <p>Departure: ${schedule.departure_time} | Arrival: ${schedule.arrival_time}</p>
+                                    <button class="select-schedule" data-schedule-id="${schedule.schedule_id}">Select</button>
+                                </div>
+                            `;
+                            scheduleContainer.append(scheduleHtml);
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error fetching schedules:', error);
+                    }
+                });
+            });
+
+            $('#schedule-container').on('click', '.select-schedule', function() {
+                const scheduleId = $(this).data('schedule-id');
+
+                $.ajax({
+                    url: `/get_seats/${scheduleId}/Business`, 
+                    type: 'GET',
+                    success: function(data) {
+                        const seats = data.seats;
+                        const seatSelect = $('#seat-selection');
+
+                        seatSelect.empty();
+
+                        seats.forEach(seat => {
+                            const seatHtml = `
+                                <div class="seat">
+                                    <input type="radio" id="seat-${seat.seat_id}" name="selected-seat" value="${seat.seat_id}">
+                                    <label for="seat-${seat.seat_id}">Seat ${seat.seat_number} (${seat.seat_class})</label>
+                                </div>
+                            `;
+                            seatSelect.append(seatHtml);
+                        });
+
+                        seatSelect.append('<button id="book-ticket">Book Ticket</button>');
+                    },
+                    error: function(error) {
+                        console.error('Error fetching seats:', error);
+                    }
+                });
+            });
+
+            $('#seat-selection').on('click', '#book-ticket', function() {
+                const selectedSeatId = $('input[name="selected-seat"]:checked').val();
+
+                const data = {
+                    schedule_id: $('#schedule-container .select-schedule').data('schedule-id'), 
+                    seat_id: selectedSeatId,
+                    num_passengers: 1 
+                };
+
+                $.ajax({
+                    url: '/book_ticket',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(response) {
+                        const bookingStatus = $('#booking-status');
+                        bookingStatus.text(`Booking successful! Ticket ID: ${response.ticket_id}`);
+                    },
+                    error: function(error) {
+                        console.error('Error booking ticket:', error);
+                        const bookingStatus = $('#booking-status');
+                        bookingStatus.text('Error booking ticket. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
