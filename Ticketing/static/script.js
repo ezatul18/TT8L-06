@@ -76,9 +76,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('select-seat-btn').addEventListener('click', () => {
         popupOverlay.style.display = 'block';
         popup.style.display = 'block';
+        updateSeats();
     });
 
     document.getElementById('close-popup').addEventListener('click', () => {
+        popupOverlay.style.display = 'none';
+        popup.style.display = 'none';
+    });
+
+    popupOverlay.addEventListener('click', () => {
         popupOverlay.style.display = 'none';
         popup.style.display = 'none';
     });

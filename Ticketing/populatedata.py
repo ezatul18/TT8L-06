@@ -28,20 +28,18 @@ def insert_sample_data():
     cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 3, 1, '2024-06-21 09:00', '2024-06-21 13:00')")
     cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 3, 1, '2024-06-21 14:00', '2024-06-21 18:00')")
 
-
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (1, '1A', 'business', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (1, '1B', 'economy', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (2, '2A', 'business', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (2, '2B', 'economy', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (3, '3A', 'business', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (3, '3B', 'economy', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (4, '4A', 'business', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (4, '4B', 'economy', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (5, '5A', 'business', 1)")
-    cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (5, '5B', 'economy', 1)")
-
     cursor.execute("INSERT INTO Bookings (schedule_id, seat_id, customer_name, booking_time) VALUES (1, 1, 'Alice', '2024-06-15 10:00')")
     cursor.execute("INSERT INTO Bookings (schedule_id, seat_id, customer_name, booking_time) VALUES (2, 3, 'Bob', '2024-06-15 11:00')")
+
+    for schedule_id in range(1, 6):
+         seat_number = 1
+         for cubicle in range(1, 5):
+            seat_class = 'business' if cubicle <= 2 else 'economy'
+            for seat in range(25):  
+                seat_number_str = f'{seat_number:02d}'
+                cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (?, ?, ?, ?)",
+                               (schedule_id, f'{seat_class[0].upper()}{cubicle}-{seat_number_str}', seat_class, 1))
+                seat_number += 1
 
     conn.commit()
     conn.close()

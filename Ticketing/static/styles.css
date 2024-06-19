@@ -61,7 +61,7 @@ ul li a:hover {
 
 .seat-map {
     display: grid;
-    grid-template-columns: repeat(4, 50px); 
+    grid-template-columns: repeat(5, 50px); 
     gap: 10px;
     margin-top: 20px;
 }

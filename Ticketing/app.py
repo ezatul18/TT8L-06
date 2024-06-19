@@ -39,21 +39,15 @@ def get_schedules():
 
     return jsonify({'schedules': schedules_list})
 
-@app.route('/get_seats/<int:schedule_id>/<string:seat_class>', methods=['GET'])
+@app.route('/get_seats/<int:schedule_id>/<seat_class>', methods=['GET'])
 def get_seats(schedule_id, seat_class):
     conn = sqlite3.connect('train_booking.db')
     cursor = conn.cursor()
-    cursor.execute('''
-        SELECT seat_id, seat_number, is_available 
-        FROM Seats 
-        WHERE schedule_id = ? AND seat_class = ?
-    ''', (schedule_id, seat_class))
+    cursor.execute("SELECT seat_id, seat_number, is_available FROM Seats WHERE schedule_id = ? AND seat_class = ?", (schedule_id, seat_class))
     seats = cursor.fetchall()
+    seat_data = [{'seat_id': seat[0], 'seat_number': seat[1], 'is_available': seat[2]} for seat in seats]
     conn.close()
-
-    seats_list = [{'seat_id': seat[0], 'seat_number': seat[1], 'is_available': seat[2]} for seat in seats]
-
-    return jsonify({'seats': seats_list})
+    return jsonify({'seats': seat_data})
 
 @app.route('/book', methods=['POST'])
 def book_ticket():
