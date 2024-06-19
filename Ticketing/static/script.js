@@ -21,16 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleSeatSelection(seatDiv) {
         const seatNumber = seatDiv.innerText;
 
+        seatDiv.classList.toggle('selected');
+
         if (seatDiv.classList.contains('selected')) {
-            seatDiv.classList.remove('selected');
-            selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
+            selectedSeats.push(seatNumber);
         } else {
-            if (selectedSeats.length < parseInt(numPaxSelect.value, 10)) {
-                seatDiv.classList.add('selected');
-                selectedSeats.push(seatNumber);
-            } else {
-                alert(`You can select up to ${numPaxSelect.value} seats.`);
-            }
+            selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
         }
 
         updateSelectedSeats();
@@ -47,6 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     seatDiv.classList.add('seat');
                     seatDiv.dataset.seatId = seat.seat_id;
                     seatDiv.innerText = seat.seat_number;
+
+                    if (selectedSeats.includes(seat.seat_number)) {
+                        seatDiv.classList.add('selected');
+                    }
+
                     seatDiv.addEventListener('click', () => handleSeatSelection(seatDiv));
                     seatMap.appendChild(seatDiv);
                 });
@@ -71,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('close-popup').addEventListener('click', closePopup);
     popupOverlay.addEventListener('click', closePopup);
 });
+
 
 
 
