@@ -13,9 +13,21 @@ def insert_sample_data():
 
     cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (1, 1, 2, '2024-06-20 08:00', '2024-06-20 12:00')")
     cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (1, 1, 2, '2024-06-20 14:00', '2024-06-20 18:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (1, 1, 2, '2024-06-20 15:00', '2024-06-20 19:00')")
     cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (1, 2, 3, '2024-06-21 09:00', '2024-06-21 13:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (1, 2, 3, '2024-06-21 11:00', '2024-06-21 15:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (1, 2, 3, '2024-06-21 14:00', '2024-06-21 18:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (1, 3, 2, '2024-06-21 11:00', '2024-06-21 15:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (1, 3, 2, '2024-06-21 16:00', '2024-06-21 20:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 1, 3, '2024-06-22 07:00', '2024-06-22 11:00')")
     cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 1, 3, '2024-06-22 10:00', '2024-06-22 14:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 1, 3, '2024-06-22 13:00', '2024-06-22 17:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 2, 1, '2024-06-23 09:00', '2024-06-23 13:00')")
     cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 2, 1, '2024-06-23 11:00', '2024-06-23 15:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 2, 1, '2024-06-23 15:00', '2024-06-23 19:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 3, 1, '2024-06-21 09:00', '2024-06-21 13:00')")
+    cursor.execute("INSERT INTO Schedules (train_id, departure_station_id, arrival_station_id, departure_time, arrival_time) VALUES (2, 3, 1, '2024-06-21 14:00', '2024-06-21 18:00')")
+
 
     cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (1, '1A', 'business', 1)")
     cursor.execute("INSERT INTO Seats (schedule_id, seat_number, seat_class, is_available) VALUES (1, '1B', 'economy', 1)")

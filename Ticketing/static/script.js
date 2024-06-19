@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     const seatSelect = document.getElementById('seat');
                     seatSelect.innerHTML = '';
                     data.seats.forEach(seat => {
-                        console.log(`Seat: ${seat.seat_number}`);  // Debug print
                         const option = document.createElement('option');
                         option.value = seat.seat_id;
                         option.text = `Seat: ${seat.seat_number}`;

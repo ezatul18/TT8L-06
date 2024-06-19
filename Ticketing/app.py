@@ -24,24 +24,20 @@ def get_stations():
 def get_schedules():
     departure_station_id = request.args.get('departure_station_id')
     arrival_station_id = request.args.get('arrival_station_id')
-
     conn = sqlite3.connect('train_booking.db')
     cursor = conn.cursor()
     cursor.execute('''
-        SELECT S.schedule_id, T.train_name, S.departure_time, S.arrival_time
-        FROM Schedules S
-        JOIN Trains T ON S.train_id = T.train_id
-        WHERE S.departure_station_id = ? AND S.arrival_station_id = ?
-    ''',(departure_station_id, arrival_station_id))
+        SELECT s.schedule_id, t.train_name, s.departure_time, s.arrival_time
+        FROM Schedules s
+        JOIN Trains t ON s.train_id = t.train_id
+        WHERE s.departure_station_id = ? AND s.arrival_station_id = ?
+    ''', (departure_station_id, arrival_station_id))
     schedules = cursor.fetchall()
     conn.close()
 
-    schedules_list = [
-        {'schedule_id': schedule[0], 'train_name': schedule[1], 'departure_time': schedule[2], 'arrival_time': schedule[3]}
-    for schedule in schedules]
-    
-    return jsonify({'schedules': schedules_list})
+    schedules_list = [{'schedule_id': sched[0], 'train_name': sched[1], 'departure_time': sched[2], 'arrival_time': sched[3]} for sched in schedules]
 
+    return jsonify({'schedules': schedules_list})
 
 @app.route('/get_seats/<int:schedule_id>/<string:seat_class>', methods=['GET'])
 def get_seats(schedule_id, seat_class):
