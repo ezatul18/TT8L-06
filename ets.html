@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Booking</title>
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+       <div class="header">
+        <div class="logo">
+            <img src="./images/pinktrain.png" alt="">
+        </div>
+        <div class="bar">
+            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-xmark" id="hdcross"></i>
+        </div>
+        <div class="nav">
+            <ul>
+                <a href="#">
+                    <li>Home</li>
+                </a>
+                <a href="C:\Users\reube\TT8L-06\ets.html">
+                    <li>ETS/Intercity</li>
+                </a>
+                <a href="C:\Users\reube\TT8L-06\ktm.html">
+                    <li>Komuter</li>
+                </a>
+
+                </a>
+              
+            </ul>
+        </div>
+        
+        <div class="profile">
+            <ul>
+                <a href="#">
+                    <li>
+                        <i class="fa-solid fa-user" id="user-lap"></i>
+                    </li>
+                </a>
+        </ul>
+    </div>
+       </div>
+    </header>
+    
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ticket Booking</title>
+        <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+        rel="stylesheet"
+      />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
+     
+    </head>
+<body>
+    <div class="center">
+        <div class="tickets">
+            <div class="ticket-selector">
+                <fieldset class="field" data-role="controlgroup" data-type="horizontal">
+                    <div class="head">
+                        <div class="title">ETS</div>
+                    </div>
+                    <div class="seats">
+                        <div class="all-seats">
+                            <div class="station">
+                                <input name="dest_type" id="s1" style="display: none;" value="ALOR SETAR" type="radio" unchecked />
+                                <label for="s1" class="seat booked">
+                                    ALOR SETAR
+                                </label>
+                            </div>
+                            <div class="station">
+                                <input name="dest_type" id="s2" style="display: none;" value="KUALA LUMPUR" type="radio" unchecked />
+                                <label for="s2" class="seat booked">
+                                    KUALA LUMPUR
+                                </label>
+                            </div>
+                            <div class="station">
+                                <input name="dest_type" id="s3" style="display: none;" value="BATANG MELAKA" type="radio" unchecked/>
+                                <label for="s3" class="seat booked">
+                                    BATANG MELAKA
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timings">
+                        
+                        <form>
+                            <div class="dates">
+                                <label class="calendar">Select Date</label>
+                                <input type="date">
+                            </div>
+                            <div class="selectors">
+                                <div class="select-group">
+                                    <button button id="reset-button" class="select-label" for="select-origin">Origin</button>
+                                    <input class="selection" type="text" id="select-origin">
+                                </div>
+                                <div class="select-group2">
+                                    <button class="select-label" for="select-destination">Destination</button>
+                                    <input class="selection" type="text" id="select-destination">
+                                </div>
+                                <div class="price">
+                                    <button type="button">Book</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    
+                </fieldset>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        
+const stationRadios = document.querySelectorAll('input[name="dest_type"]');
+
+
+const originInput = document.getElementById('select-origin');
+const destinationInput = document.getElementById('select-destination');
+
+
+const resetButton = document.getElementById('reset-button');
+
+
+stationRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+        
+        if (!originInput.value) {
+            originInput.value = this.value;
+        } 
+        
+        else {
+            destinationInput.value = this.value;
+            
+            const originRadio = document.querySelector(`input[value="${originInput.value}"]`);
+            if (originRadio) {
+                originRadio.disabled = true;
+            }
+        }
+    });
+});
+
+
+resetButton.addEventListener('click', function() {
+    
+    originInput.value = '';
+    destinationInput.value = '';
+
+    
+    stationRadios.forEach(radio => {
+        radio.disabled = false;
+    });
+});
+    
+
+        
+    </script>
+</body>
+</html>
+

@@ -6,6 +6,7 @@
     text-decoration: none;
     color: #151b16;
     font-family: Rubik, sans-serif;
+
 }
 
 .logo img{
@@ -45,33 +46,47 @@
     font-weight: bold;
     
 }
+.entryarea{
+    position: relative;
+    height: 80px;
+    line-height: 80px;
+
+}
+
+
 body{
-    width: 100%;
-    height: 100vh;
+    width: auto;
+    height: fit-content;
     margin: 0;
     padding: 0;
+
+  
 }
 
 .center{
-    width: 100%;
-    height: 100%;
-    display: flex;
+    width: auto;
+    height: 680px;
+    display: flex;  
     align-items: center;
     justify-content: center;
     background: linear-gradient(to right, rgb(255, 196, 221),rgb(214, 139, 183));
+    margin-top: 1px;
+}
+.container{
+    width: 680px;
 }
 .tickets{
-    width: 900px;
+    width: 1000px;
     height: fit-content;
     border: 0.4mm solid rgba(0,0,0,0.08);
     border-radius: 3mm;
     box-sizing: border-box;
     padding: 5px;
     font-family: Rubik;
-    max-height: 96vh;
-    overflow: auto;
-    background: white;
+    background: rgba(255, 255, 0, 0.293);
     box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+    margin-top: 20px;
+    
    
 }
 .ticket-selector{
@@ -81,7 +96,10 @@ body{
     justify-content: space-between;
     flex-direction: column ;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 40px;
+    margin-bottom: 0px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 .head{
     width: 100%;
@@ -115,11 +133,12 @@ body{
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
-    width: 869px;
+    width: 950px;
     height: 10px;
     background: #e63939a6;
     border-radius: 0 0 3mm 3mm;
     border-top: 0.3mm solid rgb(180, 180, 180);
+   
 }
 .item{
     font-size: 12px;
@@ -140,11 +159,11 @@ body{
 
 .all-seats{
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(3,1fr);
     grid-gap:50px;
-    margin: 100px;
-    margin-top: 20px;
+    margin-top: -55px;
     position: relative;
+    align-items: center;
    
 
 }
@@ -180,10 +199,10 @@ body{
 .seat.booked{
     background:  #ff91a4;
     outline: none;
+    align-items: center;
+    padding: 10px;
 }
-input{
-    display:none ;
-}
+
 .timings {
     width: 69%;
     display: flex;
@@ -191,15 +210,11 @@ input{
     align-items: center;
     justify-content: center;
     margin-top: 25px;
-    margin-bottom: 100px;
-    padding: 10px;
+    margin-bottom: -30px;
+    margin-left: 60px;
+
 }
-.dates{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+
 .dates-item{
     width: 50px;
     height: 40px;
@@ -237,12 +252,13 @@ input{
     color: white;
 }
 .price{
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px 20px ;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    margin-top: 150px;
+    margin-left: 20px;
+    justify-content: right;
+
+    
+
+    
 }
 .total{
     display: flex;
@@ -270,15 +286,17 @@ input{
 
 .selectors {
     display: flex;
-    justify-content: center;
+   margin-left: 200px;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 5px;
+    margin-right: -50px;
 }
 
 .select-group {
     display: flex;
     align-items: left;
     margin: 10px;
+    margin-left: 90px;
 }
 
 .select-group label {
@@ -287,4 +305,67 @@ input{
 
 .select-group select {
     padding: 5px;
+}
+input{
+    display:block ;
+    position: absolute;
+    width: 100%;
+    outline: none;
+    font-size: 1em;
+    padding: 0 30px;
+    line-height: 80px;
+    border-radius: 15px;
+    border: 0.5px solid black;
+
+}
+.selection{
+    width: 200px;
+    height: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    margin-top: 15px;
+    
+}
+.select-label{
+    margin-top: 10px;
+    background-color: pink;
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+input[type="date"]{
+    background-color: rgba(62, 169, 89, 0.685);
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    width: 187px;
+    height: 40px;
+    margin-right: 40px;
+    margin-left: 60px;
+}
+.calendar{
+    width: 100px;
+    height: 40px;
+    margin-top: -50px;
+    font-size: 18px;
+    margin-left: 110px;
+    font-family:Rubik ;
+}
+.dates{
+    display: grid;
+    margin-left:515px;
+    margin-top: 50px;
+    margin-bottom: 60px;
+}
+.field{
+    border: none;
+    
+}
+.select-group2{
+    display: flex;
+    align-items: left;
+    margin: 10px;
+    margin-left: 70px;
 }
