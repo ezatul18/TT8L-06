@@ -23,6 +23,10 @@ def ets():
 def ktm():
     return render_template("ktm.html")
 
+@views.route("/hotel")  
+def hotel():
+    return render_template("hotel.html")
+
 
 
 
