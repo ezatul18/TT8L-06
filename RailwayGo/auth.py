@@ -180,27 +180,41 @@ def summary():
     conn.close()
 
     return render_template('summary.html', user=user, cart_items=cart_items, total_price=total_price)
-## KTM FUNCTION FOR STATIONS ##
-@auth.route('/ktm')
-def ktm():
+
+## ets ##
+@auth.route('/ets')
+def ets_page():
     stations = get_stations()
-    return render_template('ktm.html', stations=stations)
+    available_times = get_available_times()
+    return render_template('ets.html', stations=stations, available_times=available_times)
 
+def get_available_times():
+    conn = get_db_connection()
+    times = conn.execute('SELECT time_value FROM available_times').fetchall()
+    conn.close()
+    return [time['time_value'] for time in times]
 
-## BOOK TICKET ROUTE ##
-@auth.route('/book_ticket', methods=['POST'])
-def book_ticket():
+@auth.route('/submit_booking', methods=['POST'])
+def submit_booking():
     if request.method == 'POST':
-        origin = request.form.get('origin')
-        destination = request.form.get('destination')
-        date = request.form.get('date')
+        origin = request.form.get('select-origin')
+        destination = request.form.get('select-destination')
+        date = request.form.get('bookingDate')
+        time = request.form.get('bookingTime')
+        pax = request.form.get('bookingPax')
 
-        # Example of adding booking to database using db.py function
-        add_booking(origin, destination, date)
+        try:
+            add_booking(origin, destination, date, time, pax)
+            flash('Booking Successful!', category='success')
+            return redirect(url_for('views.home'))
+        except Exception as e:
+            flash('Booking Failed. Please try again.', category='error')
+            return redirect(url_for('auth.ets'))
 
-        return jsonify({'message': 'Booking successful!'})
+    flash('Invalid request method.', category='error')
+    return redirect(url_for('auth.ets'))
 
-    return jsonify({'error': 'Invalid request'})
+
 
 
 def get_db_connection():
