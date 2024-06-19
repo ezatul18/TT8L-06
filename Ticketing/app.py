@@ -8,7 +8,11 @@ app = Flask(__name__)
 def booking_page():
     return render_template('ets.html')
 
-@app.route('/get_seats/<seat_class>', methods=['GET'])
+@app.route('/komuter')
+def komuter_page():
+    return render_template('komuter.html')
+
+@app.route('/get_seats/<seat_class>')
 def get_seats(seat_class):
     conn = sqlite3.connect('train_booking.db')
     cursor = conn.cursor()
@@ -16,17 +20,17 @@ def get_seats(seat_class):
         SELECT seat_id, seat_number 
         FROM Seats 
         WHERE seat_class = ? AND is_available = 1
+        LIMIT 50
     ''', (seat_class,))
     seats = cursor.fetchall()
     conn.close()
 
     seats_list = [{'seat_id': seat[0], 'seat_number': seat[1]} for seat in seats]
-    
     return jsonify({'seats': seats_list})
 
 @app.route('/book', methods=['POST'])
 def book_ticket():
-    seat_ids = request.form['seat'].split(',')  
+    seat_id = request.form['seat_id']
     customer_name = request.form['name']
     booking_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -34,15 +38,14 @@ def book_ticket():
     cursor = conn.cursor()
 
     try:
-        for seat_id in seat_ids:
-            cursor.execute('''
-                INSERT INTO Bookings (seat_id, customer_name, booking_time)
-                VALUES (?, ?, ?)
-            ''', (seat_id, customer_name, booking_time))
+        cursor.execute('''
+            INSERT INTO Bookings (seat_id, customer_name, booking_time)
+            VALUES (?, ?, ?)
+        ''', (seat_id, customer_name, booking_time))
 
-            cursor.execute('''
-                UPDATE Seats SET is_available = 0 WHERE seat_id = ?
-            ''', (seat_id,))
+        cursor.execute('''
+            UPDATE Seats SET is_available = 0 WHERE seat_id = ?
+        ''', (seat_id,))
         
         conn.commit()
         message = "Booking successful!"

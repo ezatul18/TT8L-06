@@ -16,35 +16,41 @@
 
         <div class="menu">
             <ul>
-                <li><a href="/ets">ETS/INTERCITY</a></li>
+                <li><a href="#">HOME</a></li>
+                <li><a href="/">ETS/INTERCITY</a></li>
                 <li><a href="/komuter">KOMUTER</a></li>
             </ul>
         </div>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Train Number</th>
-                <th>Departure Station</th>
-                <th>Arrival Station</th>
-                <th>Departure Time</th>
-                <th>Arrival Time</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for train in trains %}
-            <tr>
-                <td>{{ train.train_number }}</td>
-                <td>{{ train.departure_station }}</td>
-                <td>{{ train.arrival_station }}</td>
-                <td>{{ train.departure_time }}</td>
-                <td>{{ train.arrival_time }}</td>
-                <td><a href="../templates/book.html">View Details</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form action="/book" method="post">
+
+        <label for="class">Class:</label>
+        <select id="class" name="class">
+            <option value="business">Business</option>
+            <option value="economy">Economy</option>
+        </select><br>
+
+        <label for="num_pax">Number of Passengers:</label>
+        <select id="num_pax" name="num_pax">
+        </select><br>
+
+        <label for="seat">Seats:</label>
+        <input type="text" id="seat" name="seat" readonly><br>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br>
+
+        <button type="button" id="select-seat-btn">Select Seats</button><br>
+        <button type="submit">Book</button>
+    </form>
+
+    <div class="popup-overlay"></div>
+    <div class="popup">
+        <div class="seat-map" id="seat-map"></div>
+        <button id="close-popup">Close</button>
+    </div>
+
+    <script src="../static/script.js"></script>
 
 </body>
 

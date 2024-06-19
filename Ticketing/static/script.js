@@ -1,29 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let maxPassengers = 1; 
+    const selectSeatBtn = document.getElementById('select-seat-btn');
+    const seatMap = document.getElementById('seat-map');
+    const seatInput = document.getElementById('seat');
+    const numPaxSelect = document.getElementById('num_pax');
+    const popupOverlay = document.querySelector('.popup-overlay');
+    const popup = document.querySelector('.popup');
+    let selectedSeats = [];
+
+    for (let i = 1; i <= 13; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        numPaxSelect.appendChild(option);
+    }
+
+    function updateSelectedSeats() {
+        seatInput.value = selectedSeats.join(',');
+    }
+
+    function handleSeatSelection(seatDiv) {
+        const seatNumber = seatDiv.innerText;
+
+        if (seatDiv.classList.contains('selected')) {
+            seatDiv.classList.remove('selected');
+            selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
+        } else {
+            if (selectedSeats.length < parseInt(numPaxSelect.value, 10)) {
+                seatDiv.classList.add('selected');
+                selectedSeats.push(seatNumber);
+            } else {
+                alert(`You can select up to ${numPaxSelect.value} seats.`);
+            }
+        }
+
+        updateSelectedSeats();
+    }
 
     function updateSeats() {
         const seatClass = document.getElementById('class').value;
         fetch(`/get_seats/${seatClass}`)
             .then(response => response.json())
             .then(data => {
-                const seatMap = document.getElementById('seat-map');
                 seatMap.innerHTML = '';
                 data.seats.forEach(seat => {
                     const seatDiv = document.createElement('div');
                     seatDiv.classList.add('seat');
                     seatDiv.dataset.seatId = seat.seat_id;
                     seatDiv.innerText = seat.seat_number;
-                    seatDiv.addEventListener('click', () => {
-                        if (seatDiv.classList.contains('selected')) {
-                            seatDiv.classList.remove('selected');
-                        } else {
-                            const selectedSeats = document.querySelectorAll('.seat.selected').length;
-                            if (selectedSeats < maxPassengers) {
-                                seatDiv.classList.add('selected');
-                            }
-                        }
-                        updateSelectedSeats();
-                    });
+                    seatDiv.addEventListener('click', () => handleSeatSelection(seatDiv));
                     seatMap.appendChild(seatDiv);
                 });
                 showPopup();
@@ -33,57 +57,26 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    function updateSelectedSeats() {
-        const selectedSeats = document.querySelectorAll('.seat.selected');
-        const selectedSeatNumbers = Array.from(selectedSeats)
-            .map(seat => seat.innerText);
-        document.getElementById('seat').value = selectedSeatNumbers.join(', ');
-    }
-
-    document.getElementById('select-seat-btn').addEventListener('click', () => {
-        maxPassengers = parseInt(document.getElementById('num_pax').value) || 1;
-        updateSeats();
-    });
-
     function showPopup() {
-        const popupOverlay = document.querySelector('.popup-overlay');
-        const popup = document.querySelector('.popup');
         popupOverlay.style.display = 'block';
         popup.style.display = 'block';
     }
 
-    document.getElementById('close-popup').addEventListener('click', () => {
-        const popupOverlay = document.querySelector('.popup-overlay');
-        const popup = document.querySelector('.popup');
+    function closePopup() {
         popupOverlay.style.display = 'none';
         popup.style.display = 'none';
-    });
-
-    const popupOverlay = document.querySelector('.popup-overlay');
-    popupOverlay.addEventListener('click', () => {
-        const popupOverlay = document.querySelector('.popup-overlay');
-        const popup = document.querySelector('.popup');
-        popupOverlay.style.display = 'none';
-        popup.style.display = 'none';
-    });
-
-    const numPaxSelect = document.getElementById('num_pax');
-    numPaxSelect.addEventListener('change', () => {
-        maxPassengers = parseInt(numPaxSelect.value) || 1;
-        const selectedSeats = document.querySelectorAll('.seat.selected');
-        if (selectedSeats.length > maxPassengers) {
-            selectedSeats.forEach(seat => seat.classList.remove('selected'));
-        }
-        updateSelectedSeats();
-    });
-
-    for (let i = 1; i <= 13; i++) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.textContent = i;
-        numPaxSelect.appendChild(option);
     }
+
+    selectSeatBtn.addEventListener('click', updateSeats);
+    document.getElementById('close-popup').addEventListener('click', closePopup);
+    popupOverlay.addEventListener('click', closePopup);
 });
+
+
+
+
+
+
 
 
 
