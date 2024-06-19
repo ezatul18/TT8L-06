@@ -44,15 +44,15 @@ def get_seats(schedule_id, seat_class):
     conn = sqlite3.connect('train_booking.db')
     cursor = conn.cursor()
     cursor.execute('''
-        SELECT seat_id, seat_number 
+        SELECT seat_id, seat_number, is_available 
         FROM Seats 
-        WHERE schedule_id = ? AND seat_class = ? AND is_available = 1
+        WHERE schedule_id = ? AND seat_class = ?
     ''', (schedule_id, seat_class))
     seats = cursor.fetchall()
     conn.close()
 
-    seats_list = [{'seat_id': seat[0], 'seat_class': seat[1]} for seat in seats]
-    
+    seats_list = [{'seat_id': seat[0], 'seat_number': seat[1], 'is_available': seat[2]} for seat in seats]
+
     return jsonify({'seats': seats_list})
 
 @app.route('/book', methods=['POST'])

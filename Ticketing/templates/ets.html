@@ -51,17 +51,22 @@
         <br><br>
         
         <label for="seat">Seat:</label>
-        <select id="seat" name="seat" required>
-            <option value="">-- Select Seat --</option>
-        </select>
-        <br><br>
+        <input type="text" id="seat" name="seat" readonly><br>
 
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required>
         <br><br>
 
-        <button type="submit">Book Ticket</button>
+        <button type="button" id="select-seat-btn">Select Seat</button><br>
+        <button type="submit">Book</button>
     </form>
+
+
+    <div class="popup-overlay"></div>
+    <div class="popup">
+        <div class="seat-map" id="seat-map"></div>
+        <button id="close-popup">Close</button>
+    </div>
 
 
     <script src="../static/script.js"></script>

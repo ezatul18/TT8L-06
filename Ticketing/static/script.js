@@ -42,13 +42,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
             fetch(`/get_seats/${scheduleId}/${seatClass}`)
                 .then(response => response.json())
                 .then(data => {
-                    const seatSelect = document.getElementById('seat');
-                    seatSelect.innerHTML = '';
+                    const seatMap = document.getElementById('seat-map');
+                    seatMap.innerHTML = '';
                     data.seats.forEach(seat => {
-                        const option = document.createElement('option');
-                        option.value = seat.seat_id;
-                        option.text = `Seat: ${seat.seat_number}`;
-                        seatSelect.appendChild(option);
+                        const seatDiv = document.createElement('div');
+                        seatDiv.classList.add('seat');
+                        if (!seat.is_available) {
+                            seatDiv.classList.add('unavailable');
+                        }
+                        seatDiv.dataset.seatId = seat.seat_id;
+                        seatDiv.innerText = seat.seat_number;
+                        seatMap.appendChild(seatDiv);
+                    });
+
+                    document.querySelectorAll('.seat').forEach(seat => {
+                        if (!seat.classList.contains('unavailable')) {
+                            seat.addEventListener('click', function() {
+                                document.querySelectorAll('.seat.selected').forEach(s => s.classList.remove('selected'));
+                                seat.classList.add('selected');
+                                document.getElementById('seat').value = seat.innerText;
+                            });
+                        }
                     });
                 });
         }
@@ -56,4 +70,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('schedule').addEventListener('change', updateSeats);
     document.getElementById('class').addEventListener('change', updateSeats);
+
+    const popupOverlay = document.querySelector('.popup-overlay');
+    const popup = document.querySelector('.popup');
+    document.getElementById('select-seat-btn').addEventListener('click', () => {
+        popupOverlay.style.display = 'block';
+        popup.style.display = 'block';
+    });
+
+    document.getElementById('close-popup').addEventListener('click', () => {
+        popupOverlay.style.display = 'none';
+        popup.style.display = 'none';
+    });
 });
