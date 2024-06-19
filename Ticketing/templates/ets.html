@@ -16,56 +16,33 @@
 
         <div class="menu">
             <ul>
+                <li><a href="#">HOME</a></li>
                 <li><a href="/">ETS/INTERCITY</a></li>
                 <li><a href="/komuter">KOMUTER</a></li>
             </ul>
         </div>
     </div>
-
     <form action="/book" method="post">
 
-        <label for="departure_station">Departure Station:</label>
-        <select id="departure_station" name="departure_station">
-            <option value="">-- Select Departure Station --</option>
-        </select>
-        <br><br>
-        
-        <label for="arrival_station">Arrival Station:</label>
-        <select id="arrival_station" name="arrival_station">
-            <option value="">-- Select Arrival Station --</option>
-        </select>
-        <br><br>
-
-        <label for="schedule">Schedule:</label>
-        <select id="schedule" name="schedule">
-            <option value="">-- Select Schedule --</option>
-        </select>
-        <br><br>
-        
         <label for="class">Class:</label>
         <select id="class" name="class">
-            <option value="">-- Select Class --</option>
             <option value="business">Business</option>
             <option value="economy">Economy</option>
-        </select>
-        <br><br>
+        </select><br>
 
         <label for="num_pax">Number of Passengers:</label>
         <select id="num_pax" name="num_pax">
-            
         </select><br>
-        
-        <button type="button" id="select-seat-btn">Select Seat</button><br>
-        <label for="seat">Seat:</label>
+
+        <label for="seat">Seats:</label>
         <input type="text" id="seat" name="seat" readonly><br>
 
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br><br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br>
 
+        <button type="button" id="select-seat-btn">Select Seats</button><br>
         <button type="submit">Book</button>
     </form>
-
 
     <div class="popup-overlay"></div>
     <div class="popup">
@@ -73,10 +50,7 @@
         <button id="close-popup">Close</button>
     </div>
 
-
     <script src="../static/script.js"></script>
-
-
 
 </body>
 
