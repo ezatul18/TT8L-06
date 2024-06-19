@@ -151,13 +151,15 @@
       <div class="categories-container">
         <!--box1-->
         <div class="box">
-          <img src="{{ url_for('static', filename='image_login/ets1.jpeg')}}" alt="ETS" class="transport-image" onmouseover="toggleAbout(this, 'ETS')" onmouseout="toggleAbout(this)">
+          <a href="{{ url_for('views.ktm') }}">
+          <img src="{{ url_for('static', filename='image_login/ets1.jpeg')}}" alt="ETS" class="transport-image" onmouseover="toggleAbout(this, 'ETS')" onmouseout="toggleAbout(this)"></a>
           <h2>ETS</h2>
           
         </div>
         <!--box2-->
         <div class="box">
-          <img src="{{ url_for('static', filename='image_login/ktm.jpg')}}" alt="KTM" class="transport-image" onmouseover="toggleAbout(this, 'KTM')" onmouseout="toggleAbout(this)">
+          <a href="{{ url_for('views.ktm') }}">
+          <img src="{{ url_for('static', filename='image_login/ktm.jpg')}}" alt="KTM" class="transport-image" onmouseover="toggleAbout(this, 'KTM')" onmouseout="toggleAbout(this)"></a>
           <h2>KTM</h2>
           
         </div>
