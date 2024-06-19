@@ -508,8 +508,8 @@ hr {
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color:#FFC4DD; /* Change the background color as needed */
-    color: #fff; /* Change the text color as needed */
+    background-color:#FFC4DD; 
+    color: #fff; 
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
@@ -535,7 +535,7 @@ hr {
     justify-content: center;
     color:#FFC4DD;
     font-size: 35px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 
@@ -611,8 +611,8 @@ hr {
 }
 
 .trainschedule h2 {
-    color: #FFC4DD;
-    font-weight: bold; 
+    color:#FFC4DD;
+    font-weight: 500; 
     position: relative;
     display: flex;
     align-items: center;
