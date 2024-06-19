@@ -188,12 +188,6 @@ def ets_page():
     available_times = get_available_times()
     return render_template('ets.html', stations=stations, available_times=available_times)
 
-def get_available_times():
-    conn = get_db_connection()
-    times = conn.execute('SELECT time_value FROM available_times').fetchall()
-    conn.close()
-    return [time['time_value'] for time in times]
-
 @auth.route('/submit_booking', methods=['POST'])
 def submit_booking():
     if request.method == 'POST':
@@ -215,9 +209,13 @@ def submit_booking():
     return redirect(url_for('auth.ets'))
 
 
-
-
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+def get_available_times():
+    conn = get_db_connection()
+    times = conn.execute('SELECT time_value FROM available_times').fetchall()
+    conn.close()
+    return [time['time_value'] for time in times]
