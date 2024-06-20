@@ -136,38 +136,38 @@ hr {
 }
 
 /* BOOKING SECTION */
-
 .container h2 {
+    text-align: center;
     padding-bottom: 20px;
 }
 
 .box1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('image_ktmets/trn.jpg'); 
-    background-size: cover; 
+    background-image: url('image_ktmets/trn.jpg');
+    background-size: cover;
+    background-position: center;
     border-radius: 2rem;
     padding: 150px;
-    min-height: 400px;
 }
 
 .main-content {
     display: flex;
-    justify-content: center; /* Adjust as needed */
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    padding: 20px;
+    background-color: white;
     border-radius: 2rem;
-    padding: 20px; /* Adjust padding as needed */
 }
 
 .b1 {
-    padding: 20px;
-    font-size: 20px;
-    margin: 0 10px; /* Adjust margin between items */
+    padding: 10px;
 }
 
+.box2 {
+    background-image: url('image_login/ktm3.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 2rem;
+    padding: 150px;
+}
 
-
-
-
+.container2 {
+    padding-top: 70px;
+}

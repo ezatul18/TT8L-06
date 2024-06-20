@@ -23,9 +23,10 @@
 <section>
     <div class="container">
         <h2>Book Ticket</h2>
+        <form action="{{ url_for('auth.book_ticket') }}" method="post"></form>
         <div class="box1">
             <div class="main-content">
-                <form action="{{ url_for('auth.book_ticket') }}" method="post">
+                
                     <div class="b1">
                         <label for="origin">Origin:</label>
                         <select id="origin" name="origin" required>
@@ -63,31 +64,43 @@
                     </div>
 
                     <div class="b1">
-                        <i class='bx bxs-right-arrow'></i>
+                        <a href="#next"><i class='bx bxs-right-arrow'></i></a>
                     </div>
             </div>
         </div>
-                    <div class="box2">
-                        <br>
+                    <div class="container2">
+                    <div class="box2" id="next">
+                        <div class="main-content">
+
+                        <div class="b1">
                         <label for="num_people">Number of People:</label>
                         <input type="number" id="num_people" name="num_people" min="1" max="10" required>
-                        <br>
+                        </div>
+
+                        <div class="b1">
                         <label for="seat_type">Type of Seat:</label>
                         <select id="seat_type" name="seat_type" required>
                             <option value="Standard">Standard</option>
                             <option value="First Class">First Class</option>
                         </select>
-                        <br>
+                        </div>
+                       
+                        <div class="b1">
                         <label for="seat_number">Seat Number:</label>
                         <select id="seat_number" name="seat_number" required>
                             {% for seat in seat_numbers %}
                                 <option value="{{ seat['number'] }}" {% if not seat['available'] %} disabled {% endif %}>{{ seat['number'] }}</option>
                             {% endfor %}
                         </select>
-                        <br>
-                        <input type="submit" value="Book Ticket">
+                        </div>
+                        </div>
+
+                       
                     </div>
-                </form>
+                    </div>
+                    <br>
+                    <input type="submit" value="Book Ticket">
+        </form>
     </div>
 </section>
 
@@ -143,12 +156,7 @@
     </div>
 </section>
 
-<script>
-    const header = document.querySelector("header");
-    window.addEventListener("scroll", function() {
-        header.classList.toggle("sticky", window.scrollY > 80);
-    })
-</script>
+
 
 </body>
 </html>
