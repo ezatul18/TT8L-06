@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from .models import connect_db
+from .models import  insert_sample_data
 
 def create_app():
     app = Flask(__name__)
@@ -10,6 +11,7 @@ def create_app():
 
     app.static_folder = 'static'
 
+    insert_sample_data()
     
     from .views import views
     from .auth import auth
