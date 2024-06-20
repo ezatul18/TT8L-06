@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book ETS Ticket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h2>Book ETS Ticket</h2>
+    <form action="{{ url_for('auth.book_ets_ticket') }}" method="post">
+        <label for="origin">Origin:</label>
+        <select id="origin" name="origin" required>
+            {% for origin in origins %}
+                <option value="{{ origin }}">{{ origin }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="destination">Destination:</label>
+        <select id="destination" name="destination" required>
+            {% for destination in destinations %}
+                <option value="{{ destination }}">{{ destination }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="date">Date:</label>
+        <select id="date" name="date" required>
+            {% for date in dates %}
+                <option value="{{ date }}">{{ date }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="time">Time:</label>
+        <select id="time" name="time" required>
+            {% for time in times %}
+                <option value="{{ time }}">{{ time }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="num_people">Number of People:</label>
+        <input type="number" id="num_people" name="num_people" min="1" max="10" required>
+        <br>
+        <label for="seat_type">Type of Seat:</label>
+        <select id="seat_type" name="seat_type" required>
+            <option value="Standard">Standard</option>
+            <option value="First Class">First Class</option>
+        </select>
+        <br>
+        <label for="seat_number">Seat Number:</label>
+        <select id="seat_number" name="seat_number" required>
+            {% for seat in seat_numbers %}
+                <option value="{{ seat['number'] }}" {% if not seat['available'] %} disabled {% endif %}>{{ seat['number'] }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Book ETS Ticket">
+    </form>
+</div>
+
+</body>
+</html>
