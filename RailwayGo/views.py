@@ -15,7 +15,7 @@ def about():
 def homefood():
     return render_template("home_food.html")
 
-@views.route("/ets")  
+@views.route("/ets_")  
 def ets():
     return render_template("ets.html")
 

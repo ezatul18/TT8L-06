@@ -1,6 +1,7 @@
 
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify, session
+from functools import wraps
 from .models import add_user, get_user_by_email, get_user_by_username
 from .models import connect_db, add_booking, get_stations
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,6 +10,19 @@ import os
 auth = Blueprint("auth", __name__)
 
 ## LOGIN -SIGNUP ##
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Please log in to access this page.', 'error')
+            return redirect(url_for('auth.login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+
+
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -185,6 +199,7 @@ def summary():
 ## BOOK ##
 
 @auth.route('/book', methods=['GET', 'POST'])
+@login_required
 def book_ticket():
     if request.method == 'POST':
         origin = request.form['origin']
@@ -235,6 +250,7 @@ def book_ticket():
 
 
 @auth.route('/ticket')
+@login_required
 def ticket():
     conn = get_db_connection()
     cur = conn.execute('SELECT * FROM bookings')
@@ -264,6 +280,7 @@ def calculate_ticket_price(booking):
 from flask import session
 
 @auth.route('/ets_book', methods=['GET', 'POST'])
+@login_required
 def book_ets_ticket():
     if request.method == 'POST':
         origin = request.form['origin']
@@ -314,6 +331,7 @@ def book_ets_ticket():
     return render_template('book_ets.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
 
 @auth.route('/ets_ticket')
+@login_required
 def ets_ticket():
     db = get_db_connection()
     cur = db.execute('SELECT * FROM ets_bookings')
@@ -327,6 +345,7 @@ def ets_ticket():
 
 
 @auth.route('/cancel_ticket/<int:booking_id>', methods=['POST'])
+@login_required
 def cancel_ticket(booking_id):
     db = get_db_connection()
     try:
