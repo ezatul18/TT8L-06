@@ -10,6 +10,7 @@ def create_app():
 
     app.static_folder = 'static'
 
+
     
     from .views import views
     from .auth import auth

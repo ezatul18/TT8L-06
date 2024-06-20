@@ -3,146 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Booking</title>
-   
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='style_ktmets.css') }}">
+    <title>ktm</title>
 </head>
 <body>
-    <header>
-       <div class="header">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='image_ktmets/pinktrain.png') }}" alt="">
+    <!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailwayTicket</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style_seat.css')}}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="icon">
+            <h2 class="logo">RailwayTicket</h2>
         </div>
-        <div class="bar">
-            <i class="fa-solid fa-bars"></i>
-            <i class="fa-solid fa-xmark" id="hdcross"></i>
-        </div>
-        <div class="nav">
+
+        <div class="menu">
             <ul>
-                <li><a href="{{ url_for('views.home') }}">Home</a></li>
-                <li><a href="{{ url_for('views.ets') }}">ETS/Intercity</a></li>
-                <li><a href="{{ url_for('views.ktm') }}">Komuter</a></li>
+                <li><a href="/">HOME</a></li>
+                <li><a href="#" id="ets-link">ETS/INTERCITY</a></li>
+                <li><a href="#" id="ktm-link">KOMUTER</a></li>
             </ul>
-        </div>
-        
-        <div class="profile">
-            <ul>
-                <li><a href="#"><i class="fa-solid fa-user" id="user-lap"></i></a></li>
-            </ul>
-        </div>
-       </div>
-    </header>
-    
-    <div class="center">
-        <div class="tickets">
-            <div class="ticket-selector">
-                <fieldset class="field" data-role="controlgroup" data-type="horizontal">
-                    <div class="head">
-                        <div class="title">KTM</div>
-                    </div>
-                    <div class="seats">
-                        <div class="all-seats">
-                            <!-- Loop through stations fetched from Flask backend -->
-                            {% for station in stations %}
-                            <div class="station">
-                                <input name="dest_type" id="s{{ stations.id }}" style="display: none;" value="{{ stations.name }}" type="radio" unchecked />
-                                <label for="s{{ stations.id }}" class="seat booked">
-                                    {{ stations.name }}
-                                </label>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    
-                    <div class="timings">
-                        <form>
-                            <div class="dates">
-                                <label class="calendar">Select Date</label>
-                                <input type="date" id="booking-date">
-                            </div>
-                            <div class="selectors">
-                                <div class="select-group">
-                                    <button id="reset-button" class="select-label" for="select-origin">Origin</button>
-                                    <input class="selection" type="text" id="select-origin">
-                                </div>
-                                <div class="select-group2">
-                                    <button class="select-label" for="select-destination">Destination</button>
-                                    <input class="selection" type="text" id="select-destination">
-                                </div>
-                                <div class="price">
-                                    <button type="button" onclick="bookTicket()">Book</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    
-                </fieldset>
-            </div>
         </div>
     </div>
+    <form id="booking-form" method="post">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            const stationRadios = document.querySelectorAll('input[name="dest_type"]');
-            const originInput = document.getElementById('select-origin');
-            const destinationInput = document.getElementById('select-destination');
-            const resetButton = document.getElementById('reset-button');
+        <label for="class">Class:</label>
+        <select id="class" name="class">
+            <option value="business">Business</option>
+            <option value="economy">Economy</option>
+        </select><br>
 
-            stationRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (!originInput.value) {
-                        originInput.value = this.value;
-                    } else {
-                        destinationInput.value = this.value;
-                        const originRadio = document.querySelector(`input[value="${originInput.value}"]`);
-                        if (originRadio) {
-                            originRadio.disabled = true;
-                        }
-                    }
-                });
-            });
+        <label for="num_pax">Number of Passengers:</label>
+        <select id="num_pax" name="num_pax"></select><br>
 
-            resetButton.addEventListener('click', function() {
-                originInput.value = '';
-                destinationInput.value = '';
-                stationRadios.forEach(radio => {
-                    radio.disabled = false;
-                });
-            });
+        <label for="seat">Seats:</label>
+        <input type="text" id="seat" name="seat" readonly><br>
 
-            // Function to handle booking
-            function bookTicket() {
-                const selectedOrigin = originInput.value;
-                const selectedDestination = destinationInput.value;
-                const bookingDate = document.getElementById('booking-date').value;
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br>
 
-                // Example of sending data to Flask backend using AJAX (jQuery)
-                $.ajax({
-                    type: 'POST',
-                    url: '/book_ticket',  // Modify the URL as per your Flask route
-                    data: {
-                        origin: selectedOrigin,
-                        destination: selectedDestination,
-                        date: bookingDate
-                    },
-                    success: function(response) {
-                        // Handle success response, if needed
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        // Handle error response, if needed
-                        console.error(error);
-                    }
-                });
-            }
-        });
-    </script>
+        <button type="button" id="select-seat-btn">Select Seats</button><br>
+        <button type="submit">Book</button>
+    </form>
+
+    <div class="popup-overlay"></div>
+    <div class="popup">
+        <div class="seat-map" id="seat-map"></div>
+        <button id="close-popup">Close</button>
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='script_login.js')}}"></script>
 </body>
 </html>
 
+</body>
+</html>
