@@ -17,9 +17,9 @@
          </ul>
     </header>
     
-<div class="container">
-    <h2>Book ETS Ticket</h2>
-    <form action="{{ url_for('auth.book_ets_ticket') }}" method="post">
+    <div class="container">
+        <h2>Book Ticket ETS</h2>
+        <form action="{{ url_for('auth.book_ticket') }}" method="post">
         <div class="box1">
             <div class="main-content">
                 
@@ -98,20 +98,7 @@
                     <input type="submit" value="Book Ticket">
         </form>
     </div>
-<script>
-    function updateSeatOptions() {
-        var numPeople = parseInt(document.getElementById('num_people').value);
-        var seatOptions = document.querySelectorAll('#seat_number option');
 
-        seatOptions.forEach(function(option) {
-            if (parseInt(option.value) > numPeople) {
-                option.disabled = true;
-            } else {
-                option.disabled = false;
-            }
-        });
-    }
-</script>
 
 </body>
 </html>

@@ -29,14 +29,10 @@ header {
     transition: all .50s ease;
 }
 
-
 .container{
-    margin-top: 100px;
+    margin-top: 200px;
 }
-.container h2{
-    margin-top: 50px;
-    font-weight: 700;
-}
+
 .main {
     display: flex;
     align-items: center;
@@ -77,8 +73,6 @@ ul {
 
 section {
     padding: 150px 14% 60px;
-    
-
 }
 
 /* CONTACT */
@@ -147,6 +141,7 @@ hr {
 .container h2 {
     text-align: center;
     padding-bottom: 20px;
+    font-weight: 550;
 }
 
 .box1 {
@@ -155,7 +150,8 @@ hr {
     background-position: center;
     border-radius: 2rem;
     padding: 150px;
-    margin-top: 70px;
+    margin: 50px;
+    
 }
 
 .main-content {
@@ -175,6 +171,7 @@ hr {
     background-position: center;
     border-radius: 2rem;
     padding: 150px;
+    margin: 50px;
 }
 
 .container2 {
@@ -182,10 +179,10 @@ hr {
 }
 
 select, input[type="number"], input[type="submit"] {
-    width: 80%; /* Adjust width as needed */
+    width: 70%; 
     padding: 10px;
-    margin: 10px auto; /* Center horizontally */
-    display: block; /* Ensure each element takes up a full line */
+    margin: 10px auto; 
+    display: block; 
     box-sizing: border-box;
 }
 
