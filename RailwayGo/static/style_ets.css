@@ -77,6 +77,8 @@ ul {
 
 section {
     padding: 150px 14% 60px;
+    
+
 }
 
 /* CONTACT */
@@ -177,4 +179,21 @@ hr {
 
 .container2 {
     padding-top: 70px;
+}
+
+select, input[type="number"], input[type="submit"] {
+    width: 80%; /* Adjust width as needed */
+    padding: 10px;
+    margin: 10px auto; /* Center horizontally */
+    display: block; /* Ensure each element takes up a full line */
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    cursor: pointer;
+    background-color: var(--text-color);
+    color: white;
+    font-weight: 800;
+    border: none;
+    border-radius: 5px;
 }
