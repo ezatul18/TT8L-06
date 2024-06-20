@@ -321,7 +321,6 @@ def book_ets_ticket():
     
     # Retrieve selected seat from session
     selected_seat = session.get('selected_seat')
-    # If selected seat exists, mark it as unavailable
     if selected_seat:
         for seat in seat_numbers:
             if seat['number'] == selected_seat:
