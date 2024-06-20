@@ -199,7 +199,7 @@ def summary():
 ## BOOK ##
 
 @auth.route('/book', methods=['GET', 'POST'])
-@login_required
+
 def book_ticket():
     if request.method == 'POST':
         origin = request.form['origin']
@@ -208,68 +208,69 @@ def book_ticket():
         time = request.form['time']
         num_people = request.form['num_people']
         seat_type = request.form['seat_type']
-        seat_number = request.form['seat_number']
+        seat_numbers = request.form.getlist('seat_number')  # Get selected seat numbers as a list
         
         db = get_db_connection()
         try:
+            for seat_number in seat_numbers:
+                db.execute('INSERT INTO bookings (origin, destination, date, time, num_people, seat_type, seat_number) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                           [origin, destination, date, time, num_people, seat_type, seat_number])
+                db.execute('UPDATE seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
+                db.commit()
 
-            db.execute('INSERT INTO bookings (origin, destination, date, time, num_people, seat_type, seat_number) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                       [origin, destination, date, time, num_people, seat_type, seat_number])
-            db.commit()
-
-
-            db.execute('UPDATE seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
-            db.commit()
-
-            flash('Ticket booked successfully!', 'success')
+            flash('Ticket(s) booked successfully!', 'success')
             return redirect(url_for('auth.ticket'))
         except sqlite3.Error as e:
             flash(f'Error booking ticket: {str(e)}', 'error')
         finally:
             db.close()
-    
+
     origins = ['KL', 'Nilai', 'KL Sentral']
     destinations = ['KL', 'Nilai', 'KL Sentral']
     dates = ['2024-08-01', '2024-08-02', '2024-08-03', '2024-08-04', '2024-08-05', '2024-08-06', '2024-08-07', '2024-08-08', '2024-08-09', '2024-08-10', '2024-08-11', '2024-08-12', '2024-08-13', '2024-08-14', '2024-08-15', '2024-08-16', '2024-08-17', '2024-08-18', '2024-08-19', '2024-08-20', '2024-08-21', '2024-08-22', '2024-08-23', '2024-08-24', '2024-08-25', '2024-08-26', '2024-08-27', '2024-08-28', '2024-08-29', '2024-08-30', '2024-08-31']
     times = ['08:00', '16:00', '21:00']
     
- 
     db = get_db_connection()
     cur = db.execute('SELECT seat_number, status FROM seat_status')
     seat_data = cur.fetchall()
     db.close()
     
-  
     seat_numbers = [{'number': seat['seat_number'], 'available': seat['status'] == 'available'} for seat in seat_data]
 
     return render_template('book_ktm.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
 
 
-  
-
 
 
 @auth.route('/ticket')
-@login_required
 def ticket():
     conn = get_db_connection()
-    cur = conn.execute('SELECT * FROM bookings')
-    rows = cur.fetchall()
+    cursor = conn.cursor()
 
-    
+    cursor.execute("SELECT * FROM bookings")
+    rows = cursor.fetchall()
+
     bookings = []
     for row in rows:
-        booking = dict(row)
-        booking['ticket_price'] = calculate_ticket_price(booking)
+        booking = {
+            'origin': row[1],
+            'destination': row[2],
+            'date': row[3],
+            'time': row[4],
+            'num_people': row[5],
+            'seat_type': row[6],
+            'seat_numbers': row[7].split(', '),  # Assuming seat_numbers are stored as comma-separated string in database
+            'ticket_price': row[8]
+        }
         bookings.append(booking)
 
     conn.close()
 
     return render_template('ticket_ktm.html', bookings=bookings)
 
-def calculate_ticket_price(booking):
+def calculate_ticket_price(booking): 
     base_price_per_ticket = 12  
-    num_people = booking['num_people']
+    num_people = row[5] 
     
     total_price = num_people * base_price_per_ticket
     
