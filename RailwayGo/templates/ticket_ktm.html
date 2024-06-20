@@ -48,6 +48,7 @@
                 <th>Number of People</th>
                 <th>Seat Type</th>
                 <th>Seat Number</th>
+                <th>Ticket Price</th>
             </tr>
         </thead>
         <tbody>
@@ -60,6 +61,7 @@
                 <td>{{ booking['num_people'] }}</td>
                 <td>{{ booking['seat_type'] }}</td>
                 <td>{{ booking['seat_number'] }}</td>
+                <td>RM {{ booking['ticket_price'] }}</td>
             </tr>
             {% endfor %}
         </tbody>

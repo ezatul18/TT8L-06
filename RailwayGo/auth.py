@@ -252,12 +252,28 @@ def book_ticket():
 @auth.route('/ticket')
 @login_required
 def ticket():
-    db = get_db_connection()
-    cur = db.execute('SELECT * FROM bookings')
-    bookings = cur.fetchall()
-    db.close()
+    conn = get_db_connection()
+    cur = conn.execute('SELECT * FROM bookings')
+    rows = cur.fetchall()
+
+    
+    bookings = []
+    for row in rows:
+        booking = dict(row)
+        booking['ticket_price'] = calculate_ticket_price(booking)
+        bookings.append(booking)
+
+    conn.close()
 
     return render_template('ticket_ktm.html', bookings=bookings)
+
+def calculate_ticket_price(booking):
+    base_price_per_ticket = 12  
+    num_people = booking['num_people']
+    
+    total_price = num_people * base_price_per_ticket
+    
+    return total_price
 
 
 
