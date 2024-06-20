@@ -197,12 +197,12 @@ def book_ticket():
         
         db = get_db_connection()
         try:
-            # Insert into bookings table
+
             db.execute('INSERT INTO bookings (origin, destination, date, time, num_people, seat_type, seat_number) VALUES (?, ?, ?, ?, ?, ?, ?)',
                        [origin, destination, date, time, num_people, seat_type, seat_number])
             db.commit()
 
-            # Update seat_status table to mark the seat as booked
+
             db.execute('UPDATE seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
             db.commit()
 
@@ -218,13 +218,13 @@ def book_ticket():
     dates = ['2024-08-01', '2024-08-02', '2024-08-03', '2024-08-04', '2024-08-05', '2024-08-06', '2024-08-07', '2024-08-08', '2024-08-09', '2024-08-10', '2024-08-11', '2024-08-12', '2024-08-13', '2024-08-14', '2024-08-15', '2024-08-16', '2024-08-17', '2024-08-18', '2024-08-19', '2024-08-20', '2024-08-21', '2024-08-22', '2024-08-23', '2024-08-24', '2024-08-25', '2024-08-26', '2024-08-27', '2024-08-28', '2024-08-29', '2024-08-30', '2024-08-31']
     times = ['08:00', '16:00', '21:00']
     
-    # Fetch seat numbers and availability status from database
+ 
     db = get_db_connection()
     cur = db.execute('SELECT seat_number, status FROM seat_status')
     seat_data = cur.fetchall()
     db.close()
     
-    # Prepare seat_numbers list based on fetched data
+  
     seat_numbers = [{'number': seat['seat_number'], 'available': seat['status'] == 'available'} for seat in seat_data]
 
     return render_template('book.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
