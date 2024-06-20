@@ -48,7 +48,7 @@
                 <th>Number of People</th>
                 <th>Seat Type</th>
                 <th>Seat Number</th>
-                <!-- Add additional ETS-specific headers if needed -->
+                <th>Action</th> <!-- New column for cancellation button -->
             </tr>
         </thead>
         <tbody>
@@ -61,11 +61,17 @@
                 <td>{{ booking['num_people'] }}</td>
                 <td>{{ booking['seat_type'] }}</td>
                 <td>{{ booking['seat_number'] }}</td>
-                
+                <td>
+                    <!-- Form for canceling the ticket -->
+                    <form action="{{ url_for('auth.cancel_ticket', booking_id=booking['id']) }}" method="post">
+                        <button type="submit">Cancel</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    
     
 </div>
 

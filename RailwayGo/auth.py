@@ -245,6 +245,8 @@ def ticket():
 
 
 
+from flask import session
+
 @auth.route('/ets_book', methods=['GET', 'POST'])
 def book_ets_ticket():
     if request.method == 'POST':
@@ -283,6 +285,15 @@ def book_ets_ticket():
     db.close()
     
     seat_numbers = [{'number': seat['seat_number'], 'available': seat['status'] == 'available'} for seat in seat_data]
+    
+    # Retrieve selected seat from session
+    selected_seat = session.get('selected_seat')
+    # If selected seat exists, mark it as unavailable
+    if selected_seat:
+        for seat in seat_numbers:
+            if seat['number'] == selected_seat:
+                seat['available'] = False
+                break
 
     return render_template('book_ets.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
 
@@ -293,5 +304,35 @@ def ets_ticket():
     bookings = cur.fetchall()
     db.close()
 
+    # Remove selected seat from session when rendering ticket page
+    session.pop('selected_seat', None)
+
     return render_template('ticket_ets.html', bookings=bookings)
 
+
+@auth.route('/cancel_ticket/<int:booking_id>', methods=['POST'])
+def cancel_ticket(booking_id):
+    db = get_db_connection()
+    try:
+        # Retrieve the booked ticket details
+        cur = db.execute('SELECT * FROM ets_bookings WHERE id = ?', (booking_id,))
+        booking = cur.fetchone()
+        if not booking:
+            flash('Booking not found!', 'error')
+            return redirect(url_for('auth.ets_ticket'))
+        
+        # Update seat status to available
+        db.execute('UPDATE ets_seat_status SET status = "available" WHERE seat_number = ?', (booking['seat_number'],))
+        db.commit()
+
+        # Delete the booking from the database
+        db.execute('DELETE FROM ets_bookings WHERE id = ?', (booking_id,))
+        db.commit()
+
+        flash('Ticket canceled successfully!', 'success')
+    except sqlite3.Error as e:
+        flash(f'Error canceling ticket: {str(e)}', 'error')
+    finally:
+        db.close()
+    
+    return redirect(url_for('auth.ets_ticket'))
