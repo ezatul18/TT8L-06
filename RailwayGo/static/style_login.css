@@ -247,8 +247,8 @@ nav{
  }
  
  .logo h4 a {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit text color */
+    text-decoration: none; 
+    color: inherit; 
     font-weight: 500;
 }
  .main-wrapper{
