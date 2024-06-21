@@ -161,9 +161,7 @@ hr {
     border-radius: 2rem;
 }
 
-.b1 {
-    padding: 10px;
-}
+
 
 .box2 {
     background-image: url('image_login/ktm3.jpg');
@@ -172,19 +170,14 @@ hr {
     border-radius: 2rem;
     padding: 150px;
     margin: 50px;
+    text-align: center;
 }
 
 .container2 {
     padding-top: 70px;
 }
 
-select, input[type="number"], input[type="submit"] {
-    width: 70%; 
-    padding: 10px;
-    margin: 10px auto; 
-    display: block; 
-    box-sizing: border-box;
-}
+
 
 input[type="submit"] {
     cursor: pointer;
@@ -193,6 +186,7 @@ input[type="submit"] {
     font-weight: 800;
     border: none;
     border-radius: 5px;
+    margin-top: 30px;
 }
 .flash-message{
     position: fixed;
@@ -217,3 +211,56 @@ input[type="submit"] {
     background-color: #82a284;
     color: white;
 }
+.seat-block {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 10px; 
+}
+
+.seat-label {
+    display: block;
+    width: 30px; 
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.seat-label.disabled {
+    opacity: 0.5; 
+    cursor: not-allowed;
+}
+
+.seat-label.selected {
+    background-color: maroon; 
+    color: white; 
+}
+
+select, input[type="number"], input[type="submit"] {
+    width: auto; 
+    padding: 10px;
+    margin: 10px auto 0; 
+    display: block; 
+    box-sizing: border-box;
+}
+
+.b1 {
+    padding: 10px;
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+.b1 label {
+    margin-right: 10px; 
+}
+
+.b1 select {
+    flex: 1; 
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+
