@@ -31,6 +31,7 @@ def connect_db():
     conn.commit()
     conn.close()
 
+# Other functions
 def add_user(email, username, password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
@@ -58,6 +59,7 @@ def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
+
 
 
 
