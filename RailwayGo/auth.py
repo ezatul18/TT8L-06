@@ -202,6 +202,7 @@ def summary():
 
 ## BOOK KTM ##
 @auth.route('/book', methods=['GET', 'POST'])
+@login_required
 
 
 def book_ticket():
@@ -247,6 +248,7 @@ def book_ticket():
 
 
 @auth.route('/ticket')
+@login_required
 
 def ticket():
     conn = get_db_connection()
@@ -319,38 +321,35 @@ def book_ets_ticket():
         time = request.form['time']
         num_people = int(request.form['num_people'])
         seat_type = request.form['seat_type']
-        seat_numbers = request.form.getlist('seat_number')
+        seat_numbers = request.form.getlist('seat_number')  
 
         total_price = calculate_ticket_price(num_people)
 
         db = get_db_connection()
         try:
             for seat_number in seat_numbers:
-                db.execute(
-                    'INSERT INTO ets_bookings (origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                    (origin, destination, date, time, num_people, seat_type, seat_number, total_price)
-                )
+                db.execute('INSERT INTO ets_bookings (origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                           [origin, destination, date, time, num_people, seat_type, seat_number, total_price])
                 db.execute('UPDATE ets_seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
-            db.commit()
+                db.commit()
 
             flash('Ticket(s) booked successfully!', 'success')
             return redirect(url_for('auth.ets_ticket'))
         except sqlite3.Error as e:
-            db.rollback()
             flash(f'Error booking ticket: {str(e)}', 'error')
         finally:
             db.close()
-
+    
     origins = ['Alor Setar', 'Kuala Lumpur', 'Batang Melaka']
     destinations = ['Alor Setar', 'Kuala Lumpur', 'Batang Melaka']
-    dates = ['2024-08-01', '2024-08-02', '2024-08-03']
-    times = ['08:00', '16:00', '21:00']
-
+    dates = ['2024-08-01', '2024-08-02', '2024-08-03']  
+    times = ['08:00', '16:00', '21:00']  
+    
     db = get_db_connection()
     cur = db.execute('SELECT seat_number, status FROM ets_seat_status')
     seat_data = cur.fetchall()
     db.close()
-
+    
     seat_numbers = [{'number': seat['seat_number'], 'available': seat['status'] == 'available'} for seat in seat_data]
 
     return render_template('book_ets.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
@@ -388,16 +387,16 @@ def ets_ticket():
 
     ets_bookings = []
     for row in rows:
-        seat_numbers = row['seat_numbers'].strip(', ')
+        seat_numbers = row[6].strip(', ')  
         seat_numbers_list = seat_numbers.split(', ') if seat_numbers else []
-        total_price = row['total_price']
+        total_price = row[7]
         booking = {
-            'origin': row['origin'],
-            'destination': row['destination'],
-            'date': row['date'],
-            'time': row['time'],
-            'num_people': row['num_people'],
-            'seat_type': row['seat_type'],
+            'origin': row[0],
+            'destination': row[1],
+            'date': row[2],
+            'time': row[3],
+            'num_people': row[4],
+            'seat_type': row[5],
             'seat_numbers': seat_numbers_list,
             'total_price': total_price
         }
@@ -405,39 +404,16 @@ def ets_ticket():
 
     conn.close()
 
+    return render_template('ticket_ets.html', ets_bookings=ets_bookings)
+
+
+
 def calculate_ticket_price(num_people):
     base_price_per_ticket = 12
     total_price = num_people * base_price_per_ticket
     return total_price
 
 
-    return render_template('ticket_ets.html', ets_bookings=ets_bookings)
+   
 
 
-@auth.route('/cancel_ticket/<int:booking_id>', methods=['POST'])
-
-def cancel_ticket(booking_id):
-    db = get_db_connection()
-    try:
-        # Retrieve the booked ticket details
-        cur = db.execute('SELECT * FROM ets_bookings WHERE id = ?', (booking_id,))
-        booking = cur.fetchone()
-        if not booking:
-            flash('Booking not found!', 'error')
-            return redirect(url_for('auth.ets_ticket'))
-        
-        # Update seat status to available
-        db.execute('UPDATE ets_seat_status SET status = "available" WHERE seat_number = ?', (booking['seat_number'],))
-        db.commit()
-
-        # Delete the booking from the database
-        db.execute('DELETE FROM ets_bookings WHERE id = ?', (booking_id,))
-        db.commit()
-
-        flash('Ticket canceled successfully!', 'success')
-    except sqlite3.Error as e:
-        flash(f'Error canceling ticket: {str(e)}', 'error')
-    finally:
-        db.close()
-    
-    return redirect(url_for('auth.ets_ticket'))

@@ -47,12 +47,12 @@
                 <th>Time</th>
                 <th>Number of People</th>
                 <th>Seat Type</th>
-                <th>Seat Number</th>
-                <th>Action</th> <!-- New column for cancellation button -->
+                <th>Seat Numbers</th>
+                <th>Ticket Price</th>
             </tr>
         </thead>
         <tbody>
-            {% for booking in bookings %}
+            {% for booking in ets_bookings %}
             <tr>
                 <td>{{ booking['origin'] }}</td>
                 <td>{{ booking['destination'] }}</td>
@@ -66,16 +66,11 @@
                         {% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </td>
-                <td>
-                    <!-- Form for canceling the ticket -->
-                    <form action="{{ url_for('auth.cancel_ticket', booking_id=booking['id']) }}" method="post">
-                        <button type="submit">Cancel</button>
-                    </form>
-                </td>
                 <td>RM {{ booking['total_price'] }}</td>  
             </tr>
             {% endfor %}
         </tbody>
+        
     </table>
     
     
