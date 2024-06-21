@@ -231,7 +231,7 @@ def book_ticket():
 
             # If any seats are already booked, flash an error message
             if booked_seats:
-                flash(f"The following seat(s) are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
+                flash(f"The following seats are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ticket'))
             
             for seat_number in seat_numbers:
@@ -240,7 +240,7 @@ def book_ticket():
                 db.execute('UPDATE seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
                 db.commit()
 
-            flash('Ticket(s) booked successfully!', 'success')
+            flash('Tickets booked successfully!', 'success')
             return redirect(url_for('auth.ticket'))
         except sqlite3.Error as e:
             flash(f'Error booking ticket: {str(e)}', 'error')
@@ -353,7 +353,7 @@ def book_ets_ticket():
 
             # If any seats are already booked, flash an error message
             if booked_seats:
-                flash(f"The following seat(s) are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
+                flash(f"The following seat are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ets_ticket'))
 
 
@@ -366,7 +366,7 @@ def book_ets_ticket():
                 db.execute('UPDATE ets_seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
                 db.commit()
 
-            flash('Ticket(s) booked successfully!', 'success')
+            flash('Ticket booked successfully!', 'success')
             return redirect(url_for('auth.ets_ticket'))
         except sqlite3.Error as e:
             flash(f'Error booking ticket: {str(e)}', 'error')
