@@ -116,6 +116,7 @@ def store_food():
     return render_template('store_food.html', products=products_with_images)
 
 @auth.route('/add_to_cart', methods=['POST'])
+@login_required
 def add_to_cart():
     product_id = request.form['product_id']
     quantity = int(request.form['quantity'])
@@ -132,6 +133,7 @@ def add_to_cart():
         return jsonify({'error': 'Product not found'})
     
 @auth.route('/cart')
+@login_required
 def cart():
     conn = get_db_connection()
     cart_items = conn.execute('''
@@ -200,6 +202,7 @@ def summary():
 
 ## BOOK KTM ##
 @auth.route('/book', methods=['GET', 'POST'])
+@login_required
 
 def book_ticket():
     if request.method == 'POST':
