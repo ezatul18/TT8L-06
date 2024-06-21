@@ -66,10 +66,11 @@
                         {% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </td>
-                <td>RM {{ booking['ticket_price'] }}</td>
+                <td>RM {{ booking['total_price'] }}</td>  
             </tr>
             {% endfor %}
         </tbody>
+        
     </table>
     
 </div>
