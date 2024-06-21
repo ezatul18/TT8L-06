@@ -14,7 +14,7 @@
     <a href="#home" class="main">Railway<span>Go</span></a>
 
     <ul class="navlist">
-        <li><a href="#home">Home</a></li>
+        <li><a href="{{url_for('views.home')}}">Home</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="/homefood"></a></li>
      </ul>
@@ -23,6 +23,15 @@
 <!-- BOOKING SECTION -->
 <section>
     <div class="container">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
         <h2>Book Ticket</h2>
         <form action="{{ url_for('auth.book_ticket') }}" method="post">
         <div class="box1">

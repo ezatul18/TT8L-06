@@ -5,6 +5,7 @@ from functools import wraps
 from .models import add_user, get_user_by_email, get_user_by_username
 from .models import connect_db, add_booking, get_stations
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 import sqlite3
 import os
 auth = Blueprint("auth", __name__)
@@ -219,6 +220,20 @@ def book_ticket():
 
         db = get_db_connection()
         try:
+             
+            booked_seats = []
+            # Check if any of the selected seats are already booked for the specified date and time
+            for seat_number in seat_numbers:
+                cursor = db.execute('SELECT COUNT(*) FROM bookings WHERE date = ? AND time = ? AND seat_number = ?',
+                                    (date, time, seat_number))
+                if cursor.fetchone()[0] > 0:
+                    booked_seats.append(seat_number)
+
+            # If any seats are already booked, flash an error message
+            if booked_seats:
+                flash(f"The following seat(s) are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
+                return redirect(url_for('auth.book_ticket'))
+            
             for seat_number in seat_numbers:
                 db.execute('INSERT INTO bookings (origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                            [origin, destination, date, time, num_people, seat_type, seat_number, total_price])
@@ -327,6 +342,24 @@ def book_ets_ticket():
 
         db = get_db_connection()
         try:
+            
+            booked_seats = []
+            # Check if any of the selected seats are already booked for the specified date and time
+            for seat_number in seat_numbers:
+                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ?',
+                                    (date, time, seat_number))
+                if cursor.fetchone()[0] > 0:
+                    booked_seats.append(seat_number)
+
+            # If any seats are already booked, flash an error message
+            if booked_seats:
+                flash(f"The following seat(s) are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
+                return redirect(url_for('auth.book_ets_ticket'))
+
+
+
+
+
             for seat_number in seat_numbers:
                 db.execute('INSERT INTO ets_bookings (origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                            [origin, destination, date, time, num_people, seat_type, seat_number, total_price])

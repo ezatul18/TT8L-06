@@ -194,3 +194,26 @@ input[type="submit"] {
     border: none;
     border-radius: 5px;
 }
+.flash-message{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+
+.flash-message {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.error {
+    background-color: #ffcccc;
+    color: #cc0000;
+}
+
+.success {
+    background-color: #82a284;
+    color: white;
+}
