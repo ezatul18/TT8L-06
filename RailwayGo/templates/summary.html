@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <a href="/main" class="main">Railway<span>Food</span></a>
+        <a href="/" class="main">Railway<span>Go</span></a>
     
         <ul class="navlist">
             <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
@@ -18,9 +18,55 @@
     </header>
 
     <section class="summary">
-        <h1>Order Summary</h1>
-        <h2>Order Details for {{ user.username }}</h2>
-        <p>Email: {{ user.email }}</p>
+    <div class="content">
+        <div class="user-info">
+        <h1>Thankyou for your purchase!</h1>
+        <h3>Order Details for <span>{{ user.username }}</span></h3>
+        <h3>Email: <span>{{ user.email }}</span></h3>
+        <p>Your order will be processed within 24 hours,<br>we will notify you via email for the confirmation receipt.<br>Thankyou for your patience!</p>
+        <div class="pay">
+            <div class="pay--nav">
+                <nav class="navbar">
+                    <ul class="nav-links">
+                        <li class="nav-link paydwn">
+                            <a href="#">FPX
+                                <span><i class='bx bxs-down-arrow'></i></span>
+                            </a>
+                            <ul class="drop-down">
+                                <li>Maybank</li>
+                                <li>Bank muamalat</li>
+                                <li>Bank Islam</li>
+                            </ul>
+                        </li>
+                        <li class="nav-link paydwn">
+                            <a href="#">Card
+                                <span><i class='bx bxs-down-arrow'></i></span>
+                            </a>
+                            <ul class="drop-down">
+                                <li>Debit card</li>
+                                <li>Credit card</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <p>
+                <button id="checkoutButton">Checkout</button>
+                <div id="checkoutModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Are you sure you want to checkout?</p>
+                        <button id="confirmCheckout">Confirm</button>
+                        <button class="close-modal">Cancel</button>
+                    </div>
+                </div>
+            </p>
+        </div>    
+        </div>
+        
+        <div class="table">
+        <div class="container">
+        <h2>Food</h2>
         <table>
             <thead>
                 <tr>
@@ -39,6 +85,7 @@
                     <td>RM {{ item['price'] * item['quantity'] }}0</td>
                 </tr>
                 {% endfor %}
+            
             </tbody>
             <tfoot>
                 <tr>
@@ -47,11 +94,13 @@
                 </tr>
             </tfoot>
         </table>
-    </section>
+        </div>
+        
+    
 
-    <section class="ets-bookings">
+   
         <div class="container">
-            <h2>Booked ETS Tickets</h2>
+            <h2>ETS Tickets</h2>
             <table>
                 <thead>
                     <tr>
@@ -89,18 +138,16 @@
                         <td colspan="7">Ticket Total:</td>
                         <td>RM {{ total_ticket_price }}0</td>
                     </tr>
-                    <tr>
-                        <td colspan="7">Overall Total:</td>
-                        <td>RM {{ overall_total }}0</td>
-                    </tr>
                 </tfoot>
             </table>
+           <h4>Overall total : RM{{ overall_total }}0</h4>
+        
         </div>
-    </section>
+   
 
-    <section class="ktm-bookings">
+    
         <div class="container">
-            <h2>Booked KTM Tickets</h2>
+            <h2>KTM Tickets</h2>
             <table>
                 <thead>
                     <tr>
@@ -138,58 +185,22 @@
                         <td colspan="7">Ticket Total:</td>
                         <td>RM {{ total_ticket_price_ktm }}0</td>
                     </tr>
-                    <tr>
-                        <td colspan="7">Overall Total:</td>
-                        <td>RM {{ overall_total_1 }}0</td>
-                    </tr>
                 </tfoot>
             </table>
+            <h4>Overall total : RM{{ overall_total_1 }}0</h4>
         </div>
+    </div>
+    </div>
     </section>
 
-    <section class="pay">
-        <div class="pay--nav">
-            <nav class="navbar">
-                <ul class="nav-links">
-                    <li class="nav-link paydwn">
-                        <a href="#">FPX
-                            <span><i class='bx bxs-down-arrow'></i></span>
-                        </a>
-                        <ul class="drop-down">
-                            <li>Maybank</li>
-                            <li>Bank muamalat</li>
-                            <li>Bank Islam</li>
-                        </ul>
-                    </li>
-                    <li class="nav-link paydwn">
-                        <a href="#">Card
-                            <span><i class='bx bxs-down-arrow'></i></span>
-                        </a>
-                        <ul class="drop-down">
-                            <li>Debit card</li>
-                            <li>Credit card</li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </div>
 
-        <p>
-            <button id="checkoutButton">Checkout</button>
-            <div id="checkoutModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <p>Are you sure you want to checkout?</p>
-                    <button id="confirmCheckout">Confirm</button>
-                    <button class="close-modal">Cancel</button>
-                </div>
-            </div>
-        </p>
-
-      
-    </section>
     <script>
-        // JavaScript for modal behavior
+        // HEADER //
+        const header = document.querySelector("header");
+        window.addEventListener("scroll", function() {
+            header.classList.toggle("sticky", window.scrollY > 80);
+})
+        // MASSAGE POP OUT //
         document.addEventListener('DOMContentLoaded', function() {
     var checkoutButton = document.getElementById('checkoutButton');
     var modal = document.getElementById('checkoutModal');
@@ -211,32 +222,29 @@
     });
 
     confirmButton.addEventListener('click', function() {
-        // Handle checkout confirmation
-        // For example, submit form or proceed with checkout
-
-        // Display a message
+       
         var message = document.createElement('p');
         message.textContent = "You have checked out. Thank you for using our website!";
         message.style.fontWeight = 'bold';
         message.style.color = 'green';
         message.style.marginTop = '10px';
 
-        // Insert the message after the modal content
+       
         modalContent.appendChild(message);
 
-        // Hide the modal after displaying the message
+        
         setTimeout(function() {
             closeModal();
-            // Remove the message after hiding the modal
+            
             modalContent.removeChild(message);
-        }, 2000); // Adjust the timeout as needed (2 seconds in this example)
+        }, 2000); 
     });
 
     function closeModal() {
         modal.style.display = 'none';
     }
 
-    // Close modal when clicking outside the modal content
+    
     window.addEventListener('click', function(event) {
         if (event.target === modal) {
             closeModal();
@@ -246,6 +254,6 @@
 
 
     </script>
-    <script src="{{url_for('static', filename='script_food.js')}}"></script>
+   
 </body>
 </html>

@@ -15,86 +15,88 @@
   }
   
   /* header */
-  
   header {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      right: 0;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: transparent;
-      padding: 20px 150px;
-      transition: all .50s ease;
-  }
-  
-  
-  
-  .main {
-      display: flex;
-      align-items: center;
-      margin: 50px;
-      color: var(--text-color);
-      font-size: 35px;
-      
-  }
-  
-  .main span {
-      color: var(--logo-color)
-  }
-  
-  .navlist {
-      display: flex;
-      
-  }
-  
-  .navlist a {
-      margin: 0 30px;
-      transition: all .50s ease;
-      font-weight: 600;
-      color: black;
-      
-  }
-  
-  ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-  }
-  
-  .navlist a:hover{
-      color: var(--text-color);
-      transform: scale(1.1);
-      
-  }
-  
-  
-  .icons{
-      display: flex;
-      size: 50px;
-      align-items: center;
-      padding: 6px 5px;
-      background: var(--main-color);
-      border-radius: 2rem;
-      box-shadow: rgba(0, 0, 0, 0.15);
-  }
-  
-  .icons i {
-      vertical-align: middle;
-      color:white;
-      margin-right: 6px;
-      margin-left: 7px;
-      transition: all 0.50s ease;
-      font-size: 20px;
-  
-  }
-  
-  .icons i:hover {
-      transform: scale(1.1);
-      color: var(--text-color);
-  }
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    padding: 20px 150px;
+    transition: all .50s ease;
+}
+
+
+
+.main {
+    display: flex;
+    align-items: center;
+    margin: 50px;
+    color: var(--text-color);
+    font-size: 35px;
+    
+}
+
+.main span {
+    color: var(--logo-color)
+}
+
+.navlist {
+    display: flex;
+    
+}
+
+.navlist a {
+    margin: 0 30px;
+    transition: all .50s ease;
+    font-weight: 600;
+    color: black;
+    
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navlist a:hover{
+    color: var(--text-color);
+    transform: scale(1.1);
+    
+}
+
+
+.icons{
+    display: flex;
+    size: 50px;
+    align-items: center;
+    padding: 6px 5px;
+    background: var(--main-color);
+    border-radius: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.15);
+}
+
+.icons i {
+    vertical-align: middle;
+    color:white;
+    margin-right: 6px;
+    margin-left: 7px;
+    transition: all 0.50s ease;
+    font-size: 20px;
+
+}
+
+.icons i:hover {
+    transform: scale(1.1);
+    color: var(--text-color);
+}
+
+
+
 
   /* Summary section */
 
@@ -107,26 +109,77 @@ section  {
     align-items: center;
 }
 
-.summary p {
-    padding: 15px;
+.content {
+    display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); 
+  gap: 20px;
+}
+
+.user-info {
+   padding-top: 150px;
+   background-color: var(--logo-color);
+   border-radius: 2rem;
+   color: white;
+}
+
+.user-info h3{
+    padding: 10px;
+}
+
+.user-info p{
+    padding: 10px;
+}
+
+.user-info h3 span {
+    color: maroon;
 }
 
 
-table {
+.user-info h1{
+   color: maroon;
+}
+
+.container {
+    padding: 30px;
+   
+}
+
+.table table {
     padding-top: 30px;
     width: 100%;
     align-items: center;
     text-align: left;
-    font-size: 15px;
+    font-size: 12px;
     border-spacing: 0;
     overflow: hidden;
+    border-collapse: collapse;
+ }
+
+ th, td {
+    border: 1px solid black; /* Adds a 1px solid border with color #ccc to each table cell */
+    padding: 8px;
+    text-align: left;
     
  }
 
- th {
-    background-color: grey;
-    font-size: 20px;
+ .container h2 {
+    padding: 10px;
  }
+
+ .container h4 {
+    padding: 10px;
+ }
+
+
+
+
+
+
+
+
+
+
+ 
 
 /* PAY */
 
@@ -134,13 +187,14 @@ table {
 .pay--nav {
     display: flex;
     font-size: 14px;
+    padding-top: 30px;
     
 }
 
 .navbar {
     margin: auto;
     padding: 0.5rem 1.5rem;
-    background: #fff;
+    background: var(--text-color);
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -176,7 +230,7 @@ a {
 }
 
 .nav-link:hover {
-    background-color: black;
+    background-color: #AEC3AE;
     color: #fff;
     border-radius: 0.5rem;
 }
@@ -203,7 +257,7 @@ a {
 }
 
 .drop-down li:hover {
-    background: black;
+    background: #AEC3AE;
     color: #fff;
     border-radius: 0.5rem;
 }
