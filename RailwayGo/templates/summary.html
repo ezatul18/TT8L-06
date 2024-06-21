@@ -175,10 +175,77 @@
         </div>
 
         <p>
-            <button>Checkout</button>
+            <button id="checkoutButton">Checkout</button>
+            <div id="checkoutModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Are you sure you want to checkout?</p>
+                    <button id="confirmCheckout">Confirm</button>
+                    <button class="close-modal">Cancel</button>
+                </div>
+            </div>
         </p>
-    </section>
 
+      
+    </section>
+    <script>
+        // JavaScript for modal behavior
+        document.addEventListener('DOMContentLoaded', function() {
+    var checkoutButton = document.getElementById('checkoutButton');
+    var modal = document.getElementById('checkoutModal');
+    var closeButton = document.querySelector('.close');
+    var cancelButton = document.querySelector('.close-modal');
+    var confirmButton = document.getElementById('confirmCheckout');
+    var modalContent = document.querySelector('.modal-content');
+
+    checkoutButton.addEventListener('click', function() {
+        modal.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', function() {
+        closeModal();
+    });
+
+    cancelButton.addEventListener('click', function() {
+        closeModal();
+    });
+
+    confirmButton.addEventListener('click', function() {
+        // Handle checkout confirmation
+        // For example, submit form or proceed with checkout
+
+        // Display a message
+        var message = document.createElement('p');
+        message.textContent = "You have checked out. Thank you for using our website!";
+        message.style.fontWeight = 'bold';
+        message.style.color = 'green';
+        message.style.marginTop = '10px';
+
+        // Insert the message after the modal content
+        modalContent.appendChild(message);
+
+        // Hide the modal after displaying the message
+        setTimeout(function() {
+            closeModal();
+            // Remove the message after hiding the modal
+            modalContent.removeChild(message);
+        }, 2000); // Adjust the timeout as needed (2 seconds in this example)
+    });
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+});
+
+
+    </script>
     <script src="{{url_for('static', filename='script_food.js')}}"></script>
 </body>
 </html>
