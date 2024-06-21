@@ -307,8 +307,9 @@ def summary():
     total_ticket_price = sum(booking['total_price'] for booking in ets_bookings)
     total_ticket_price_ktm = sum(booking['total_price'] for booking in bookings)
 
-    overall_total = total_cart_price + total_ticket_price
-    overall_total_1 = total_cart_price + total_ticket_price_ktm
+
+    overall_total = total_cart_price + total_ticket_price 
+    overall_total_1 = total_cart_price + total_ticket_price_ktm 
     
     conn.close()
 
