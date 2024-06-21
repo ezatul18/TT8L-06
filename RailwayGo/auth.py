@@ -295,7 +295,6 @@ def ticket():
 
     return render_template('ticket_ktm.html', bookings=bookings)
 
-
 def calculate_ticket_price(num_people):
     base_price_per_ticket = 12
     total_price = num_people * base_price_per_ticket
@@ -398,16 +397,6 @@ def ets_ticket():
     conn.close()
 
     return render_template('ticket_ets.html', ets_bookings=ets_bookings)
-
-def calculate_ticket_price(booking):
-    base_price_per_ticket = 12  
-    num_people = booking['num_people']
-    
-    total_price = num_people * base_price_per_ticket
-    
-    return total_price
-
-
 
 
 @auth.route('/cancel_ticket/<int:booking_id>', methods=['POST'])
