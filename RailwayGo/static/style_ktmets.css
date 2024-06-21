@@ -171,3 +171,29 @@ hr {
 .container2 {
     padding-top: 70px;
 }
+
+.seat-block {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Adjust column count as per your layout */
+    gap: 10px; /* Adjust gap between seats */
+}
+
+.seat-label {
+    display: block;
+    width: 30px; /* Adjust width and height to fit your seat design */
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.seat-label.disabled {
+    opacity: 0.5; /* Style for disabled seats */
+    cursor: not-allowed;
+}
+
+.seat-label.selected {
+    background-color: maroon; /* Change background color when selected */
+    color: white; /* Adjust text color for better contrast */
+}
