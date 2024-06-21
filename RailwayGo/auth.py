@@ -202,7 +202,7 @@ def summary():
 
 ## BOOK KTM ##
 @auth.route('/book', methods=['GET', 'POST'])
-@login_required
+
 
 def book_ticket():
     if request.method == 'POST':
