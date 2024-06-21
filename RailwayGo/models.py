@@ -3,6 +3,8 @@ import sqlite3
 def connect_db():
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
+
+    # Create users table
     cur.execute('''CREATE TABLE IF NOT EXISTS users
                    (id INTEGER PRIMARY KEY, 
                     email VARCHAR(150) UNIQUE, 
@@ -10,9 +12,24 @@ def connect_db():
                     password TEXT, 
                     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
 
+    # Create seat_status table
+    cur.execute('''CREATE TABLE IF NOT EXISTS seat_status
+                   (seat_number INTEGER PRIMARY KEY,
+                    status TEXT NOT NULL)''')
+
+    # Create ets_seat_status table
+    cur.execute('''CREATE TABLE IF NOT EXISTS ets_seat_status
+                   (seat_number INTEGER PRIMARY KEY,
+                    status TEXT NOT NULL)''')
+
+    # Create products table
+    cur.execute('''CREATE TABLE IF NOT EXISTS products
+                   (id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    price REAL NOT NULL)''')
+
     conn.commit()
     conn.close()
-
 
 def add_user(email, username, password):
     conn = sqlite3.connect('database.db')
@@ -41,5 +58,7 @@ def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+
 
 
