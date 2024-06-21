@@ -342,9 +342,10 @@ def book_ticket():
 
             # Check if any of the selected seats are already booked for the specified date and time
             for seat_number in seat_numbers:
-                cursor = db.execute('SELECT COUNT(*) FROM bookings WHERE origin = ? AND destination = ? AND date = ? AND time = ? AND seat_number = ? AND seat_type = ? AND status = "active"',
-                                    (origin, destination, date, time, seat_number, seat_type))
+                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
+                    (date, time, seat_number, seat_type))
 
+                                    
                 if cursor.fetchone()[0] > 0:
                     booked_seats.append(seat_number)
 
@@ -478,11 +479,12 @@ def book_ets_ticket():
             booked_seats = []
             
             for seat_number in seat_numbers:
-                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE origin = ? AND destination = ? AND date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
-                                    (origin, destination, date, time, seat_number, seat_type))
+                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
+                    (date, time, seat_number, seat_type))
 
+                                    
                 if cursor.fetchone()[0] > 0:
-                    booked_seats.append(seat_number)
+                    booked_seats.append(seat_number) 
 
             
             if booked_seats:
