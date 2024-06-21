@@ -350,22 +350,8 @@ def book_ets_ticket():
 @auth.route('/ets_ticket')
 
 def ets_ticket():
-<<<<<<< HEAD
     conn = get_db_connection()
     cursor = conn.cursor()
-=======
-    db = get_db_connection()
-    cur = db.execute('SELECT * FROM ets_bookings')
-    rows = cur.fetchall()
-    
-    bookings = []
-    for row in rows:
-        booking = dict(row)
-        booking['ticket_price'] = calculate_ticket_price(booking)
-        bookings.append(booking)
-    
-    db.close()
->>>>>>> c2b6434b6819c130844bc5578f088067be8e15ad
 
     sql_query = """
     SELECT 
