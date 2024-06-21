@@ -350,8 +350,22 @@ def book_ets_ticket():
 @auth.route('/ets_ticket')
 
 def ets_ticket():
+<<<<<<< HEAD
     conn = get_db_connection()
     cursor = conn.cursor()
+=======
+    db = get_db_connection()
+    cur = db.execute('SELECT * FROM ets_bookings')
+    rows = cur.fetchall()
+    
+    bookings = []
+    for row in rows:
+        booking = dict(row)
+        booking['ticket_price'] = calculate_ticket_price(booking)
+        bookings.append(booking)
+    
+    db.close()
+>>>>>>> c2b6434b6819c130844bc5578f088067be8e15ad
 
     sql_query = """
     SELECT 
@@ -398,6 +412,16 @@ def ets_ticket():
     conn.close()
 
     return render_template('ticket_ets.html', ets_bookings=ets_bookings)
+
+def calculate_ticket_price(booking):
+    base_price_per_ticket = 12  
+    num_people = booking['num_people']
+    
+    total_price = num_people * base_price_per_ticket
+    
+    return total_price
+
+
 
 
 @auth.route('/cancel_ticket/<int:booking_id>', methods=['POST'])
