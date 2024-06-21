@@ -51,43 +51,55 @@
 </head>
 <body>
 
-<div class="container">
-    <h2>Booked Tickets</h2>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Origin</th>
-                <th>Destination</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Number of People</th>
-                <th>Seat Type</th>
-                <th>Seat Numbers</th>
-                <th>Ticket Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for booking in bookings %}
-            <tr>
-                <td>{{ booking['origin'] }}</td>
-                <td>{{ booking['destination'] }}</td>
-                <td>{{ booking['date'] }}</td>
-                <td>{{ booking['time'] }}</td>
-                <td>{{ booking['num_people'] }}</td>
-                <td>{{ booking['seat_type'] }}</td>
-                <td>
-                    {% for seat_number in booking['seat_numbers'] %}
-                        {{ seat_number }}
-                        {% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </td>
-                <td>RM {{ booking['total_price'] }}</td>  
-            </tr>
-            {% endfor %}
-        </tbody>
+    <div class="container">
+        <h2>Booked KTM Tickets</h2>
         
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Number of People</th>
+                    <th>Seat Type</th>
+                    <th>Seat Numbers</th>
+                    <th>Ticket Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking['origin'] }}</td>
+                    <td>{{ booking['destination'] }}</td>
+                    <td>{{ booking['date'] }}</td>
+                    <td>{{ booking['time'] }}</td>
+                    <td>{{ booking['num_people'] }}</td>
+                    <td>{{ booking['seat_type'] }}</td>
+                    <td>
+                        {% for seat_number in booking['seat_numbers'] %}
+                            {{ seat_number }}
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>RM {{ booking['total_price'] }}</td>
+                    <td>
+                        {% if booking['status'] == 'active' %}
+                            <span style="color: green;">Active</span>
+                        {% elif booking['status'] == 'not active' %}
+                            <span style="color: red;">Not Active</span>
+                        {% else %}
+                            <span>{{ booking['status'] }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+
     <div class="button-container">
         <a href="{{ url_for('views.homefood') }}" class="button">Next: Railway Food</a>
     </div>

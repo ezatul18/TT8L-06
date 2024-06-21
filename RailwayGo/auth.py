@@ -1,5 +1,7 @@
 
 
+
+
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify, session
 from functools import wraps
 from .models import add_user, get_user_by_email, get_user_by_username
@@ -75,6 +77,7 @@ def sign_up():
 ## LOG OUT ##
 @auth.route("/logout")
 def logout():
+    # Update cart items status to 'deleted'
     conn = get_db_connection()
     try:
         conn.execute('''
@@ -84,12 +87,25 @@ def logout():
         ''')
         conn.commit()
     except Exception as e:
-       
         print(f"Error updating cart items: {e}")
         conn.rollback()
     finally:
         conn.close()
 
+    # Update ticket statuses to 'not active' for the logged-out user
+    user_id = session.get('user_id')
+    db = get_db_connection()
+    try:
+        db.execute('UPDATE ets_bookings SET status = "not active" WHERE user_id = ?', (user_id,))
+        db.commit()
+        flash('You have been logged out.', 'info')
+    except sqlite3.Error as e:
+        flash(f'Error updating ticket status: {str(e)}', 'error')
+        db.rollback()
+    finally:
+        db.close()
+
+    # Clear session
     session.clear()
 
     return redirect(url_for('auth.login'))
@@ -307,7 +323,6 @@ def summary():
 ## BOOK KTM ##
 @auth.route('/book', methods=['GET', 'POST'])
 @login_required
-
 def book_ticket():
     if request.method == 'POST':
         origin = request.form['origin']
@@ -324,23 +339,26 @@ def book_ticket():
         try:
             user_id = session.get('user_id')
             booked_seats = []
-           
-            for seat_number in seat_numbers:
-                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
-                    (date, time, seat_number, seat_type))
 
-                                    
+            # Check if any of the selected seats are already booked for the specified date and time
+            for seat_number in seat_numbers:
+                cursor = db.execute('SELECT COUNT(*) FROM bookings WHERE origin = ? AND destination = ? AND date = ? AND time = ? AND seat_number = ? AND seat_type = ? AND status = "active"',
+                                    (origin, destination, date, time, seat_number, seat_type))
+
                 if cursor.fetchone()[0] > 0:
                     booked_seats.append(seat_number)
 
-           
+            # If any seats are already booked, flash an error message
             if booked_seats:
-                flash(f"The following seats are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
+                flash(f"The following seats are already booked for {date} at {time} where origin {origin} and destination {destination} for {seat_type}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ticket'))
 
-            # Insert the booking into the database
+            # Update the status of previously booked tickets for the user to 'not active'
+            db.execute('UPDATE bookings SET status = "not active" WHERE user_id = ? AND status = "active"', (user_id,))
+            
+            # Insert the new booking into the database
             for seat_number in seat_numbers:
-                db.execute('INSERT INTO bookings (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                db.execute('INSERT INTO bookings (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, "active")',
                            (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price))
                 db.execute('UPDATE seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
                 db.commit()
@@ -385,7 +403,8 @@ def ticket():
         num_people, 
         seat_type, 
         group_concat(IFNULL(seat_number, ''), ', ') AS seat_numbers, 
-        total_price 
+        total_price,
+        status
     FROM 
         bookings 
     WHERE 
@@ -397,7 +416,8 @@ def ticket():
         time, 
         num_people, 
         seat_type, 
-        total_price
+        total_price,
+        status
     """
 
     cursor.execute(sql_query, (user_id,))
@@ -408,6 +428,7 @@ def ticket():
         seat_numbers = row[6].strip(', ')  
         seat_numbers_list = seat_numbers.split(', ') if seat_numbers else []
         total_price = row[7]
+        status = row[8]
         booking = {
             'origin': row[0],
             'destination': row[1],
@@ -416,13 +437,15 @@ def ticket():
             'num_people': row[4],
             'seat_type': row[5],
             'seat_numbers': seat_numbers_list,
-            'total_price': total_price
+            'total_price': total_price,
+            'status': status
         }
         bookings.append(booking)
 
     conn.close()
 
     return render_template('ticket_ktm.html', bookings=bookings)
+
 
 
 def calculate_ticket_price(num_people):
@@ -453,31 +476,28 @@ def book_ets_ticket():
         db = get_db_connection()
         try:
             booked_seats = []
-            # Check if any of the selected seats are already booked for the specified date and time
+            
             for seat_number in seat_numbers:
-                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
-                    (date, time, seat_number, seat_type))
+                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE origin = ? AND destination = ? AND date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
+                                    (origin, destination, date, time, seat_number, seat_type))
 
-                                    
                 if cursor.fetchone()[0] > 0:
                     booked_seats.append(seat_number)
 
-            # If any seats are already booked, flash an error message
+            
             if booked_seats:
-                flash(f"The following seats are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
+                flash(f"The following seats are already booked for {date} at {time} where origin is {origin} and destination {destination} for {seat_type}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ets_ticket'))
 
-            
             user_id = session.get('user_id')
             for seat_number in seat_numbers:
-                db.execute('INSERT INTO ets_bookings (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                           (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price))
+                db.execute('INSERT INTO ets_bookings (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                           (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price, 'active'))
                 db.execute('UPDATE ets_seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
                 db.commit()
 
             flash('Ticket(s) booked successfully!', 'success')
 
-            
             return redirect(url_for('auth.ets_ticket'))
 
         except sqlite3.Error as e:
@@ -485,11 +505,10 @@ def book_ets_ticket():
         finally:
             db.close()
 
-    
     origins = ['Alor Setar', 'Kuala Lumpur', 'Batang Melaka']
     destinations = ['Alor Setar', 'Kuala Lumpur', 'Batang Melaka']
-    dates = ['2024-08-01', '2024-08-02', '2024-08-03', '2024-08-04', '2024-08-05', '2024-08-06', '2024-08-07', '2024-08-08', '2024-08-09', '2024-08-10', '2024-08-11', '2024-08-12', '2024-08-13', '2024-08-14', '2024-08-15', '2024-08-16', '2024-08-17', '2024-08-18', '2024-08-19', '2024-08-20', '2024-08-21', '2024-08-22', '2024-08-23', '2024-08-24', '2024-08-25', '2024-08-26', '2024-08-27', '2024-08-28', '2024-08-29', '2024-08-30', '2024-08-31']  
-    times = ['08:00', '16:00', '21:00']  
+    dates = ['2024-08-01', '2024-08-02', '2024-08-03', '2024-08-04', '2024-08-05', '2024-08-06', '2024-08-07', '2024-08-08', '2024-08-09', '2024-08-10', '2024-08-11', '2024-08-12', '2024-08-13', '2024-08-14', '2024-08-15', '2024-08-16', '2024-08-17', '2024-08-18', '2024-08-19', '2024-08-20', '2024-08-21', '2024-08-22', '2024-08-23', '2024-08-24', '2024-08-25', '2024-08-26', '2024-08-27', '2024-08-28', '2024-08-29', '2024-08-30', '2024-08-31']
+    times = ['08:00', '16:00', '21:00']
 
     db = get_db_connection()
     cur = db.execute('SELECT seat_number, status FROM ets_seat_status')
@@ -499,6 +518,7 @@ def book_ets_ticket():
     seat_numbers = [{'number': seat['seat_number'], 'available': seat['status'] == 'available'} for seat in seat_data]
 
     return render_template('book_ets.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
+
 
 
 @auth.route('/ets_ticket')
@@ -518,7 +538,8 @@ def ets_ticket():
         num_people, 
         seat_type, 
         group_concat(IFNULL(seat_number, ''), ', ') AS seat_numbers, 
-        total_price 
+        total_price,
+        status
     FROM 
         ets_bookings 
     WHERE 
@@ -530,7 +551,8 @@ def ets_ticket():
         time, 
         num_people, 
         seat_type, 
-        total_price
+        total_price,
+        status
     """
 
     cursor.execute(sql_query, (user_id,))
@@ -549,7 +571,8 @@ def ets_ticket():
             'num_people': row[4],
             'seat_type': row[5],
             'seat_numbers': seat_numbers_list,
-            'total_price': total_price
+            'total_price': total_price,
+            'status': row[8]  
         }
         ets_bookings.append(booking)
 
@@ -559,10 +582,15 @@ def ets_ticket():
 
 
 
+
 def calculate_ticket_price(num_people):
     base_price_per_ticket = 12
     total_price = num_people * base_price_per_ticket
     return total_price
+
+
+   
+
 
 
    

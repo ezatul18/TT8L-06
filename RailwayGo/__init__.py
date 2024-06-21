@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_login import LoginManager
 from .models import connect_db
+from datetime import timedelta
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "testtest"  
+    
 
     connect_db()
 
