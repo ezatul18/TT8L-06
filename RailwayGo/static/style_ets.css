@@ -186,7 +186,10 @@ input[type="submit"] {
     font-weight: 800;
     border: none;
     border-radius: 5px;
-    margin-top: 30px;
+    margin-top: 50px; 
+    width: 60%;
+    height: 40px;
+    
 }
 .flash-message{
     position: fixed;
@@ -237,7 +240,7 @@ input[type="submit"] {
     color: white; 
 }
 
-select, input[type="number"], input[type="submit"] {
+select, input[type="number"], input[type="seat_type"] {
     width: auto; 
     padding: 10px;
     margin: 10px auto 0; 
