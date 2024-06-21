@@ -156,7 +156,7 @@ section  {
  }
 
  th, td {
-    border: 1px solid black; /* Adds a 1px solid border with color #ccc to each table cell */
+    border: 1px solid black; 
     padding: 8px;
     text-align: left;
     
