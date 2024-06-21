@@ -324,14 +324,14 @@ def book_ticket():
         try:
             user_id = session.get('user_id')
             booked_seats = []
-            # Check if any of the selected seats are already booked for the specified date and time
+           
             for seat_number in seat_numbers:
                 cursor = db.execute('SELECT COUNT(*) FROM bookings WHERE date = ? AND time = ? AND seat_number = ?',
-                                    (date, time, seat_number))
+                                    (date, time, seat_number , seat_type))
                 if cursor.fetchone()[0] > 0:
                     booked_seats.append(seat_number)
 
-            # If any seats are already booked, flash an error message
+           
             if booked_seats:
                 flash(f"The following seats are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ticket'))
@@ -454,7 +454,7 @@ def book_ets_ticket():
             # Check if any of the selected seats are already booked for the specified date and time
             for seat_number in seat_numbers:
                 cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ?',
-                                    (date, time, seat_number))
+                                    (date, time, seat_number,seat_type))
                 if cursor.fetchone()[0] > 0:
                     booked_seats.append(seat_number)
 
