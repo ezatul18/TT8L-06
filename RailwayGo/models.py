@@ -1,10 +1,13 @@
+# models.py
+
 import sqlite3
+from flask import current_app, g
 
 def connect_db():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('database.db')  # Adjust path if necessary
     cur = conn.cursor()
 
-    # Create users table
+    # Create tables if they do not exist
     cur.execute('''CREATE TABLE IF NOT EXISTS users
                    (id INTEGER PRIMARY KEY, 
                     email VARCHAR(150) UNIQUE, 
@@ -12,17 +15,14 @@ def connect_db():
                     password TEXT, 
                     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
 
-    # Create seat_status table
     cur.execute('''CREATE TABLE IF NOT EXISTS seat_status
                    (seat_number INTEGER PRIMARY KEY,
                     status TEXT NOT NULL)''')
 
-    # Create ets_seat_status table
     cur.execute('''CREATE TABLE IF NOT EXISTS ets_seat_status
                    (seat_number INTEGER PRIMARY KEY,
                     status TEXT NOT NULL)''')
 
-    # Create products table
     cur.execute('''CREATE TABLE IF NOT EXISTS products
                    (id INTEGER PRIMARY KEY,
                     name TEXT NOT NULL,
@@ -30,6 +30,9 @@ def connect_db():
 
     conn.commit()
     conn.close()
+
+
+
 
 # Other functions
 def add_user(email, username, password):
