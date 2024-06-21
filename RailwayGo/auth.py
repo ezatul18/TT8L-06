@@ -214,13 +214,13 @@ def book_ticket():
         time = request.form['time']
         num_people = int(request.form['num_people'])
         seat_type = request.form['seat_type']
-        seat_numbers = request.form.getlist('seat_number')  
+        seat_numbers = request.form.getlist('seat_number')
 
         total_price = calculate_ticket_price(num_people)
 
         db = get_db_connection()
         try:
-             
+            user_id = session.get('user_id')
             booked_seats = []
             # Check if any of the selected seats are already booked for the specified date and time
             for seat_number in seat_numbers:
@@ -233,15 +233,17 @@ def book_ticket():
             if booked_seats:
                 flash(f"The following seats are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ticket'))
-            
+
+            # Insert the booking into the database
             for seat_number in seat_numbers:
-                db.execute('INSERT INTO bookings (origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                           [origin, destination, date, time, num_people, seat_type, seat_number, total_price])
+                db.execute('INSERT INTO bookings (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                           (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price))
                 db.execute('UPDATE seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
                 db.commit()
 
             flash('Tickets booked successfully!', 'success')
             return redirect(url_for('auth.ticket'))
+
         except sqlite3.Error as e:
             flash(f'Error booking ticket: {str(e)}', 'error')
         finally:
@@ -264,10 +266,11 @@ def book_ticket():
 
 @auth.route('/ticket')
 @login_required
-
 def ticket():
     conn = get_db_connection()
     cursor = conn.cursor()
+
+    user_id = session.get('user_id')
 
     sql_query = """
     SELECT 
@@ -281,6 +284,8 @@ def ticket():
         total_price 
     FROM 
         bookings 
+    WHERE 
+        user_id = ?
     GROUP BY 
         origin, 
         destination, 
@@ -291,7 +296,7 @@ def ticket():
         total_price
     """
 
-    cursor.execute(sql_query)
+    cursor.execute(sql_query, (user_id,))
     rows = cursor.fetchall()
 
     bookings = []
@@ -314,7 +319,6 @@ def ticket():
     conn.close()
 
     return render_template('ticket_ktm.html', bookings=bookings)
-
 
 
 def calculate_ticket_price(num_people):
