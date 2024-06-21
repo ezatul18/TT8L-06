@@ -574,12 +574,3 @@ def calculate_ticket_price(num_people):
     base_price_per_ticket = 12
     total_price = num_people * base_price_per_ticket
     return total_price
-
-
-   
-
-
-
-   
-
-
