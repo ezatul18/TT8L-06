@@ -174,13 +174,13 @@ hr {
 
 .seat-block {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Adjust column count as per your layout */
-    gap: 10px; /* Adjust gap between seats */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 10px; 
 }
 
 .seat-label {
     display: block;
-    width: 30px; /* Adjust width and height to fit your seat design */
+    width: 30px; 
     height: 30px;
     text-align: center;
     line-height: 30px;
@@ -189,13 +189,13 @@ hr {
 }
 
 .seat-label.disabled {
-    opacity: 0.5; /* Style for disabled seats */
+    opacity: 0.5; 
     cursor: not-allowed;
 }
 
 .seat-label.selected {
-    background-color: maroon; /* Change background color when selected */
-    color: white; /* Adjust text color for better contrast */
+    background-color: maroon; 
+    color: white; 
 }
 .flash-message{
     position: fixed;

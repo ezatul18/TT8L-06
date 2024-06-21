@@ -1,11 +1,8 @@
 
-
-
-
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify, session
 from functools import wraps
 from .models import add_user, get_user_by_email, get_user_by_username
-from .models import connect_db, add_booking, get_stations
+from .models import connect_db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import sqlite3
@@ -23,9 +20,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
-
-
+## LOG - IN ##
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -45,7 +40,7 @@ def login():
 
     return render_template("login.html")
 
-
+## SIGN- UP ##
 @auth.route("/sign-up", methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
@@ -77,7 +72,7 @@ def sign_up():
 ## LOG OUT ##
 @auth.route("/logout")
 def logout():
-    # Update cart items status to 'deleted'
+   
     conn = get_db_connection()
     try:
         conn.execute('''
@@ -92,7 +87,6 @@ def logout():
     finally:
         conn.close()
 
-    # Update ticket statuses to 'not active' for the logged-out user
     user_id = session.get('user_id')
     db = get_db_connection()
     try:
@@ -105,12 +99,11 @@ def logout():
     finally:
         db.close()
 
-    # Clear session
     session.clear()
 
     return redirect(url_for('auth.login'))
 
-## ADD TO CART- FOOD ##
+## FOOD ##
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
@@ -132,6 +125,7 @@ def store_food():
         
     return render_template('store_food.html', products=products_with_images)
 
+## ADD TO CART ##
 @auth.route('/add_to_cart', methods=['POST'])
 @login_required
 def add_to_cart():
@@ -148,7 +142,8 @@ def add_to_cart():
     else:
         conn.close()
         return jsonify({'error': 'Product not found'})
-    
+
+
 @auth.route('/cart')
 @login_required
 def cart():
@@ -318,7 +313,6 @@ def summary():
                            total_ticket_price=total_ticket_price, overall_total=overall_total, overall_total_1=overall_total_1)
 
 
-## BOOK ##
 
 ## BOOK KTM ##
 @auth.route('/book', methods=['GET', 'POST'])
@@ -340,7 +334,6 @@ def book_ticket():
             user_id = session.get('user_id')
             booked_seats = []
 
-            # Check if any of the selected seats are already booked for the specified date and time
             for seat_number in seat_numbers:
                 cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
                     (date, time, seat_number, seat_type))
@@ -349,15 +342,12 @@ def book_ticket():
                 if cursor.fetchone()[0] > 0:
                     booked_seats.append(seat_number)
 
-            # If any seats are already booked, flash an error message
             if booked_seats:
                 flash(f"The following seats are already booked for {date} at {time} where origin {origin} and destination {destination} for {seat_type}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ticket'))
 
-            # Update the status of previously booked tickets for the user to 'not active'
             db.execute('UPDATE bookings SET status = "not active" WHERE user_id = ? AND status = "active"', (user_id,))
-            
-            # Insert the new booking into the database
+       
             for seat_number in seat_numbers:
                 db.execute('INSERT INTO bookings (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, "active")',
                            (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price))
@@ -386,7 +376,7 @@ def book_ticket():
 
     return render_template('book_ktm.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
 
-
+## KTM TICKET ##
 @auth.route('/ticket')
 @login_required
 def ticket():
@@ -458,8 +448,6 @@ def calculate_ticket_price(num_people):
 ## BOOK ETS ##
 from flask import session
 
-
-
 @auth.route('/ets_book', methods=['GET', 'POST'])
 @login_required
 def book_ets_ticket():
@@ -521,8 +509,7 @@ def book_ets_ticket():
 
     return render_template('book_ets.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
 
-
-
+## ETS TICKET ##
 @auth.route('/ets_ticket')
 @login_required
 def ets_ticket():
@@ -582,9 +569,7 @@ def ets_ticket():
 
     return render_template('ticket_ets.html', ets_bookings=ets_bookings)
 
-
-
-
+## CALCULATE TICKET PRICE ##
 def calculate_ticket_price(num_people):
     base_price_per_ticket = 12
     total_price = num_people * base_price_per_ticket
