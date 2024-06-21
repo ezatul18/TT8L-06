@@ -180,10 +180,8 @@ def update_selfpickup():
 def summary():
     conn = get_db_connection()
     
-    
-    user_id = session.get('user_id') 
+    user_id = session.get('user_id')
     user = conn.execute('SELECT email, username FROM users WHERE id = ?', (user_id,)).fetchone()
-
     
     cart_items = conn.execute('''
         SELECT p.name, p.price, c.quantity 
@@ -191,20 +189,124 @@ def summary():
         JOIN cart c ON p.id = c.product_id 
         WHERE c.status = "active"
     ''').fetchall()
+ 
+    total_cart_price = sum(item['price'] * item['quantity'] for item in cart_items)
 
+    ets_bookings = []
+    cursor = conn.cursor()
+
+    sql_query = """
+    SELECT 
+        origin, 
+        destination, 
+        date, 
+        time, 
+        num_people, 
+        seat_type, 
+        group_concat(IFNULL(seat_number, ''), ', ') AS seat_numbers, 
+        total_price 
+    FROM 
+        ets_bookings 
+    WHERE 
+        user_id = ?
+    GROUP BY 
+        origin, 
+        destination, 
+        date, 
+        time, 
+        num_people, 
+        seat_type, 
+        total_price
+    """
+
+    cursor.execute(sql_query, (user_id,))
+    rows = cursor.fetchall()
+
+    for row in rows:
+        seat_numbers = row['seat_numbers'].strip(', ') if row['seat_numbers'] else ''
+        seat_numbers_list = seat_numbers.split(', ') if seat_numbers else []
+        total_price = row[7]
+        booking = {
+            'origin': row[0],
+            'destination': row[1],
+            'date': row[2],
+            'time': row[3],
+            'num_people': row[4],
+            'seat_type': row[5],
+            'seat_numbers': seat_numbers_list,
+            'total_price': total_price
+        }
+        ets_bookings.append(booking)
+
+    cursor.close()
+
+    bookings = []
+    cursor = conn.cursor()
+
+    sql_query = """
+    SELECT 
+        origin, 
+        destination, 
+        date, 
+        time, 
+        num_people, 
+        seat_type, 
+        group_concat(IFNULL(seat_number, ''), ', ') AS seat_numbers, 
+        total_price 
+    FROM 
+        bookings 
+    WHERE 
+        user_id = ?
+    GROUP BY 
+        origin, 
+        destination, 
+        date, 
+        time, 
+        num_people, 
+        seat_type, 
+        total_price
+    """
+
+    cursor.execute(sql_query, (user_id,))
+    rows = cursor.fetchall()
+
+    for row in rows:
+        seat_numbers = row['seat_numbers'].strip(', ') if row['seat_numbers'] else ''
+        seat_numbers_list = seat_numbers.split(', ') if seat_numbers else []
+        total_price = row[7]
+        booking = {
+            'origin': row[0],
+            'destination': row[1],
+            'date': row[2],
+            'time': row[3],
+            'num_people': row[4],
+            'seat_type': row[5],
+            'seat_numbers': seat_numbers_list,
+            'total_price': total_price
+        }
+        bookings.append(booking)
+
+    cursor.close()
+
+    total_ticket_price = sum(booking['total_price'] for booking in ets_bookings)
+
+    total_ticket_price_ktm = sum(booking['total_price'] for booking in bookings)
+
+    overall_total = total_cart_price + total_ticket_price
+
+    overall_total_1 = total_cart_price + total_ticket_price_ktm
     
-    total_price = sum(item['price'] * item['quantity'] for item in cart_items)
-
     conn.close()
 
-    return render_template('summary.html', user=user, cart_items=cart_items, total_price=total_price)
+    return render_template('summary.html', user=user, cart_items=cart_items, bookings=bookings,
+                           ets_bookings=ets_bookings, total_cart_price=total_cart_price, total_ticket_price_ktm=total_ticket_price_ktm,
+                           total_ticket_price=total_ticket_price, overall_total=overall_total, overall_total_1=overall_total_1)
 
 ## BOOK ##
 
 ## BOOK KTM ##
 @auth.route('/book', methods=['GET', 'POST'])
 @login_required
-
 
 def book_ticket():
     if request.method == 'POST':

@@ -8,80 +8,177 @@
     <title>Order Summary</title>
 </head>
 
+<body>
     <header>
-            <a href="/main" class="main">Railway<span>Food</span></a>
+        <a href="/main" class="main">Railway<span>Food</span></a>
     
-            <ul class="navlist">
-                <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
-             </ul>
-    
+        <ul class="navlist">
+            <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
+        </ul>
     </header>
 
-<body>
-        <section class="summary">
-            <h1>Order Summary</h1>
-            <h2>Order Details for {{ user.username }}</h2>
-            <p>Email: {{ user.email }}</p>
+    <section class="summary">
+        <h1>Order Summary</h1>
+        <h2>Order Details for {{ user.username }}</h2>
+        <p>Email: {{ user.email }}</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item['name'] }}</td>
+                    <td>RM {{ item['price'] }}0</td>
+                    <td>{{ item['quantity'] }}</td>
+                    <td>RM {{ item['price'] * item['quantity'] }}0</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Cart Total:</td>
+                    <td>RM {{ total_cart_price }}0</td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+
+    <section class="ets-bookings">
+        <div class="container">
+            <h2>Booked ETS Tickets</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Number of People</th>
+                        <th>Seat Type</th>
+                        <th>Seat Numbers</th>
+                        <th>Ticket Price</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in cart_items %}
+                    {% for booking in ets_bookings %}
                     <tr>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.price }}0</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.price * item.quantity }}0</td>
+                        <td>{{ booking['origin'] }}</td>
+                        <td>{{ booking['destination'] }}</td>
+                        <td>{{ booking['date'] }}</td>
+                        <td>{{ booking['time'] }}</td>
+                        <td>{{ booking['num_people'] }}</td>
+                        <td>{{ booking['seat_type'] }}</td>
+                        <td>
+                            {% for seat_number in booking['seat_numbers'] %}
+                                {{ seat_number }}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>RM {{ booking['total_price'] }}0</td>
                     </tr>
                     {% endfor %}
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3">Total:</td>
-                        <td>RM {{ total_price }}0</td>
+                        <td colspan="7">Ticket Total:</td>
+                        <td>RM {{ total_ticket_price }}0</td>
+                    </tr>
+                    <tr>
+                        <td colspan="7">Overall Total:</td>
+                        <td>RM {{ overall_total }}0</td>
                     </tr>
                 </tfoot>
             </table>
-        </section>
+        </div>
+    </section>
 
-        <section class="pay">
-            <div class="pay--nav">
-                <nav class="navbar">
-                    <ul class="nav-links">
-                        <li class="nav-link paydwn">
-                            <a href="#">FPX
-                                <span><i class='bx bxs-down-arrow'></i></span>
-                            </a>
-                            <ul class="drop-down">
-                                <li>Maybank</li>
-                                <li>Bank muamalat</li>
-                                <li>Bank Islam</li>
-                            </ul>
-                        </li>
-                        <li class="nav-link paydwn">
-                            <a href="#">Card
-                                <span><i class='bx bxs-down-arrow'></i></span>
-                            </a>
-                            <ul class="drop-down">
-                                <li>Debit card</li>
-                                <li>Credit card</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+    <section class="ktm-bookings">
+        <div class="container">
+            <h2>Booked KTM Tickets</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Number of People</th>
+                        <th>Seat Type</th>
+                        <th>Seat Numbers</th>
+                        <th>Ticket Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking['origin'] }}</td>
+                        <td>{{ booking['destination'] }}</td>
+                        <td>{{ booking['date'] }}</td>
+                        <td>{{ booking['time'] }}</td>
+                        <td>{{ booking['num_people'] }}</td>
+                        <td>{{ booking['seat_type'] }}</td>
+                        <td>
+                            {% for seat_number in booking['seat_numbers'] %}
+                                {{ seat_number }}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>RM {{ booking['total_price'] }}0</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7">Ticket Total:</td>
+                        <td>RM {{ total_ticket_price_ktm }}0</td>
+                    </tr>
+                    <tr>
+                        <td colspan="7">Overall Total:</td>
+                        <td>RM {{ overall_total_1 }}0</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </section>
 
-            <p>
-                <button>Checkout</button>
-            </p>
-        </section>
-    
+    <section class="pay">
+        <div class="pay--nav">
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li class="nav-link paydwn">
+                        <a href="#">FPX
+                            <span><i class='bx bxs-down-arrow'></i></span>
+                        </a>
+                        <ul class="drop-down">
+                            <li>Maybank</li>
+                            <li>Bank muamalat</li>
+                            <li>Bank Islam</li>
+                        </ul>
+                    </li>
+                    <li class="nav-link paydwn">
+                        <a href="#">Card
+                            <span><i class='bx bxs-down-arrow'></i></span>
+                        </a>
+                        <ul class="drop-down">
+                            <li>Debit card</li>
+                            <li>Credit card</li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <p>
+            <button>Checkout</button>
+        </p>
+    </section>
+
     <script src="{{url_for('static', filename='script_food.js')}}"></script>
 </body>
 </html>
