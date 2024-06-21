@@ -335,13 +335,30 @@ def book_ets_ticket():
 def ets_ticket():
     db = get_db_connection()
     cur = db.execute('SELECT * FROM ets_bookings')
-    bookings = cur.fetchall()
+    rows = cur.fetchall()
+    
+    bookings = []
+    for row in rows:
+        booking = dict(row)
+        booking['ticket_price'] = calculate_ticket_price(booking)
+        bookings.append(booking)
+    
     db.close()
 
     # Remove selected seat from session when rendering ticket page
     session.pop('selected_seat', None)
 
     return render_template('ticket_ets.html', bookings=bookings)
+
+def calculate_ticket_price(booking):
+    base_price_per_ticket = 12  
+    num_people = booking['num_people']
+    
+    total_price = num_people * base_price_per_ticket
+    
+    return total_price
+
+
 
 
 @auth.route('/cancel_ticket/<int:booking_id>', methods=['POST'])
