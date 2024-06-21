@@ -60,13 +60,19 @@
                 <td>{{ booking['time'] }}</td>
                 <td>{{ booking['num_people'] }}</td>
                 <td>{{ booking['seat_type'] }}</td>
-                <td>{{ booking['seat_number'] }}</td>
+                <td>
+                    {% for seat_number in booking['seat_numbers'] %}
+                        {{ seat_number }}
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
                 <td>
                     <!-- Form for canceling the ticket -->
                     <form action="{{ url_for('auth.cancel_ticket', booking_id=booking['id']) }}" method="post">
                         <button type="submit">Cancel</button>
                     </form>
                 </td>
+                <td>RM {{ booking['total_price'] }}</td>  
             </tr>
             {% endfor %}
         </tbody>

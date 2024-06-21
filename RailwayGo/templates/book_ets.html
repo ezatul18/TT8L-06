@@ -82,13 +82,13 @@
                         </div>
                        
                         <div class="b1">
-                        <label for="seat_number">Seat Number:</label>
-                        <select id="seat_number" name="seat_number" required>
-                            {% for seat in seat_numbers %}
-                                <option value="{{ seat['number'] }}" {% if not seat['available'] %} disabled {% endif %}>{{ seat['number'] }}</option>
-                            {% endfor %}
-                        </select>
-                        </div>
+                            <label>Select Seat Number:</label>
+                            <div class="seat-block">
+                                {% for seat in seat_numbers %}
+                                    <input type="checkbox" id="seat_{{ seat['number'] }}" name="seat_number" value="{{ seat['number'] }}" class="seat-checkbox {% if not seat['available'] %} disabled {% endif %}">
+                                    <label for="seat_{{ seat['number'] }}" class="seat-label {% if not seat['available'] %} disabled {% endif %}">{{ seat['number'] }}</label>
+                                {% endfor %}
+                            </div>
                         </div>
 
                        
@@ -99,7 +99,38 @@
         </form>
     </div>
 
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const seatCheckboxes = document.querySelectorAll('.seat-checkbox');
+            const numPeopleInput = document.getElementById('num_people');
+        
+            let seatsSelected = 0;
+        
+            seatCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        seatsSelected++;
+                    } else {
+                        seatsSelected--;
+                    }
+        
+                    // Disable all checkboxes if seatsSelected equals numPeople
+                    if (seatsSelected === parseInt(numPeopleInput.value)) {
+                        seatCheckboxes.forEach(cb => {
+                            if (!cb.checked) {
+                                cb.disabled = true;
+                            }
+                        });
+                    } else {
+                        seatCheckboxes.forEach(cb => {
+                            cb.disabled = false;
+                        });
+                    }
+                });
+            });
+        });
+        
+        </script>
 </body>
 </html>
 

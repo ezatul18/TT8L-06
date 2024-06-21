@@ -198,6 +198,7 @@ def summary():
 
 ## BOOK ##
 
+## BOOK KTM ##
 @auth.route('/book', methods=['GET', 'POST'])
 
 def book_ticket():
@@ -206,15 +207,17 @@ def book_ticket():
         destination = request.form['destination']
         date = request.form['date']
         time = request.form['time']
-        num_people = request.form['num_people']
+        num_people = int(request.form['num_people'])
         seat_type = request.form['seat_type']
-        seat_numbers = request.form.getlist('seat_number')  # Get selected seat numbers as a list
-        
+        seat_numbers = request.form.getlist('seat_number')  
+
+        total_price = calculate_ticket_price(num_people)
+
         db = get_db_connection()
         try:
             for seat_number in seat_numbers:
-                db.execute('INSERT INTO bookings (origin, destination, date, time, num_people, seat_type, seat_number) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                           [origin, destination, date, time, num_people, seat_type, seat_number])
+                db.execute('INSERT INTO bookings (origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                           [origin, destination, date, time, num_people, seat_type, seat_number, total_price])
                 db.execute('UPDATE seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
                 db.commit()
 
@@ -240,27 +243,51 @@ def book_ticket():
     return render_template('book_ktm.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
 
 
-
-
 @auth.route('/ticket')
+
 def ticket():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM bookings")
+    sql_query = """
+    SELECT 
+        origin, 
+        destination, 
+        date, 
+        time, 
+        num_people, 
+        seat_type, 
+        group_concat(IFNULL(seat_number, ''), ', ') AS seat_numbers, 
+        total_price 
+    FROM 
+        bookings 
+    GROUP BY 
+        origin, 
+        destination, 
+        date, 
+        time, 
+        num_people, 
+        seat_type, 
+        total_price
+    """
+
+    cursor.execute(sql_query)
     rows = cursor.fetchall()
 
     bookings = []
     for row in rows:
+        seat_numbers = row[6].strip(', ')  
+        seat_numbers_list = seat_numbers.split(', ') if seat_numbers else []
+        total_price = row[7]
         booking = {
-            'origin': row[1],
-            'destination': row[2],
-            'date': row[3],
-            'time': row[4],
-            'num_people': row[5],
-            'seat_type': row[6],
-            'seat_numbers': row[7].split(', '),  # Assuming seat_numbers are stored as comma-separated string in database
-            'ticket_price': row[8]
+            'origin': row[0],
+            'destination': row[1],
+            'date': row[2],
+            'time': row[3],
+            'num_people': row[4],
+            'seat_type': row[5],
+            'seat_numbers': seat_numbers_list,
+            'total_price': total_price
         }
         bookings.append(booking)
 
@@ -268,43 +295,41 @@ def ticket():
 
     return render_template('ticket_ktm.html', bookings=bookings)
 
-def calculate_ticket_price(booking): 
-    base_price_per_ticket = 12  
-    num_people = row[5] 
-    
+
+def calculate_ticket_price(num_people):
+    base_price_per_ticket = 12
     total_price = num_people * base_price_per_ticket
-    
     return total_price
 
 
-
+## BOOK ETS ##
 from flask import session
 
 @auth.route('/ets_book', methods=['GET', 'POST'])
-@login_required
 def book_ets_ticket():
     if request.method == 'POST':
         origin = request.form['origin']
         destination = request.form['destination']
         date = request.form['date']
         time = request.form['time']
-        num_people = request.form['num_people']
+        num_people = int(request.form['num_people'])
         seat_type = request.form['seat_type']
-        seat_number = request.form['seat_number']
-        
+        seat_numbers = request.form.getlist('seat_number')  
+
+        total_price = calculate_ticket_price(num_people)
+
         db = get_db_connection()
         try:
-            db.execute('INSERT INTO ets_bookings (origin, destination, date, time, num_people, seat_type, seat_number) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                       [origin, destination, date, time, num_people, seat_type, seat_number])
-            db.commit()
+            for seat_number in seat_numbers:
+                db.execute('INSERT INTO ets_bookings (origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                           [origin, destination, date, time, num_people, seat_type, seat_number, total_price])
+                db.execute('UPDATE ets_seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
+                db.commit()
 
-            db.execute('UPDATE ets_seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
-            db.commit()
-
-            flash('ETS Ticket booked successfully!', 'success')
+            flash('Ticket(s) booked successfully!', 'success')
             return redirect(url_for('auth.ets_ticket'))
         except sqlite3.Error as e:
-            flash(f'Error booking ETS ticket: {str(e)}', 'error')
+            flash(f'Error booking ticket: {str(e)}', 'error')
         finally:
             db.close()
     
@@ -319,33 +344,64 @@ def book_ets_ticket():
     db.close()
     
     seat_numbers = [{'number': seat['seat_number'], 'available': seat['status'] == 'available'} for seat in seat_data]
-    
-    # Retrieve selected seat from session
-    selected_seat = session.get('selected_seat')
-    if selected_seat:
-        for seat in seat_numbers:
-            if seat['number'] == selected_seat:
-                seat['available'] = False
-                break
 
     return render_template('book_ets.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
 
 @auth.route('/ets_ticket')
-@login_required
+
 def ets_ticket():
-    db = get_db_connection()
-    cur = db.execute('SELECT * FROM ets_bookings')
-    bookings = cur.fetchall()
-    db.close()
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-    # Remove selected seat from session when rendering ticket page
-    session.pop('selected_seat', None)
+    sql_query = """
+    SELECT 
+        origin, 
+        destination, 
+        date, 
+        time, 
+        num_people, 
+        seat_type, 
+        group_concat(IFNULL(seat_number, ''), ', ') AS seat_numbers, 
+        total_price 
+    FROM 
+        ets_bookings 
+    GROUP BY 
+        origin, 
+        destination, 
+        date, 
+        time, 
+        num_people, 
+        seat_type, 
+        total_price
+    """
 
-    return render_template('ticket_ets.html', bookings=bookings)
+    cursor.execute(sql_query)
+    rows = cursor.fetchall()
+
+    ets_bookings = []
+    for row in rows:
+        seat_numbers = row[6].strip(', ')  
+        seat_numbers_list = seat_numbers.split(', ') if seat_numbers else []
+        total_price = row[7]
+        booking = {
+            'origin': row[0],
+            'destination': row[1],
+            'date': row[2],
+            'time': row[3],
+            'num_people': row[4],
+            'seat_type': row[5],
+            'seat_numbers': seat_numbers_list,
+            'total_price': total_price
+        }
+        ets_bookings.append(booking)
+
+    conn.close()
+
+    return render_template('ticket_ets.html', ets_bookings=ets_bookings)
 
 
 @auth.route('/cancel_ticket/<int:booking_id>', methods=['POST'])
-@login_required
+
 def cancel_ticket(booking_id):
     db = get_db_connection()
     try:
