@@ -1,18 +1,12 @@
 from flask import Flask
 from flask_login import LoginManager
 from .models import connect_db, get_user_by_email
-from datetime import timedelta
 import os
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "testtest"
-    app.config['DATABASE'] = os.path.join(app.instance_path, 'database.db')
-
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+    app.config['DATABASE'] = '/home/ezatul/TT8L-06/database.db'  
 
     # Initialize the database
     with app.app_context():
@@ -35,6 +29,7 @@ def create_app():
         return get_user_by_email(id)
 
     return app
+
 
 
 
