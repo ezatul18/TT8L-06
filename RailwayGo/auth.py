@@ -224,7 +224,7 @@ def summary():
     FROM 
         ets_bookings 
     WHERE 
-        user_id = ?
+        user_id = ? AND status = 'active'  -- Adjusted to filter active bookings
     GROUP BY 
         origin, 
         destination, 
@@ -272,7 +272,7 @@ def summary():
     FROM 
         bookings 
     WHERE 
-        user_id = ?
+        user_id = ? AND status = 'active'  -- Adjusted to filter active bookings
     GROUP BY 
         origin, 
         destination, 
@@ -305,11 +305,9 @@ def summary():
     cursor.close()
 
     total_ticket_price = sum(booking['total_price'] for booking in ets_bookings)
-
     total_ticket_price_ktm = sum(booking['total_price'] for booking in bookings)
 
     overall_total = total_cart_price + total_ticket_price
-
     overall_total_1 = total_cart_price + total_ticket_price_ktm
     
     conn.close()
@@ -317,6 +315,7 @@ def summary():
     return render_template('summary.html', user=user, cart_items=cart_items, bookings=bookings,
                            ets_bookings=ets_bookings, total_cart_price=total_cart_price, total_ticket_price_ktm=total_ticket_price_ktm,
                            total_ticket_price=total_ticket_price, overall_total=overall_total, overall_total_1=overall_total_1)
+
 
 ## BOOK ##
 
