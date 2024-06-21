@@ -324,14 +324,16 @@ def book_ticket():
         try:
             user_id = session.get('user_id')
             booked_seats = []
-            # Check if any of the selected seats are already booked for the specified date and time
+           
             for seat_number in seat_numbers:
-                cursor = db.execute('SELECT COUNT(*) FROM bookings WHERE date = ? AND time = ? AND seat_number = ?',
-                                    (date, time, seat_number))
+                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
+                    (date, time, seat_number, seat_type))
+
+                                    
                 if cursor.fetchone()[0] > 0:
                     booked_seats.append(seat_number)
 
-            # If any seats are already booked, flash an error message
+           
             if booked_seats:
                 flash(f"The following seats are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ticket'))
@@ -453,8 +455,10 @@ def book_ets_ticket():
             booked_seats = []
             # Check if any of the selected seats are already booked for the specified date and time
             for seat_number in seat_numbers:
-                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ?',
-                                    (date, time, seat_number))
+                cursor = db.execute('SELECT COUNT(*) FROM ets_bookings WHERE date = ? AND time = ? AND seat_number = ? AND seat_type = ?',
+                    (date, time, seat_number, seat_type))
+
+                                    
                 if cursor.fetchone()[0] > 0:
                     booked_seats.append(seat_number)
 
@@ -463,7 +467,7 @@ def book_ets_ticket():
                 flash(f"The following seats are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ets_ticket'))
 
-            # Insert the booking into the database
+            
             user_id = session.get('user_id')
             for seat_number in seat_numbers:
                 db.execute('INSERT INTO ets_bookings (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
@@ -473,7 +477,7 @@ def book_ets_ticket():
 
             flash('Ticket(s) booked successfully!', 'success')
 
-            # Redirect to the booked tickets display (ets_ticket)
+            
             return redirect(url_for('auth.ets_ticket'))
 
         except sqlite3.Error as e:
@@ -481,7 +485,7 @@ def book_ets_ticket():
         finally:
             db.close()
 
-    # If GET request or after booking, display booked tickets
+    
     origins = ['Alor Setar', 'Kuala Lumpur', 'Batang Melaka']
     destinations = ['Alor Setar', 'Kuala Lumpur', 'Batang Melaka']
     dates = ['2024-08-01', '2024-08-02', '2024-08-03', '2024-08-04', '2024-08-05', '2024-08-06', '2024-08-07', '2024-08-08', '2024-08-09', '2024-08-10', '2024-08-11', '2024-08-12', '2024-08-13', '2024-08-14', '2024-08-15', '2024-08-16', '2024-08-17', '2024-08-18', '2024-08-19', '2024-08-20', '2024-08-21', '2024-08-22', '2024-08-23', '2024-08-24', '2024-08-25', '2024-08-26', '2024-08-27', '2024-08-28', '2024-08-29', '2024-08-30', '2024-08-31']  
