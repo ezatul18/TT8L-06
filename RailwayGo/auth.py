@@ -326,6 +326,8 @@ def calculate_ticket_price(num_people):
 ## BOOK ETS ##
 from flask import session
 
+
+
 @auth.route('/ets_book', methods=['GET', 'POST'])
 @login_required
 def book_ets_ticket():
@@ -336,13 +338,12 @@ def book_ets_ticket():
         time = request.form['time']
         num_people = int(request.form['num_people'])
         seat_type = request.form['seat_type']
-        seat_numbers = request.form.getlist('seat_number')  
+        seat_numbers = request.form.getlist('seat_number')
 
         total_price = calculate_ticket_price(num_people)
 
         db = get_db_connection()
         try:
-            
             booked_seats = []
             # Check if any of the selected seats are already booked for the specified date and time
             for seat_number in seat_numbers:
@@ -353,45 +354,50 @@ def book_ets_ticket():
 
             # If any seats are already booked, flash an error message
             if booked_seats:
-                flash(f"The following seat are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
+                flash(f"The following seats are already booked for {date} at {time}: {', '.join(booked_seats)}. Please select another seat.", 'error')
                 return redirect(url_for('auth.book_ets_ticket'))
 
-
-
-
-
+            # Insert the booking into the database
+            user_id = session.get('user_id')
             for seat_number in seat_numbers:
-                db.execute('INSERT INTO ets_bookings (origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                           [origin, destination, date, time, num_people, seat_type, seat_number, total_price])
+                db.execute('INSERT INTO ets_bookings (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                           (user_id, origin, destination, date, time, num_people, seat_type, seat_number, total_price))
                 db.execute('UPDATE ets_seat_status SET status = "booked" WHERE seat_number = ?', (seat_number,))
                 db.commit()
 
-            flash('Ticket booked successfully!', 'success')
+            flash('Ticket(s) booked successfully!', 'success')
+
+            # Redirect to the booked tickets display (ets_ticket)
             return redirect(url_for('auth.ets_ticket'))
+
         except sqlite3.Error as e:
             flash(f'Error booking ticket: {str(e)}', 'error')
         finally:
             db.close()
-    
+
+    # If GET request or after booking, display booked tickets
     origins = ['Alor Setar', 'Kuala Lumpur', 'Batang Melaka']
     destinations = ['Alor Setar', 'Kuala Lumpur', 'Batang Melaka']
     dates = ['2024-08-01', '2024-08-02', '2024-08-03', '2024-08-04', '2024-08-05', '2024-08-06', '2024-08-07', '2024-08-08', '2024-08-09', '2024-08-10', '2024-08-11', '2024-08-12', '2024-08-13', '2024-08-14', '2024-08-15', '2024-08-16', '2024-08-17', '2024-08-18', '2024-08-19', '2024-08-20', '2024-08-21', '2024-08-22', '2024-08-23', '2024-08-24', '2024-08-25', '2024-08-26', '2024-08-27', '2024-08-28', '2024-08-29', '2024-08-30', '2024-08-31']  
     times = ['08:00', '16:00', '21:00']  
-    
+
     db = get_db_connection()
     cur = db.execute('SELECT seat_number, status FROM ets_seat_status')
     seat_data = cur.fetchall()
     db.close()
-    
+
     seat_numbers = [{'number': seat['seat_number'], 'available': seat['status'] == 'available'} for seat in seat_data]
 
     return render_template('book_ets.html', origins=origins, destinations=destinations, dates=dates, times=times, seat_numbers=seat_numbers)
+
 
 @auth.route('/ets_ticket')
 @login_required
 def ets_ticket():
     conn = get_db_connection()
     cursor = conn.cursor()
+
+    user_id = session.get('user_id')
 
     sql_query = """
     SELECT 
@@ -405,6 +411,8 @@ def ets_ticket():
         total_price 
     FROM 
         ets_bookings 
+    WHERE 
+        user_id = ?
     GROUP BY 
         origin, 
         destination, 
@@ -415,12 +423,12 @@ def ets_ticket():
         total_price
     """
 
-    cursor.execute(sql_query)
+    cursor.execute(sql_query, (user_id,))
     rows = cursor.fetchall()
 
     ets_bookings = []
     for row in rows:
-        seat_numbers = row[6].strip(', ')  
+        seat_numbers = row[6].strip(', ')
         seat_numbers_list = seat_numbers.split(', ') if seat_numbers else []
         total_price = row[7]
         booking = {
