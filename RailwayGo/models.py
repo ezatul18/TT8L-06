@@ -4,7 +4,7 @@ import sqlite3
 from flask import current_app, g
 
 def connect_db():
-    conn = sqlite3.connect('/home/ezatul/TT8L-06/database.db')
+    conn = sqlite3.connect(current_app.config['DATABASE'])
     cur = conn.cursor()
 
     # Create tables if they do not exist
